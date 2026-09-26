@@ -1,0 +1,34 @@
+{
+  "id": "hw-01",
+  "title": "Same code on two different dates (weekly therapy)",
+  "profile": { "id": "hw-jonah", "name": "Jonah Whitfield", "relation": "self" },
+  "bill": {
+    "id": "BILL-hw-01",
+    "provider": { "name": "Northgate Physical Therapy", "address": "702 North Gate Blvd, Fairhaven, PA 19003" },
+    "patient": { "name": "Jonah Whitfield" },
+    "account_number": "ACCT-55120984",
+    "statement_date": "2026-05-12",
+    "lines": [
+      { "line_no": 1, "date": "2026-04-02", "code": "97110", "description": "Therapeutic exercise", "units": 1, "charge": 130 },
+      { "line_no": 2, "date": "2026-04-09", "code": "97110", "description": "Therapeutic exercise", "units": 1, "charge": 130 }
+    ],
+    "adjustments": [{ "description": "Contractual adjustment", "amount": 120 }],
+    "insurance_payments": [{ "date": "2026-04-28", "payer": "Cardinal Shield Insurance", "amount": 112 }],
+    "patient_payments": [],
+    "amount_due": 28
+  },
+  "eob": {
+    "id": "EOB-hw-01",
+    "insurer": "Cardinal Shield Insurance",
+    "member": { "name": "Jonah Whitfield", "id": "CSI-300418" },
+    "claim_number": "CLM-640118271",
+    "provider_name": "Northgate Physical Therapy",
+    "network": "in-network",
+    "service_type": "therapy",
+    "lines": [
+      { "date": "2026-04-02", "code": "97110", "description": "Therapeutic exercise", "units": 1, "billed": 130, "allowed": 70, "insurer_paid": 56, "patient_resp": 14 },
+      { "date": "2026-04-09", "code": "97110", "description": "Therapeutic exercise", "units": 1, "billed": 130, "allowed": 70, "insurer_paid": 56, "patient_resp": 14 }
+    ],
+    "totals": { "billed": 260, "allowed": 140, "insurer_paid": 112, "patient_resp": 28 }
+  }
+}

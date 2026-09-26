@@ -1,0 +1,138 @@
+{
+  "id": "case-15",
+  "title": "Rosa, physical therapy for a sore knee",
+  "profile": {
+    "id": "rosa",
+    "name": "Rosa Torres",
+    "relation": "parent"
+  },
+  "bill": {
+    "id": "BILL-case-15",
+    "provider": {
+      "name": "Northgate Physical Therapy",
+      "address": "702 North Gate Blvd, Fairhaven, PA 19003"
+    },
+    "patient": {
+      "name": "Rosa Torres"
+    },
+    "account_number": "ACCT-46297725",
+    "statement_date": "2026-08-11",
+    "lines": [
+      {
+        "line_no": 1,
+        "date": "2026-06-24",
+        "code": "97161",
+        "description": "Physical therapy evaluation",
+        "units": 1,
+        "charge": 311
+      },
+      {
+        "line_no": 2,
+        "date": "2026-06-24",
+        "code": "97110",
+        "description": "Therapeutic exercise",
+        "units": 1,
+        "charge": 137
+      },
+      {
+        "line_no": 3,
+        "date": "2026-06-24",
+        "code": "97110",
+        "description": "Therapeutic exercise",
+        "units": 1,
+        "charge": 137
+      },
+      {
+        "line_no": 4,
+        "date": "2026-07-01",
+        "code": "97110",
+        "description": "Therapeutic exercise",
+        "units": 1,
+        "charge": 123
+      },
+      {
+        "line_no": 5,
+        "date": "2026-07-08",
+        "code": "97110",
+        "description": "Therapeutic exercise",
+        "units": 1,
+        "charge": 120
+      }
+    ],
+    "adjustments": [
+      {
+        "description": "Contractual adjustment",
+        "amount": 290
+      }
+    ],
+    "insurance_payments": [
+      {
+        "date": "2026-07-29",
+        "payer": "Evergreen Mutual Health",
+        "amount": 289
+      }
+    ],
+    "patient_payments": [],
+    "amount_due": 249
+  },
+  "eob": {
+    "id": "EOB-case-15",
+    "insurer": "Evergreen Mutual Health",
+    "member": {
+      "name": "Rosa Torres",
+      "id": "EVM771208"
+    },
+    "claim_number": "CLM-806768404",
+    "provider_name": "Northgate Physical Therapy",
+    "network": "in-network",
+    "service_type": "therapy",
+    "lines": [
+      {
+        "date": "2026-06-24",
+        "code": "97161",
+        "description": "Physical therapy evaluation",
+        "units": 1,
+        "billed": 271,
+        "allowed": 149,
+        "insurer_paid": 119,
+        "patient_resp": 30
+      },
+      {
+        "date": "2026-06-24",
+        "code": "97110",
+        "description": "Therapeutic exercise",
+        "units": 1,
+        "billed": 137,
+        "allowed": 78,
+        "insurer_paid": 62,
+        "patient_resp": 16
+      },
+      {
+        "date": "2026-07-01",
+        "code": "97110",
+        "description": "Therapeutic exercise",
+        "units": 1,
+        "billed": 123,
+        "allowed": 67,
+        "insurer_paid": 54,
+        "patient_resp": 13
+      },
+      {
+        "date": "2026-07-08",
+        "code": "97110",
+        "description": "Therapeutic exercise",
+        "units": 1,
+        "billed": 120,
+        "allowed": 67,
+        "insurer_paid": 54,
+        "patient_resp": 13
+      }
+    ],
+    "totals": {
+      "billed": 651,
+      "allowed": 361,
+      "insurer_paid": 289,
+      "patient_resp": 72
+    }
+  }
+}

@@ -1,0 +1,174 @@
+{
+  "id": "case-06",
+  "title": "Rosa, ER visit for chest pain",
+  "profile": {
+    "id": "rosa",
+    "name": "Rosa Torres",
+    "relation": "parent"
+  },
+  "bill": {
+    "id": "BILL-case-06",
+    "provider": {
+      "name": "Owlbrook Regional Hospital",
+      "address": "1200 Linden Ridge Rd, Fairhaven, PA 19000"
+    },
+    "patient": {
+      "name": "Rosa Torres"
+    },
+    "account_number": "ACCT-78924269",
+    "statement_date": "2026-04-15",
+    "lines": [
+      {
+        "line_no": 1,
+        "date": "2026-03-12",
+        "code": "99285",
+        "description": "ER visit, severe (level 5)",
+        "units": 1,
+        "charge": 2831
+      },
+      {
+        "line_no": 2,
+        "date": "2026-03-12",
+        "code": "93000",
+        "description": "Heart tracing (ECG)",
+        "units": 1,
+        "charge": 200
+      },
+      {
+        "line_no": 3,
+        "date": "2026-03-12",
+        "code": "93000",
+        "description": "Heart tracing (ECG)",
+        "units": 1,
+        "charge": 200
+      },
+      {
+        "line_no": 4,
+        "date": "2026-03-12",
+        "code": "71046",
+        "description": "Chest X-ray, 2 views",
+        "units": 1,
+        "charge": 361
+      },
+      {
+        "line_no": 5,
+        "date": "2026-03-12",
+        "code": "80053",
+        "description": "Comprehensive metabolic panel",
+        "units": 1,
+        "charge": 215
+      },
+      {
+        "line_no": 6,
+        "date": "2026-03-12",
+        "code": "85025",
+        "description": "Complete blood count (CBC)",
+        "units": 1,
+        "charge": 121
+      },
+      {
+        "line_no": 7,
+        "date": "2026-03-12",
+        "code": "36415",
+        "description": "Blood draw",
+        "units": 1,
+        "charge": 44
+      }
+    ],
+    "adjustments": [
+      {
+        "description": "Contractual adjustment",
+        "amount": 2190
+      }
+    ],
+    "insurance_payments": [
+      {
+        "date": "2026-04-02",
+        "payer": "Evergreen Mutual Health",
+        "amount": 1337
+      }
+    ],
+    "patient_payments": [],
+    "amount_due": 445
+  },
+  "eob": {
+    "id": "EOB-case-06",
+    "insurer": "Evergreen Mutual Health",
+    "member": {
+      "name": "Rosa Torres",
+      "id": "EVM771208"
+    },
+    "claim_number": "CLM-782236490",
+    "provider_name": "Owlbrook Regional Hospital",
+    "network": "in-network",
+    "service_type": "emergency",
+    "lines": [
+      {
+        "date": "2026-03-12",
+        "code": "99285",
+        "description": "ER visit, severe (level 5)",
+        "units": 1,
+        "billed": 2831,
+        "allowed": 1101,
+        "insurer_paid": 951,
+        "patient_resp": 150
+      },
+      {
+        "date": "2026-03-12",
+        "code": "93000",
+        "description": "Heart tracing (ECG)",
+        "units": 1,
+        "billed": 200,
+        "allowed": 104,
+        "insurer_paid": 83,
+        "patient_resp": 21
+      },
+      {
+        "date": "2026-03-12",
+        "code": "71046",
+        "description": "Chest X-ray, 2 views",
+        "units": 1,
+        "billed": 361,
+        "allowed": 177,
+        "insurer_paid": 142,
+        "patient_resp": 35
+      },
+      {
+        "date": "2026-03-12",
+        "code": "80053",
+        "description": "Comprehensive metabolic panel",
+        "units": 1,
+        "billed": 215,
+        "allowed": 112,
+        "insurer_paid": 90,
+        "patient_resp": 22
+      },
+      {
+        "date": "2026-03-12",
+        "code": "85025",
+        "description": "Complete blood count (CBC)",
+        "units": 1,
+        "billed": 121,
+        "allowed": 72,
+        "insurer_paid": 58,
+        "patient_resp": 14
+      },
+      {
+        "date": "2026-03-12",
+        "code": "36415",
+        "description": "Blood draw",
+        "units": 1,
+        "billed": 44,
+        "allowed": 16,
+        "insurer_paid": 13,
+        "patient_resp": 3
+      }
+    ],
+    "totals": {
+      "billed": 3772,
+      "allowed": 1582,
+      "insurer_paid": 1337,
+      "patient_resp": 245
+    }
+  }
+}

@@ -1,0 +1,711 @@
+{
+  "generated_at": "2026-09-26T23:23:02.840Z",
+  "hero_ok": true,
+  "sets": [
+    {
+      "id": "generated",
+      "name": "Generated set (18 cases)",
+      "totals": {
+        "cases": 18,
+        "planted": 19,
+        "caught": 19,
+        "false_alarms": 0,
+        "owe_correct": 18
+      },
+      "cases": [
+        {
+          "id": "case-01",
+          "profile": "maya",
+          "title": "Maya, ER visit for a sprained ankle",
+          "planted": [
+            "duplicate_charge",
+            "missing_insurance_payment"
+          ],
+          "found": [
+            "duplicate_charge",
+            "missing_insurance_payment"
+          ],
+          "missed": [],
+          "false_alarms": [],
+          "expected_owe": 250,
+          "likely_owe": 250,
+          "owe_correct": true
+        },
+        {
+          "id": "case-02",
+          "profile": "daniel",
+          "title": "Daniel, yearly checkup at the family doctor",
+          "planted": [],
+          "found": [],
+          "missed": [],
+          "false_alarms": [],
+          "expected_owe": 43,
+          "likely_owe": 43,
+          "owe_correct": true
+        },
+        {
+          "id": "case-03",
+          "profile": "rosa",
+          "title": "Rosa, blood tests at a lab",
+          "planted": [],
+          "found": [],
+          "missed": [],
+          "false_alarms": [],
+          "expected_owe": 23,
+          "likely_owe": 23,
+          "owe_correct": true
+        },
+        {
+          "id": "case-04",
+          "profile": "leo",
+          "title": "Leo, ER visit for a cut hand",
+          "planted": [],
+          "found": [],
+          "missed": [],
+          "false_alarms": [],
+          "expected_owe": 121,
+          "likely_owe": 121,
+          "owe_correct": true
+        },
+        {
+          "id": "case-05",
+          "profile": "daniel",
+          "title": "Daniel, ER visit for a head bump (out-of-network)",
+          "planted": [],
+          "found": [],
+          "missed": [],
+          "false_alarms": [],
+          "expected_owe": 335,
+          "likely_owe": 335,
+          "owe_correct": true
+        },
+        {
+          "id": "case-06",
+          "profile": "rosa",
+          "title": "Rosa, ER visit for chest pain",
+          "planted": [
+            "duplicate_charge"
+          ],
+          "found": [
+            "duplicate_charge"
+          ],
+          "missed": [],
+          "false_alarms": [],
+          "expected_owe": 245,
+          "likely_owe": 245,
+          "owe_correct": true
+        },
+        {
+          "id": "case-07",
+          "profile": "maya",
+          "title": "Maya, MRI of the lower back",
+          "planted": [
+            "missing_insurance_payment"
+          ],
+          "found": [
+            "missing_insurance_payment"
+          ],
+          "missed": [],
+          "false_alarms": [],
+          "expected_owe": 131,
+          "likely_owe": 131,
+          "owe_correct": true
+        },
+        {
+          "id": "case-08",
+          "profile": "rosa",
+          "title": "Rosa, yearly checkup at the family doctor",
+          "planted": [
+            "not_submitted_to_insurance"
+          ],
+          "found": [
+            "not_submitted_to_insurance"
+          ],
+          "missed": [],
+          "false_alarms": [],
+          "expected_owe": 41,
+          "likely_owe": 41,
+          "owe_correct": true
+        },
+        {
+          "id": "case-09",
+          "profile": "daniel",
+          "title": "Daniel, physical therapy for a sore knee",
+          "planted": [
+            "adjustment_missing"
+          ],
+          "found": [
+            "adjustment_missing"
+          ],
+          "missed": [],
+          "false_alarms": [],
+          "expected_owe": 68,
+          "likely_owe": 68,
+          "owe_correct": true
+        },
+        {
+          "id": "case-10",
+          "profile": "maya",
+          "title": "Maya, blood tests at a lab",
+          "planted": [
+            "charge_mismatch"
+          ],
+          "found": [
+            "charge_mismatch"
+          ],
+          "missed": [],
+          "false_alarms": [],
+          "expected_owe": 23,
+          "likely_owe": 23,
+          "owe_correct": true
+        },
+        {
+          "id": "case-11",
+          "profile": "leo",
+          "title": "Leo, ER visit for a twisted ankle (out-of-network)",
+          "planted": [
+            "surprise_bill_nsa"
+          ],
+          "found": [
+            "surprise_bill_nsa"
+          ],
+          "missed": [],
+          "false_alarms": [],
+          "expected_owe": 204,
+          "likely_owe": 204,
+          "owe_correct": true
+        },
+        {
+          "id": "case-12",
+          "profile": "maya",
+          "title": "Maya, ER visit for a head bump (out-of-network)",
+          "planted": [
+            "surprise_bill_nsa",
+            "duplicate_charge"
+          ],
+          "found": [
+            "duplicate_charge",
+            "surprise_bill_nsa"
+          ],
+          "missed": [],
+          "false_alarms": [],
+          "expected_owe": 382,
+          "likely_owe": 382,
+          "owe_correct": true
+        },
+        {
+          "id": "case-13",
+          "profile": "daniel",
+          "title": "Daniel, ER visit for a cut hand",
+          "planted": [
+            "not_submitted_to_insurance",
+            "charge_mismatch"
+          ],
+          "found": [
+            "charge_mismatch",
+            "not_submitted_to_insurance"
+          ],
+          "missed": [],
+          "false_alarms": [],
+          "expected_owe": 232,
+          "likely_owe": 232,
+          "owe_correct": true
+        },
+        {
+          "id": "case-14",
+          "profile": "leo",
+          "title": "Leo, yearly checkup at the family doctor",
+          "planted": [
+            "adjustment_missing",
+            "missing_insurance_payment"
+          ],
+          "found": [
+            "missing_insurance_payment",
+            "adjustment_missing"
+          ],
+          "missed": [],
+          "false_alarms": [],
+          "expected_owe": 40,
+          "likely_owe": 40,
+          "owe_correct": true
+        },
+        {
+          "id": "case-15",
+          "profile": "rosa",
+          "title": "Rosa, physical therapy for a sore knee",
+          "planted": [
+            "charge_mismatch",
+            "duplicate_charge"
+          ],
+          "found": [
+            "charge_mismatch",
+            "duplicate_charge"
+          ],
+          "missed": [],
+          "false_alarms": [],
+          "expected_owe": 72,
+          "likely_owe": 72,
+          "owe_correct": true
+        },
+        {
+          "id": "case-16",
+          "profile": "daniel",
+          "title": "Daniel, MRI of the lower back",
+          "planted": [
+            "not_submitted_to_insurance"
+          ],
+          "found": [
+            "not_submitted_to_insurance"
+          ],
+          "missed": [],
+          "false_alarms": [],
+          "expected_owe": 155,
+          "likely_owe": 155,
+          "owe_correct": true
+        },
+        {
+          "id": "case-17",
+          "profile": "maya",
+          "title": "Maya, ER visit for chest pain",
+          "planted": [
+            "adjustment_missing"
+          ],
+          "found": [
+            "adjustment_missing"
+          ],
+          "missed": [],
+          "false_alarms": [],
+          "expected_owe": 229,
+          "likely_owe": 229,
+          "owe_correct": true
+        },
+        {
+          "id": "case-18",
+          "profile": "leo",
+          "title": "Leo, blood tests at a lab",
+          "planted": [
+            "missing_insurance_payment"
+          ],
+          "found": [
+            "missing_insurance_payment"
+          ],
+          "missed": [],
+          "false_alarms": [],
+          "expected_owe": 22,
+          "likely_owe": 22,
+          "owe_correct": true
+        }
+      ]
+    },
+    {
+      "id": "handwritten",
+      "name": "Hand-written edge cases (8 cases)",
+      "totals": {
+        "cases": 8,
+        "planted": 3,
+        "caught": 3,
+        "false_alarms": 0,
+        "owe_correct": 8
+      },
+      "cases": [
+        {
+          "id": "hw-01",
+          "profile": "hw-jonah",
+          "title": "Same code on two different dates (weekly therapy)",
+          "planted": [],
+          "found": [],
+          "missed": [],
+          "false_alarms": [],
+          "expected_owe": 28,
+          "likely_owe": 28,
+          "owe_correct": true
+        },
+        {
+          "id": "hw-02",
+          "profile": "hw-alicia",
+          "title": "Units split: bill has one line x 2 units, EOB has two lines",
+          "planted": [],
+          "found": [],
+          "missed": [],
+          "false_alarms": [],
+          "expected_owe": 48,
+          "likely_owe": 48,
+          "owe_correct": true
+        },
+        {
+          "id": "hw-03",
+          "profile": "hw-samuel",
+          "title": "Units split: bill has two lines, EOB has one line x 2 units",
+          "planted": [],
+          "found": [],
+          "missed": [],
+          "false_alarms": [],
+          "expected_owe": 48,
+          "likely_owe": 48,
+          "owe_correct": true
+        },
+        {
+          "id": "hw-04",
+          "profile": "hw-grace",
+          "title": "Extra units: bill 3 units, EOB processed 2",
+          "planted": [
+            "duplicate_charge"
+          ],
+          "found": [
+            "duplicate_charge"
+          ],
+          "missed": [],
+          "false_alarms": [],
+          "expected_owe": 48,
+          "likely_owe": 48,
+          "owe_correct": true
+        },
+        {
+          "id": "hw-05",
+          "profile": "hw-tomas",
+          "title": "Denied line: supplies not covered, patient owes the full charge",
+          "planted": [],
+          "found": [],
+          "missed": [],
+          "false_alarms": [],
+          "expected_owe": 75,
+          "likely_owe": 75,
+          "owe_correct": true
+        },
+        {
+          "id": "hw-06",
+          "profile": "hw-hana",
+          "title": "Previous balance of $75 carried over onto a correct lab bill",
+          "planted": [],
+          "found": [],
+          "missed": [],
+          "false_alarms": [],
+          "expected_owe": 12,
+          "likely_owe": 12,
+          "owe_correct": true
+        },
+        {
+          "id": "hw-07",
+          "profile": "hw-marcus",
+          "title": "Cents and rounding: a correct bill with odd amounts",
+          "planted": [],
+          "found": [],
+          "missed": [],
+          "false_alarms": [],
+          "expected_owe": 36.32,
+          "likely_owe": 36.32,
+          "owe_correct": true
+        },
+        {
+          "id": "hw-08",
+          "profile": "hw-ruth",
+          "title": "Two errors plus clean lines: overcharged IV and a short insurance payment",
+          "planted": [
+            "charge_mismatch",
+            "missing_insurance_payment"
+          ],
+          "found": [
+            "charge_mismatch",
+            "missing_insurance_payment"
+          ],
+          "missed": [],
+          "false_alarms": [],
+          "expected_owe": 320.75,
+          "likely_owe": 320.75,
+          "owe_correct": true
+        }
+      ]
+    }
+  ],
+  "totals": {
+    "cases": 18,
+    "planted": 19,
+    "caught": 19,
+    "false_alarms": 0,
+    "owe_correct": 18
+  },
+  "cases": [
+    {
+      "id": "case-01",
+      "profile": "maya",
+      "title": "Maya, ER visit for a sprained ankle",
+      "planted": [
+        "duplicate_charge",
+        "missing_insurance_payment"
+      ],
+      "found": [
+        "duplicate_charge",
+        "missing_insurance_payment"
+      ],
+      "missed": [],
+      "false_alarms": [],
+      "expected_owe": 250,
+      "likely_owe": 250,
+      "owe_correct": true
+    },
+    {
+      "id": "case-02",
+      "profile": "daniel",
+      "title": "Daniel, yearly checkup at the family doctor",
+      "planted": [],
+      "found": [],
+      "missed": [],
+      "false_alarms": [],
+      "expected_owe": 43,
+      "likely_owe": 43,
+      "owe_correct": true
+    },
+    {
+      "id": "case-03",
+      "profile": "rosa",
+      "title": "Rosa, blood tests at a lab",
+      "planted": [],
+      "found": [],
+      "missed": [],
+      "false_alarms": [],
+      "expected_owe": 23,
+      "likely_owe": 23,
+      "owe_correct": true
+    },
+    {
+      "id": "case-04",
+      "profile": "leo",
+      "title": "Leo, ER visit for a cut hand",
+      "planted": [],
+      "found": [],
+      "missed": [],
+      "false_alarms": [],
+      "expected_owe": 121,
+      "likely_owe": 121,
+      "owe_correct": true
+    },
+    {
+      "id": "case-05",
+      "profile": "daniel",
+      "title": "Daniel, ER visit for a head bump (out-of-network)",
+      "planted": [],
+      "found": [],
+      "missed": [],
+      "false_alarms": [],
+      "expected_owe": 335,
+      "likely_owe": 335,
+      "owe_correct": true
+    },
+    {
+      "id": "case-06",
+      "profile": "rosa",
+      "title": "Rosa, ER visit for chest pain",
+      "planted": [
+        "duplicate_charge"
+      ],
+      "found": [
+        "duplicate_charge"
+      ],
+      "missed": [],
+      "false_alarms": [],
+      "expected_owe": 245,
+      "likely_owe": 245,
+      "owe_correct": true
+    },
+    {
+      "id": "case-07",
+      "profile": "maya",
+      "title": "Maya, MRI of the lower back",
+      "planted": [
+        "missing_insurance_payment"
+      ],
+      "found": [
+        "missing_insurance_payment"
+      ],
+      "missed": [],
+      "false_alarms": [],
+      "expected_owe": 131,
+      "likely_owe": 131,
+      "owe_correct": true
+    },
+    {
+      "id": "case-08",
+      "profile": "rosa",
+      "title": "Rosa, yearly checkup at the family doctor",
+      "planted": [
+        "not_submitted_to_insurance"
+      ],
+      "found": [
+        "not_submitted_to_insurance"
+      ],
+      "missed": [],
+      "false_alarms": [],
+      "expected_owe": 41,
+      "likely_owe": 41,
+      "owe_correct": true
+    },
+    {
+      "id": "case-09",
+      "profile": "daniel",
+      "title": "Daniel, physical therapy for a sore knee",
+      "planted": [
+        "adjustment_missing"
+      ],
+      "found": [
+        "adjustment_missing"
+      ],
+      "missed": [],
+      "false_alarms": [],
+      "expected_owe": 68,
+      "likely_owe": 68,
+      "owe_correct": true
+    },
+    {
+      "id": "case-10",
+      "profile": "maya",
+      "title": "Maya, blood tests at a lab",
+      "planted": [
+        "charge_mismatch"
+      ],
+      "found": [
+        "charge_mismatch"
+      ],
+      "missed": [],
+      "false_alarms": [],
+      "expected_owe": 23,
+      "likely_owe": 23,
+      "owe_correct": true
+    },
+    {
+      "id": "case-11",
+      "profile": "leo",
+      "title": "Leo, ER visit for a twisted ankle (out-of-network)",
+      "planted": [
+        "surprise_bill_nsa"
+      ],
+      "found": [
+        "surprise_bill_nsa"
+      ],
+      "missed": [],
+      "false_alarms": [],
+      "expected_owe": 204,
+      "likely_owe": 204,
+      "owe_correct": true
+    },
+    {
+      "id": "case-12",
+      "profile": "maya",
+      "title": "Maya, ER visit for a head bump (out-of-network)",
+      "planted": [
+        "surprise_bill_nsa",
+        "duplicate_charge"
+      ],
+      "found": [
+        "duplicate_charge",
+        "surprise_bill_nsa"
+      ],
+      "missed": [],
+      "false_alarms": [],
+      "expected_owe": 382,
+      "likely_owe": 382,
+      "owe_correct": true
+    },
+    {
+      "id": "case-13",
+      "profile": "daniel",
+      "title": "Daniel, ER visit for a cut hand",
+      "planted": [
+        "not_submitted_to_insurance",
+        "charge_mismatch"
+      ],
+      "found": [
+        "charge_mismatch",
+        "not_submitted_to_insurance"
+      ],
+      "missed": [],
+      "false_alarms": [],
+      "expected_owe": 232,
+      "likely_owe": 232,
+      "owe_correct": true
+    },
+    {
+      "id": "case-14",
+      "profile": "leo",
+      "title": "Leo, yearly checkup at the family doctor",
+      "planted": [
+        "adjustment_missing",
+        "missing_insurance_payment"
+      ],
+      "found": [
+        "missing_insurance_payment",
+        "adjustment_missing"
+      ],
+      "missed": [],
+      "false_alarms": [],
+      "expected_owe": 40,
+      "likely_owe": 40,
+      "owe_correct": true
+    },
+    {
+      "id": "case-15",
+      "profile": "rosa",
+      "title": "Rosa, physical therapy for a sore knee",
+      "planted": [
+        "charge_mismatch",
+        "duplicate_charge"
+      ],
+      "found": [
+        "charge_mismatch",
+        "duplicate_charge"
+      ],
+      "missed": [],
+      "false_alarms": [],
+      "expected_owe": 72,
+      "likely_owe": 72,
+      "owe_correct": true
+    },
+    {
+      "id": "case-16",
+      "profile": "daniel",
+      "title": "Daniel, MRI of the lower back",
+      "planted": [
+        "not_submitted_to_insurance"
+      ],
+      "found": [
+        "not_submitted_to_insurance"
+      ],
+      "missed": [],
+      "false_alarms": [],
+      "expected_owe": 155,
+      "likely_owe": 155,
+      "owe_correct": true
+    },
+    {
+      "id": "case-17",
+      "profile": "maya",
+      "title": "Maya, ER visit for chest pain",
+      "planted": [
+        "adjustment_missing"
+      ],
+      "found": [
+        "adjustment_missing"
+      ],
+      "missed": [],
+      "false_alarms": [],
+      "expected_owe": 229,
+      "likely_owe": 229,
+      "owe_correct": true
+    },
+    {
+      "id": "case-18",
+      "profile": "leo",
+      "title": "Leo, blood tests at a lab",
+      "planted": [
+        "missing_insurance_payment"
+      ],
+      "found": [
+        "missing_insurance_payment"
+      ],
+      "missed": [],
+      "false_alarms": [],
+      "expected_owe": 22,
+      "likely_owe": 22,
+      "owe_correct": true
+    }
+  ]
+}

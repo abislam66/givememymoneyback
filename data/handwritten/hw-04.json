@@ -1,0 +1,34 @@
+{
+  "id": "hw-04",
+  "title": "Extra units: bill 3 units, EOB processed 2",
+  "profile": { "id": "hw-grace", "name": "Grace Lindqvist", "relation": "self" },
+  "bill": {
+    "id": "BILL-hw-04",
+    "provider": { "name": "Northgate Physical Therapy", "address": "702 North Gate Blvd, Fairhaven, PA 19003" },
+    "patient": { "name": "Grace Lindqvist" },
+    "account_number": "ACCT-55121033",
+    "statement_date": "2026-06-22",
+    "lines": [
+      { "line_no": 1, "date": "2026-05-18", "code": "97161", "description": "Physical therapy evaluation", "units": 1, "charge": 250 },
+      { "line_no": 2, "date": "2026-05-18", "code": "97110", "description": "Therapeutic exercise", "units": 3, "charge": 360 }
+    ],
+    "adjustments": [{ "description": "Contractual adjustment", "amount": 250 }],
+    "insurance_payments": [{ "date": "2026-06-08", "payer": "Cardinal Shield Insurance", "amount": 192 }],
+    "patient_payments": [],
+    "amount_due": 168
+  },
+  "eob": {
+    "id": "EOB-hw-04",
+    "insurer": "Cardinal Shield Insurance",
+    "member": { "name": "Grace Lindqvist", "id": "CSI-300705" },
+    "claim_number": "CLM-640118399",
+    "provider_name": "Northgate Physical Therapy",
+    "network": "in-network",
+    "service_type": "therapy",
+    "lines": [
+      { "date": "2026-05-18", "code": "97161", "description": "Physical therapy evaluation", "units": 1, "billed": 250, "allowed": 120, "insurer_paid": 96, "patient_resp": 24 },
+      { "date": "2026-05-18", "code": "97110", "description": "Therapeutic exercise", "units": 2, "billed": 240, "allowed": 120, "insurer_paid": 96, "patient_resp": 24 }
+    ],
+    "totals": { "billed": 490, "allowed": 240, "insurer_paid": 192, "patient_resp": 48 }
+  }
+}

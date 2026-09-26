@@ -1,0 +1,115 @@
+{
+  "id": "case-12",
+  "title": "Maya, ER visit for a head bump (out-of-network)",
+  "profile": {
+    "id": "maya",
+    "name": "Maya Torres",
+    "relation": "self"
+  },
+  "bill": {
+    "id": "BILL-case-12",
+    "provider": {
+      "name": "Stonebridge Emergency Center",
+      "address": "88 Quarry Lane, Millbrook, PA 19001"
+    },
+    "patient": {
+      "name": "Maya Torres"
+    },
+    "account_number": "ACCT-68468670",
+    "statement_date": "2026-06-22",
+    "lines": [
+      {
+        "line_no": 1,
+        "date": "2026-05-19",
+        "code": "99284",
+        "description": "ER visit, serious (level 4)",
+        "units": 1,
+        "charge": 1228
+      },
+      {
+        "line_no": 2,
+        "date": "2026-05-19",
+        "code": "70450",
+        "description": "CT scan of head, no contrast",
+        "units": 1,
+        "charge": 1897
+      },
+      {
+        "line_no": 3,
+        "date": "2026-05-19",
+        "code": "70450",
+        "description": "CT scan of head, no contrast",
+        "units": 1,
+        "charge": 1897
+      },
+      {
+        "line_no": 4,
+        "date": "2026-05-19",
+        "code": "96374",
+        "description": "IV push medication",
+        "units": 1,
+        "charge": 279
+      }
+    ],
+    "adjustments": [],
+    "insurance_payments": [
+      {
+        "date": "2026-06-09",
+        "payer": "Bluefinch Health Plan",
+        "amount": 1475
+      }
+    ],
+    "patient_payments": [],
+    "amount_due": 3826
+  },
+  "eob": {
+    "id": "EOB-case-12",
+    "insurer": "Bluefinch Health Plan",
+    "member": {
+      "name": "Maya Torres",
+      "id": "BFH482913"
+    },
+    "claim_number": "CLM-914546164",
+    "provider_name": "Stonebridge Emergency Center",
+    "network": "out-of-network",
+    "service_type": "emergency",
+    "lines": [
+      {
+        "date": "2026-05-19",
+        "code": "99284",
+        "description": "ER visit, serious (level 4)",
+        "units": 1,
+        "billed": 1228,
+        "allowed": 694,
+        "insurer_paid": 544,
+        "patient_resp": 150
+      },
+      {
+        "date": "2026-05-19",
+        "code": "70450",
+        "description": "CT scan of head, no contrast",
+        "units": 1,
+        "billed": 1897,
+        "allowed": 1022,
+        "insurer_paid": 818,
+        "patient_resp": 204
+      },
+      {
+        "date": "2026-05-19",
+        "code": "96374",
+        "description": "IV push medication",
+        "units": 1,
+        "billed": 279,
+        "allowed": 141,
+        "insurer_paid": 113,
+        "patient_resp": 28
+      }
+    ],
+    "totals": {
+      "billed": 3404,
+      "allowed": 1857,
+      "insurer_paid": 1475,
+      "patient_resp": 382
+    }
+  }
+}

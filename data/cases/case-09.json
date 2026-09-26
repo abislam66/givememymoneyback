@@ -1,0 +1,130 @@
+{
+  "id": "case-09",
+  "title": "Daniel, physical therapy for a sore knee",
+  "profile": {
+    "id": "daniel",
+    "name": "Daniel Torres",
+    "relation": "spouse"
+  },
+  "bill": {
+    "id": "BILL-case-09",
+    "provider": {
+      "name": "Northgate Physical Therapy",
+      "address": "702 North Gate Blvd, Fairhaven, PA 19003"
+    },
+    "patient": {
+      "name": "Daniel Torres"
+    },
+    "account_number": "ACCT-87273462",
+    "statement_date": "2026-05-31",
+    "lines": [
+      {
+        "line_no": 1,
+        "date": "2026-04-13",
+        "code": "97161",
+        "description": "Physical therapy evaluation",
+        "units": 1,
+        "charge": 229
+      },
+      {
+        "line_no": 2,
+        "date": "2026-04-13",
+        "code": "97110",
+        "description": "Therapeutic exercise",
+        "units": 1,
+        "charge": 116
+      },
+      {
+        "line_no": 3,
+        "date": "2026-04-20",
+        "code": "97110",
+        "description": "Therapeutic exercise",
+        "units": 1,
+        "charge": 121
+      },
+      {
+        "line_no": 4,
+        "date": "2026-04-27",
+        "code": "97110",
+        "description": "Therapeutic exercise",
+        "units": 1,
+        "charge": 142
+      }
+    ],
+    "adjustments": [
+      {
+        "description": "Contractual adjustment",
+        "amount": 161
+      }
+    ],
+    "insurance_payments": [
+      {
+        "date": "2026-05-18",
+        "payer": "Bluefinch Health Plan",
+        "amount": 272
+      }
+    ],
+    "patient_payments": [],
+    "amount_due": 175
+  },
+  "eob": {
+    "id": "EOB-case-09",
+    "insurer": "Bluefinch Health Plan",
+    "member": {
+      "name": "Daniel Torres",
+      "id": "BFH482914"
+    },
+    "claim_number": "CLM-264973127",
+    "provider_name": "Northgate Physical Therapy",
+    "network": "in-network",
+    "service_type": "therapy",
+    "lines": [
+      {
+        "date": "2026-04-13",
+        "code": "97161",
+        "description": "Physical therapy evaluation",
+        "units": 1,
+        "billed": 229,
+        "allowed": 134,
+        "insurer_paid": 107,
+        "patient_resp": 27
+      },
+      {
+        "date": "2026-04-13",
+        "code": "97110",
+        "description": "Therapeutic exercise",
+        "units": 1,
+        "billed": 116,
+        "allowed": 60,
+        "insurer_paid": 48,
+        "patient_resp": 12
+      },
+      {
+        "date": "2026-04-20",
+        "code": "97110",
+        "description": "Therapeutic exercise",
+        "units": 1,
+        "billed": 121,
+        "allowed": 69,
+        "insurer_paid": 55,
+        "patient_resp": 14
+      },
+      {
+        "date": "2026-04-27",
+        "code": "97110",
+        "description": "Therapeutic exercise",
+        "units": 1,
+        "billed": 142,
+        "allowed": 77,
+        "insurer_paid": 62,
+        "patient_resp": 15
+      }
+    ],
+    "totals": {
+      "billed": 608,
+      "allowed": 340,
+      "insurer_paid": 272,
+      "patient_resp": 68
+    }
+  }
+}

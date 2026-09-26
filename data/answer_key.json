@@ -1,0 +1,164 @@
+{
+  "case-01": {
+    "errors": [
+      {
+        "type": "duplicate_charge",
+        "amount": 380
+      },
+      {
+        "type": "missing_insurance_payment",
+        "amount": 610
+      }
+    ],
+    "expected_owe": 250
+  },
+  "case-02": {
+    "errors": [],
+    "expected_owe": 43
+  },
+  "case-03": {
+    "errors": [],
+    "expected_owe": 23
+  },
+  "case-04": {
+    "errors": [],
+    "expected_owe": 121
+  },
+  "case-05": {
+    "errors": [],
+    "expected_owe": 335
+  },
+  "case-06": {
+    "errors": [
+      {
+        "type": "duplicate_charge",
+        "amount": 200
+      }
+    ],
+    "expected_owe": 245
+  },
+  "case-07": {
+    "errors": [
+      {
+        "type": "missing_insurance_payment",
+        "amount": 262
+      }
+    ],
+    "expected_owe": 131
+  },
+  "case-08": {
+    "errors": [
+      {
+        "type": "not_submitted_to_insurance",
+        "amount": 115
+      }
+    ],
+    "expected_owe": 41
+  },
+  "case-09": {
+    "errors": [
+      {
+        "type": "adjustment_missing",
+        "amount": 107
+      }
+    ],
+    "expected_owe": 68
+  },
+  "case-10": {
+    "errors": [
+      {
+        "type": "charge_mismatch",
+        "amount": 65
+      }
+    ],
+    "expected_owe": 23
+  },
+  "case-11": {
+    "errors": [
+      {
+        "type": "surprise_bill_nsa",
+        "amount": 824
+      }
+    ],
+    "expected_owe": 204
+  },
+  "case-12": {
+    "errors": [
+      {
+        "type": "surprise_bill_nsa",
+        "amount": 1547
+      },
+      {
+        "type": "duplicate_charge",
+        "amount": 1897
+      }
+    ],
+    "expected_owe": 382
+  },
+  "case-13": {
+    "errors": [
+      {
+        "type": "not_submitted_to_insurance",
+        "amount": 85
+      },
+      {
+        "type": "charge_mismatch",
+        "amount": 120
+      }
+    ],
+    "expected_owe": 232
+  },
+  "case-14": {
+    "errors": [
+      {
+        "type": "adjustment_missing",
+        "amount": 228
+      },
+      {
+        "type": "missing_insurance_payment",
+        "amount": 160
+      }
+    ],
+    "expected_owe": 40
+  },
+  "case-15": {
+    "errors": [
+      {
+        "type": "charge_mismatch",
+        "amount": 40
+      },
+      {
+        "type": "duplicate_charge",
+        "amount": 137
+      }
+    ],
+    "expected_owe": 72
+  },
+  "case-16": {
+    "errors": [
+      {
+        "type": "not_submitted_to_insurance",
+        "amount": 140
+      }
+    ],
+    "expected_owe": 155
+  },
+  "case-17": {
+    "errors": [
+      {
+        "type": "adjustment_missing",
+        "amount": 536
+      }
+    ],
+    "expected_owe": 229
+  },
+  "case-18": {
+    "errors": [
+      {
+        "type": "missing_insurance_payment",
+        "amount": 202
+      }
+    ],
+    "expected_owe": 22
+  }
+}

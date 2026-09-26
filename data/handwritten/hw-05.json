@@ -1,0 +1,36 @@
+{
+  "id": "hw-05",
+  "title": "Denied line: supplies not covered, patient owes the full charge",
+  "profile": { "id": "hw-tomas", "name": "Tomas Reyes", "relation": "self" },
+  "bill": {
+    "id": "BILL-hw-05",
+    "provider": { "name": "Brightwater Family Practice", "address": "45 Elm Court, Fairhaven, PA 19000" },
+    "patient": { "name": "Tomas Reyes" },
+    "account_number": "ACCT-55121058",
+    "statement_date": "2026-07-06",
+    "lines": [
+      { "line_no": 1, "date": "2026-06-03", "code": "99213", "description": "Office visit, established patient", "units": 1, "charge": 210 },
+      { "line_no": 2, "date": "2026-06-03", "code": "99070", "description": "Supplies and materials", "units": 1, "charge": 45 },
+      { "line_no": 3, "date": "2026-06-03", "code": "36415", "description": "Blood draw", "units": 1, "charge": 30 }
+    ],
+    "adjustments": [{ "description": "Contractual adjustment", "amount": 118 }],
+    "insurance_payments": [{ "date": "2026-06-24", "payer": "Cardinal Shield Insurance", "amount": 92 }],
+    "patient_payments": [],
+    "amount_due": 75
+  },
+  "eob": {
+    "id": "EOB-hw-05",
+    "insurer": "Cardinal Shield Insurance",
+    "member": { "name": "Tomas Reyes", "id": "CSI-300811" },
+    "claim_number": "CLM-640118420",
+    "provider_name": "Brightwater Family Practice",
+    "network": "in-network",
+    "service_type": "office",
+    "lines": [
+      { "date": "2026-06-03", "code": "99213", "description": "Office visit, established patient", "units": 1, "billed": 210, "allowed": 110, "insurer_paid": 80, "patient_resp": 30 },
+      { "date": "2026-06-03", "code": "99070", "description": "Supplies and materials (not covered)", "units": 1, "billed": 45, "allowed": 0, "insurer_paid": 0, "patient_resp": 45 },
+      { "date": "2026-06-03", "code": "36415", "description": "Blood draw", "units": 1, "billed": 30, "allowed": 12, "insurer_paid": 12, "patient_resp": 0 }
+    ],
+    "totals": { "billed": 285, "allowed": 122, "insurer_paid": 92, "patient_resp": 75 }
+  }
+}

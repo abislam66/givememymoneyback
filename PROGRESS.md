@@ -1,0 +1,169 @@
+# PROGRESS.md: SecondLook
+
+Claude Code updates this file at the end of every phase. Check off items only after the phase's check passes.
+
+**Deadline:** about 9am Sunday, Sept 27, 2026. Submit by 8:30am.
+**Stretch cutoff:** skip Phase 7 if it's past 4am.
+
+## Status
+- **Current phase:** Phase 8 no-key work done. Waiting on a Gemini key for `npm run score:extraction`.
+- **Last updated:** 2026-09-26 16:15
+- **Scoreboard:** Generated set (18 cases): caught 19 of 19, 0 false alarms, 18 of 18 owed correct. Hand-written edge cases (8 cases): caught 3 of 3, 0 false alarms, 8 of 8 owed correct. Hero assertions 3/3.
+- **Hero case working:** yes, rules engine and web app ($1,240 − $380 − $610 = $250; resolving at $250 shows "Saved $990"), rechecked after Phase 8
+
+## Phase 1: Test data
+- [x] `data/generate.js` with a seeded generator
+- [x] 18 cases with profiles (3–4 fictional family members)
+- [x] Hero case exactly as specified ($1,240 billed → $250 owed)
+- [x] 4 clean cases (one with a prior patient payment)
+- [x] Every error type planted at least twice; 2 out-of-network emergency cases
+- [x] `data/answer_key.json`
+- [x] Check passed: amount_due verified for every case
+
+## Phase 2: Rules engine and scoreboard
+- [x] `src/rules.js` `check(bill, eob)` with flags, matches, summary, math, notes
+- [x] All 6 error types plus `unexplained_difference`
+- [x] `scripts/score.js` with per-case table and totals
+- [x] 3 hero-case assertions
+- [x] `data/scoreboard.json` written
+- [x] Check passed: 100% caught, 0 false alarms, 18 of 18 owed amounts correct
+
+## Phase 3: Server, letters, explanations
+- [x] `src/gemini.js` helper with timeout and no-key fallback
+- [x] `src/letter.js`: letter, follow-up letter, call script
+- [x] `src/explain.js`: glossary plus finding explanations with number verification
+- [x] `src/extract.js` with validation and cache
+- [x] `src/tts.js`
+- [x] All API routes in `server.js`
+- [x] Check passed: curl tests with no keys
+
+## Phase 4A: Web app core
+- [x] Header and made-up-data note
+- [x] Case dropdown and upload flow
+- [x] Result hero card (potential savings labeled)
+- [x] Reconciliation view with SVG connectors and status labels
+- [x] Math steps
+- [x] Findings list with "Show me"
+- [x] Break-it mode with Re-check
+- [x] Check passed: break-it adds and removes a flag; works at 400px
+
+## Phase 4B: Explainer, letter, accessibility
+- [x] Clickable terms and "Why?" buttons
+- [x] Letter, copy button, read-aloud with fallback
+- [x] Scoreboard section
+- [x] Atkinson Hyperlegible, WCAG AA, keyboard, aria-live, larger text, light and dark
+- [x] Check passed: explainer works with no keys; keyboard-only walkthrough
+
+## Phase 5: Dispute agent and call practice
+- [x] Dispute store and routes
+- [x] Track → send → simulate 30 days → follow-up letter and escalation path
+- [x] Resolve: confirmed savings computed deterministically, shown separately
+- [x] Call practice: scripted rep (no key) and Gemini rep (with key)
+- [x] Voice via ElevenLabs or browser fallback
+- [x] Deterministic checklist scoring
+- [x] Check passed: full hero dispute flow ends at "Saved $990"
+
+## Phase 6: Demo polish
+- [x] README (setup, env vars, architecture, limits)
+- [x] Demo mode with no network calls
+- [x] Timeouts and friendly errors everywhere
+- [ ] Check passed: full demo path twice with no keys (PASSED), once with keys (NOT RUN: no keys on this machine yet)
+
+## Phase 7: Stretch (only if 1–6 pass; skip after 4am)
+- [x] Family Bill Manager (profile selector, claims grouped per person)
+- [x] Cost History & Savings (Total Saved counts resolved disputes only)
+
+## Phase 8: Hardening for real documents
+- [x] Step 1: Gemini model configuration (GEMINI_MODEL documented; clear model-named errors; key never in URL or logs; no-key fallback unchanged)
+- [x] Step 2: Units (quantity) in data model, generator, extraction, rules, UI (generated set still 100%, hero identical)
+- [x] Step 3: Hand-written edge-case set (8 cases) + second scoreboard (both 100%)
+- [x] Step 4: Realistic rendered bills and EOBs (`npm run render`, 3 layouts, PNG + PDF; 26 cases → 104 files)
+- [x] Step 5: Live upload with review screen + extraction scoreboard (`npm run score:extraction`). No-key parts done and tested; the with-key extraction run is NOT done yet (needs your key)
+- [x] Step 6: Wrap-up (README, CLAUDE.md, final checks)
+
+**Phase 8 results (deterministic):** Generated set (18 cases): caught 19 of 19, 0 false alarms, 18 of 18 owed correct. Hand-written edge cases (8 cases): caught 3 of 3, 0 false alarms, 8 of 8 owed correct.
+**Extraction results:** not measured yet (no Gemini key on this machine). Phone photos: none tested.
+
+## Not code (do these yourself)
+- [ ] Confirm the submission deadline on the OwlHacks schedule
+- [ ] Gemini API key from Google AI Studio
+- [ ] ElevenLabs API key (free plan)
+- [ ] Claim the GoDaddy domain code and Vultr credits
+- [ ] Baseline usability test: time 2–3 people reading the raw hero bill
+- [ ] After-app usability test: time 2–3 people using SecondLook
+- [ ] Deploy (Vultr or Vercel) and connect the domain
+- [ ] 2-minute demo video
+- [ ] Devpost write-up: tracks, prizes, scoreboard, usability results
+- [ ] Submit by 8:30am
+
+## Decisions and notes
+(Claude Code adds dated notes here: choices made, bugs found, things cut.)
+- 2026-09-26: Project lives at the repo root (not a `secondlook/` subfolder) to match CLAUDE.md paths.
+- 2026-09-26: Added `src/cpt.js` (plain names + explanations for the 22 CPT codes). Shared by the generator, the rules text and the explainer so there's one source.
+- 2026-09-26: Family is Maya (self), Daniel (spouse), Leo (child), Rosa (parent). Rosa has a different fictional insurer.
+- 2026-09-26: Case 05 is a clean out-of-network ER case billed correctly, to prove `surprise_bill_nsa` doesn't false-alarm.
+- 2026-09-26: Scoring is stricter than the spec: a planted error counts as caught only if type matches AND amount is within $0.50.
+- 2026-09-26: Flags carry an extra `evidence.bill_sections` (e.g. `insurance_payments`, `adjustments`) so "Show me" can highlight bill totals rows too.
+- 2026-09-26: `rules.normalize()` cleans input (drops null lines, coerces "$380" strings, fixes missing/duplicate line_no). Server runs it before check, letter and explain, so junk input gives a result or a friendly 400, never a 500.
+- 2026-09-26: `/api/explain` with a flag_id re-runs the rules server-side and explains only flags the code found; client-sent flags are never trusted.
+- 2026-09-26: Gemini text is checked by `gemini.sameFacts()`: every number and month in the AI text must appear in the template text, or the template is used.
+- 2026-09-26: Default GEMINI_MODEL is gemini-2.5-flash (override in .env). ElevenLabs default voice is the premade "Rachel", model eleven_turbo_v2_5.
+- 2026-09-26: UI checked in headless Chrome (puppeteer-core in the session scratchpad, not a project dependency). Break-it: duplicating line 4 adds a 3rd flag; deleting both duplicates leaves only the missing payment; raising a charge adds "Price differs". 400px: no horizontal page scroll, connectors replaced by "Matches insurer line N" labels.
+- 2026-09-26: Break-it recalculates amount_due from the edited lines (charges − adjustments − payments), like a real re-issued bill. Re-check runs automatically after duplicate/delete and when an edited box loses focus; the Re-check button does it on demand.
+- 2026-09-26: Money figures use Atkinson Hyperlegible with tabular numbers; Atkinson Hyperlegible Mono is only for codes, claim numbers and the letter text (its comma looked like "$1 , 240").
+- 2026-09-26: Explainer is a non-modal panel: focus moves to its title, Escape closes it and returns focus to the button that opened it.
+- 2026-09-26: Disputes: the server re-runs the rules when a dispute is created, so stored flags are always verified. One open dispute per test case (tracking again returns the open one). "Simulate 30 days" moves a simulated "today" to the follow-up date so letter dates stay consistent.
+- 2026-09-26: Confirmed savings = original amount_due − resolved amount (min 0), set only by /resolve. Hero: resolve at $250 → "Saved $990". The potential-savings box stays visible but separate, with different wording once resolved.
+- 2026-09-26: Call practice: both modes open with the same scripted greeting (instant start). Gemini rep replies are checked with sameFacts against the fact sheet + transcript; any reply with a new number falls back to the scripted line. Scripted = 5 rep turns, Gemini = 6.
+- 2026-09-26: Checklist is regex/keyword matching in callpractice.score(): each flag (by amount, code, date+keyword, or type keywords), account/claim digits, "itemized", "collection", next-steps/timeline phrases.
+- 2026-09-26: Dispute and practice UI live in public/dispute-ui.js (uses helpers app.js exposes on window.SecondLook), to keep app.js readable.
+- 2026-09-26: Demo mode: `npm run score` also writes public/demo-data.js (hero case, full result, letter, hero explanations, scoreboard). With demo mode on, the hero view, "Why?", term explanations and scoreboard work with every /api request blocked (tested). Any other call sends X-SecondLook-Demo: 1, and the server then skips Gemini and ElevenLabs. If the server can't be reached on load, the page turns demo mode on by itself. Demo mode is remembered in localStorage.
+- 2026-09-26: Every route goes through one `safe()` wrapper: known errors → friendly JSON with their status, anything else → friendly 500, never a hang. Fuzzed 132 junk requests across all POST routes: only 200/400/404, server stayed up.
+- 2026-09-26: Once a dispute is resolved, the summary card gets a "Confirmed savings" tile next to (never merged with) potential savings.
+- 2026-09-26: Phase 7: GET /api/family summarizes each person's claims (from documents + rules) and disputes. "Whose bills?" radio chips filter the case dropdown and a claims list (with Review buttons and dispute status). Header pill + "Family costs and savings" panel show Total saved (resolved disputes only) beside potential savings, never summed. Tested: Leo filter → 4 claims; resolving Maya's hero dispute → Total saved $990, family potential stays $7,315.
+- 2026-09-26: Fixed page-level sideways scroll at 400px: grid children now get min-width: 0, and .table-scroll is position: relative so sr-only captions/labels inside tables can't escape the scroll box.
+- 2026-09-26: Final regression on `npm start` (port 3000): score 100%, break-it, full dispute flow to "Saved $990", practice checklist 6/6, demo mode offline, family totals, 400px with every table open. No console errors.
+- 2026-09-26 (Phase 8.1): gemini.js now sends the key in the x-goog-api-key header, classifies failures (model_not_found, permission, bad_key, unavailable, rate_limited, timeout, empty) and names the configured model in the message. Extraction shows that message to the user (502/429/504) instead of a generic failure. /api/status exposes the last configuration error (never the key). No automatic model switching. Tested with a stubbed 404: message names "gemini-9-nope" and says to check GEMINI_MODEL; key absent from URL.
+- 2026-09-26 (Phase 8.2): `units` (default 1) on bill and EOB lines; a line's charge/billed is the total for all its units. rules.js groups lines by date|code and hands the EOB's processed units to bill lines in order. Unprocessed units → one duplicate_charge per group, amount = Σ extra units × that line's per-unit charge. Equal units split differently → no flag. Charge mismatch compares the charge for matched units with the EOB billed for those units. Flags carry `details` (mode "lines" or "units", bill/eob/extra units, first_line, dup_lines) so the letter, call script, practice rep and math label describe "billed for 3 units, your insurer processed 2" correctly. New unmatched reason `extra_units`; UI shows an "Extra units" status and a Units column; break-it can edit units.
+- 2026-09-26 (Phase 8.2): Regenerated data diffed against the previous run: all 18 cases identical except the added `units: 1`, answer key byte-identical, hero text/evidence identical. The seeded RNG sequence was not touched.
+- 2026-09-26 (Phase 8.3): data/handwritten/hw-01..08.json + answer_key.json, written by hand (not by the generator). Each case's arithmetic was checked for internal consistency before running the rules.
+- 2026-09-26 (Phase 8.3): First run failed hw-05 and hw-06; both were rule gaps, not case errors, so the rules were fixed:
+  - hw-05 (denied line): the expected contractual adjustment was Σ(billed − allowed) over every matched line, which demanded a $45 write-off on a denied line the patient legitimately owes in full. Now Σ(billed − insurer_paid − patient_resp): identical to billed − allowed on normal lines (so the generated set is unaffected), and $0 on a denied line.
+  - hw-06 (previous balance): new optional `bill.previous_balance`. The rules set it aside before reconciling (a math step "Minus the balance carried over from an earlier bill (not checked here)"), add the note "$75 carried over from an earlier bill; not checked here.", and report `summary.previous_balance`. `likely_owe` is this visit's share only ($12 for hw-06), and the answer key uses that. The UI says "you likely owe $12 for this visit, plus $75 carried over…", and the letter says the carried balance is not disputed.
+- 2026-09-26 (Phase 8.3): scripts/score.js prints and writes two scoreboards (`sets` in data/scoreboard.json; top-level totals kept for the generated set). The UI scoreboard shows both.
+- 2026-09-26 (Phase 8.3): A bad `sed` edit appended stale copies of app.js after the closing `})();`. Caught by `node --check`; restored by keeping the first 881 lines after confirming each function appears exactly once. Lesson: use file-based edit scripts for anything with `$` or quotes.
+- 2026-09-26 (Phase 8.4): scripts/render.js (Puppeteer dev dependency, downloads its own Chromium). Layouts rotate by case index: A = serif hospital statement (MM/DD/YYYY, amount-due box top right, totals box bottom right); B = sans clinic statement (teal band, "Mon D, YYYY", columns Description/Code/Date/Qty/Amount, account summary in a left side panel; EOB adds a "Plan discount" column and summary cards); C = monospace itemized statement (ISO dates, uppercase, LN/SVC DATE/CPT/UNITS columns; EOB columns reordered CPT/DOS/UNITS/BILLED/ALLOWED/YOUR SHARE/PLAN PAID/RMK/DESCRIPTION). EOBs have remark codes (45, 2, 3, N96 for denied) with a legend, "THIS IS NOT A BILL", "Page 1 of 1", small print and "SAMPLE: FICTIONAL DATA". `--cases=id,id` renders a subset. data/rendered/manifest.json lists each case's layout.
+- 2026-09-26 (Phase 8.4): Checked by eye: case-01 (A), hw-02 (B), case-12 (C), bill and EOB each; all numbers match their JSON. Fixed the sample mark being invisible on B's teal band and tight column spacing in C, then re-rendered.
+- 2026-09-26 (Phase 8.5): One extraction pipeline: src/extract.js `readDocument()` (prompt + Gemini responseSchema, with one retry without the schema if the model rejects it; same model) and `finish()` (normalize to the data model + consistency checks). Live uploads (/api/extract) and scripts/score-extraction.js both call these. Live uploads are cached in memory only; the scoreboard caches sample documents in data/extraction-cache/.
+- 2026-09-26 (Phase 8.5): src/validate.js holds the consistency checks (line sums vs printed totals, charges − adjustments − payments + previous balance = amount due, EOB lines vs totals, paid + share = allowed except denied lines, allowed ≤ billed, dates/codes/units present, the two documents share codes and dates). Served unchanged to the browser as /validate.js, so the review screen and server can't disagree. Zero issues on all 26 ground-truth cases.
+- 2026-09-26 (Phase 8.5): Upload UI (public/upload-ui.js): PDF/PNG/JPG/JPEG by file picker or drag-and-drop (checked by extension and type, ≤ 12 MB). Both files go to /api/extract in parallel → editable review screen ("Check what we read") with every header field, every line (add/remove), totals and EOB totals. Issues show under "Please review these numbers" with "Go to it" links; affected inputs are highlighted, labeled "(check)", and aria-invalid. Checks re-run on every keystroke. "Confirm & Analyze" hands the reviewed documents to the rules. If one file can't be read, the review opens with that side blank. With no key (501), "Type the numbers in myself" opens the same review screen blank.
+- 2026-09-26 (Phase 8.5): Tested end to end in the browser with Gemini's HTTP response stubbed (test-only preload; nothing else stubbed): a brand-new PDF bill and a dropped JPG EOB from a provider not in the dataset → both sent with the schema and the key in a header → review screen with a planted $12-for-$120 misread flagged in two checks → fixing it cleared every warning → analysis found the extra unit ($164 − $120 = $44). Also: typing the hero's numbers by hand gives $1,240 → $250 with the same two flags; a .txt file is rejected.
+- 2026-09-26 (Phase 8.5): score-extraction.js tested only with (a) no key: prints a clear message, exits 0, writes nothing; (b) a stub "reader" that returns ground truth with one planted misread, to check the comparison math (55 of 56 line items, the hw-08 misread caught at line level and end to end). Those stub outputs were deleted. **No real extraction accuracy has been measured yet.**
+- 2026-09-26 (Phase 8.5): /api/extraction-scoreboard returns { available: false } until the real script has run; the UI block stays hidden until then.
+- 2026-09-26 (Phase 8.6): Final regression on `npm start` (port 3000): both scoreboards 100%, hero $1,240 → $250, break-it (duplicate/delete/charge/units), dispute flow to "Saved $990", practice checklist 6/6, demo mode twice (once with every /api call blocked), family totals, previous-balance display, no-key upload → clear message → manual entry of the hero's numbers gives the hero result, 400px with every table open = no sideways scroll, 132 junk requests with no 5xx. Upload of a new PDF + dropped JPG reached the review screen and analysis on a server with Gemini's HTTP response stubbed.
+- 2026-09-26 (Phase 8.6): Found and fixed during the final run: `.score-set` grid children couldn't shrink, so an open results table widened the page at 400px (added min-width: 0 for the score sets and the review screen).
+- 2026-09-26 (Phase 8.6): PROGRESS.md itself had a stale copy of its top half spliced into the Phase 8.3 note: that note's text contained the characters "$`", which String.replace() treats as "insert everything before the match." Removed exactly the spliced text and scanned every edited file for similar duplication (none found).
+- 2026-09-26 (UI makeover): Front-end only; no change to src/, rules, APIs or data. The page is grouped into steps (1 Check your bill, 2 What's wrong, 3 Fix it, 4 Family costs and test results) with a sticky step nav. public/steps-ui.js marks the step on screen (aria-current, filled number, underline; not color alone) and shows badges read from the rendered result ("Owe $250", "2 problems", "Saved $990"). Nothing is hidden, so every existing scroll/focus target still works; `scroll-margin-top` keeps jump targets below the sticky nav. The result card leads with a big "$1,240 (struck) → $250" line (aria-hidden; the #result-h sentence is unchanged and carries the same facts) and "See what's wrong" / "Go to the letter" links. On wide screens the picker and result sit side by side so the headline shows without scrolling. Heading levels shifted by one under the new step headings (JS-generated h3 → h4, review h4 → h5). styles.css rewritten in a calm clinical palette (same token names and classes; light, system-dark and toggle-dark blocks). Rejected two suggestions from the UI UX Pro Max skill: neumorphism (low contrast) and a testimonials carousel (would need made-up quotes).
+- 2026-09-26 (UI makeover): **Old look kept** in public/classic/ (a frozen copy of index.html, styles.css and the JS, served at /classic/; only change: `/validate.js` made absolute). The footer links to it. To revert fully: copy public/classic/* back over public/ and change `/validate.js` back if you like; delete public/steps-ui.js.
+- 2026-09-26 (UI makeover): Checked in Chrome: hero $1,240 → $250, "Show me" lands below the sticky nav with 3 rows highlighted, hero link jumps to step 2, dispute → "Saved $990" (nav badge updates), break-it, manual upload → review screen, demo mode, no sideways scroll at 400 (light, dark, Larger text) / 768 / 1280 / 1440, /classic/ works, no console errors. Both scoreboards still 100%.
+- 2026-09-26 (UI makeover, round 2, using the UI UX Pro Max skill): searched its design system (variance 8, motion 6), styles, typography, motion presets and UX rules. Took: Bento Box Grid for the result, Outfit display font (its "Geometric Modern" pairing; Atkinson Hyperlegible kept for body text), "animate 1–2 key elements per view", reduced-motion support, and scroll-padding so the sticky bar never covers keyboard focus (WCAG 2.2 Focus Not Obscured). Rejected: brutalism and skeuomorphism (wrong tone for worried patients), testimonials (would need made-up quotes), GSAP (a CDN script would break offline demo mode; plain CSS + ~30 lines of JS instead).
+- 2026-09-26 (UI makeover, round 2): Dark teal header band; dotted paper background; oversized two-digit step numerals (decorative; the "Step 1" text carries the meaning). The result is a bento grid: a dark card with ~~$1,240~~, a huge $250 and the math tape, next to "Problems found" (each finding and amount), Potential savings and (after resolve) Confirmed savings tiles. The $250 counts down from $1,240 once per new result (skipped with reduced motion; the card is aria-hidden and the #result-h sentence is unchanged). Tiles rise in on load; "Saved" pops once. Note: this PC's Windows "Animation effects" setting is off, so Chrome here reports reduced motion and shows no animation. That is the intended behavior.
+- 2026-09-26 (UI makeover, round 2): Re-checked in Chrome: all the round-1 checks pass again (hero, Show me below the sticky bar, dispute → Saved $990 + nav badge, break-it, manual upload → review, demo mode, no sideways scroll at 390/400/768/1280/1440 in both themes and with Larger text, /classic/ works, no console errors). Countdown sampled at 80 ms steps: $1,240 → $917 → $605 → $351 → $259 → $250. With reduced motion, $250 immediately and no animations. Both scoreboards still 100%.
+- 2026-09-26 (UI makeover, round 3: bright look from the user's reference dashboard): replaces round 2's dark teal styling. Page #F5F5F3, white cards (22px radius, very soft shadow), green brand band #49B653 with black text, yellow #FFC515 (black text) for Potential savings, green fill (black text) for confirmed savings, coral #C8372D only for real discrepancies, dark green #1D6B2A for buttons and links on white (bright green fails white-text contrast). Neutral dark theme kept. Steps are now 01 Upload → 02 Review → 03 Results → 04 Dispute (+ Family & tests). Upload: "Try a test bill" / "Use your own papers" choice cards; two large drop cards with a green "✓ Ready" state; "Read my documents" is the large primary button. Review has its own step (a note shows when using a test bill). Results: bento with a big white "The bill says ~~$1,240~~ / You likely owe $250" card, Problems found (count), Potential savings (yellow), Carried-over balance (when present); each problem is a white card with "$X difference", "Show evidence" (was "Show me") and "Why?". The math and the full bill/EOB tables (with break-it) are in expandable sections; Show evidence opens the comparison before highlighting. Dispute: two action cards, "Create dispute letter" (reveals the letter + call script panel) and "Practice my call". Motion: the countdown, a strike-through on the billed amount, and hover states only; none with reduced motion. JS changes are presentation only: renderHero/renderFindings markup, opening the comparison in showEvidence, redrawing the connector lines when it opens, and steps-ui.js (badges + the letter button). No change to rules, API, extraction or disputes. /classic/ untouched.
+- 2026-09-26 (UI makeover, round 3): Tested in Chrome: demo case, results, Show evidence (comparison opens, 3 rows highlighted, 3 connector lines, below the sticky bar), View the math, the letter hidden until "Create dispute letter" (then open, focus on the Letter tab), call script tab, practice call, dispute → "Saved $990" (tile, nav badge, header pill), break-it, demo mode, manual entry → review, and a **real live upload with Gemini (gemini-3.5-flash-lite)** of the rendered case-01 bill PDF + EOB PNG: read correctly ("Everything adds up"), Confirm & Analyze gave $1,240 → $250 with both problems. No sideways scroll at 390/768/1024/1440, light and dark, Larger text. Countdown runs with motion allowed; with reduced motion it shows $250 immediately and nothing animates. /classic/ works. No console errors. Both scoreboards 100%.
+- 2026-09-26 (UI makeover, round 4, visual only): The page followed the OS dark setting, so on a dark-mode PC it opened charcoal. It now opens **light by default**; dark mode is only through the toggle (the prefers-color-scheme block is gone, and app.js applies the saved choice or light). Palette per the user: page #F5F5F3, cards #FFFFFF with #E7E7E2 borders, green #49B653 for the header, primary buttons and success (black text), yellow #FFC515 for Potential savings, soft yellow #FFF4C2, text #111111 / #626262, coral #F25F5C for problems (large numbers and top bars; small problem text uses a darker #C43C38 because #F25F5C is 3.2:1 on white). Checked with the OS emulated as dark: opens light; toggle to dark and back works. Full regression passes; both scoreboards 100%.
+- 2026-09-26 (UI round 5: sidebar dashboard, per the user's reference): fixed blue → cyan sidebar (Check my bill, Review, Results, Dispute, Family, Tests; active item highlighted, top-bar title follows the section on screen), white top bar, #F5F7F9 page, white cards. Check my bill: welcome card, two upload cards (Medical Bill / Insurance EOB, always visible), Read my documents, and a test-bill card with "Try demo". Results: four metric cards (Bill says, Likely owe, Problems found, Potential savings in solid green), then the problem cards, then View the math and Full bill & EOB comparison (collapsed). Dispute: Create dispute letter, Practice my call, Dispute status. Phones: the sidebar becomes a compact sticky top bar. Still one scrolling page, so every existing jump/focus keeps working. Presentation only.
+- 2026-09-26 (Restored after another tool's edits): another assistant (Grok) changed the app outside this session: it removed call practice from the main page (dispute-ui.js), added an "Ask SecondLook" chat (/api/ask, src/ask.js, public/ask-ui.js), an Alt+R spoken summary (public/summary.js) with a rewritten voice player in app.js, and ran git init (branch ui/bright-light, no commits). At the user's request all of that was undone: server.js, app.js, dispute-ui.js, index.html and this file are back to the pre-Grok code; the three new files were moved (not deleted) to the session scratchpad (grok-backup/). The empty .git folder was left alone.
+- 2026-09-26 (Ask SecondLook, built fresh after removing Grok's version; user request): Practice Call is off the main page (its code and /api/practice stay; /classic/ still has it; dispute-ui.js skips it when the elements are missing). Results has an "Ask SecondLook" card: 4 suggested questions (Why was this charge flagged? / How did you calculate what I likely owe? / What should I ask the billing department? / Explain my EOB simply.) and a chat. src/askfacts.js (UMD, also served as /askfacts.js) builds the suggested answers and the Alt+R summary only from the rules result, bill and EOB. src/ask.js (POST /api/ask) re-runs the rules: suggested questions get that text, which Gemini may reword (kept only if every number/month matches); other questions go to Gemini with the fact sheet and must answer from it or say NOT_IN_DOCUMENTS; any reply with a number or month not in the facts is dropped and the "can't find that" message is shown. Demo mode and no-key: suggested answers only; offline: the browser answers suggested questions from askfacts.js. Each answer has a speaker: Play/Pause, Replay, Stop, 0.75× / 1× / 1.25× (ElevenLabs through /api/tts, key server-side; browser voice fallback). Alt+R reads only the vital summary (bill, likely owe, problem count, one line per problem, potential savings), again stops it, and does nothing while typing. Rules and calculations untouched.
+- 2026-09-26 (Ask SecondLook check): Chrome with the real Gemini key: all 4 suggestions answered (Gemini wording, numbers verified); "Why is my insurance payment missing?" answered from the findings; "weather" and "add a $50 problem" refused / not invented; ElevenLabs /api/tts 200; play, pause, resume, speed, replay, stop; Alt+R on/off and ignored while typing; new case clears the chat; demo mode and blocked /api/ask still answer suggestions; 390px no sideways scroll; dispute to "Saved $990"; full regression passes; both scoreboards 100%.
+- 2026-09-26: Out-of-network non-emergency shortfall: no flag, just a note (per spec). The leftover then shows up as `unexplained_difference`, which is honest. Not in the test set.
+
+## Known issues
+(List anything broken or risky for the demo.)
+- Not yet tested with real Gemini / ElevenLabs keys: photo extraction, Gemini rewording, Gemini rep, ElevenLabs audio. All fall back cleanly without keys. Default model `gemini-2.5-flash` may need changing in .env if Google has retired it.
+- The dispute letter's date is "today" on the server. In demo mode the bundled letter carries the date `npm run score` last ran. Re-run `npm run score` on demo day.
+- Disputes are in memory: restarting the server clears them.
+- Extraction has never run against the real Gemini API. The prompt, the response schema (OpenAPI-style, uppercase types) and PDF input are untested with a real key. If the model rejects the schema, extraction retries once without it (same model) and logs that.
+- Gemini calls time out at 20 s (CLAUDE.md rule). A large PDF could hit that; the user then gets a clear timeout message and can retry or type numbers in.
+- `data/rendered/` is about 11 MB of generated files; regenerate any time with `npm run render`.
+- In the review screen, adjustments / insurance payments / patient payments are edited as one total each (the rules only use the sums), so individual payment dates and descriptions from an extracted bill are collapsed on confirm.

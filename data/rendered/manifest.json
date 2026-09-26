@@ -1,0 +1,106 @@
+[
+  {
+    "id": "case-01",
+    "layout": "A"
+  },
+  {
+    "id": "case-02",
+    "layout": "B"
+  },
+  {
+    "id": "case-03",
+    "layout": "C"
+  },
+  {
+    "id": "case-04",
+    "layout": "A"
+  },
+  {
+    "id": "case-05",
+    "layout": "B"
+  },
+  {
+    "id": "case-06",
+    "layout": "C"
+  },
+  {
+    "id": "case-07",
+    "layout": "A"
+  },
+  {
+    "id": "case-08",
+    "layout": "B"
+  },
+  {
+    "id": "case-09",
+    "layout": "C"
+  },
+  {
+    "id": "case-10",
+    "layout": "A"
+  },
+  {
+    "id": "case-11",
+    "layout": "B"
+  },
+  {
+    "id": "case-12",
+    "layout": "C"
+  },
+  {
+    "id": "case-13",
+    "layout": "A"
+  },
+  {
+    "id": "case-14",
+    "layout": "B"
+  },
+  {
+    "id": "case-15",
+    "layout": "C"
+  },
+  {
+    "id": "case-16",
+    "layout": "A"
+  },
+  {
+    "id": "case-17",
+    "layout": "B"
+  },
+  {
+    "id": "case-18",
+    "layout": "C"
+  },
+  {
+    "id": "hw-01",
+    "layout": "A"
+  },
+  {
+    "id": "hw-02",
+    "layout": "B"
+  },
+  {
+    "id": "hw-03",
+    "layout": "C"
+  },
+  {
+    "id": "hw-04",
+    "layout": "A"
+  },
+  {
+    "id": "hw-05",
+    "layout": "B"
+  },
+  {
+    "id": "hw-06",
+    "layout": "C"
+  },
+  {
+    "id": "hw-07",
+    "layout": "A"
+  },
+  {
+    "id": "hw-08",
+    "layout": "B"
+  }
+]

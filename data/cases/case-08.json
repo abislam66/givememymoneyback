@@ -1,0 +1,138 @@
+{
+  "id": "case-08",
+  "title": "Rosa, yearly checkup at the family doctor",
+  "profile": {
+    "id": "rosa",
+    "name": "Rosa Torres",
+    "relation": "parent"
+  },
+  "bill": {
+    "id": "BILL-case-08",
+    "provider": {
+      "name": "Brightwater Family Practice",
+      "address": "45 Elm Court, Fairhaven, PA 19000"
+    },
+    "patient": {
+      "name": "Rosa Torres"
+    },
+    "account_number": "ACCT-49320581",
+    "statement_date": "2026-05-06",
+    "lines": [
+      {
+        "line_no": 1,
+        "date": "2026-04-02",
+        "code": "99213",
+        "description": "Office visit, established patient",
+        "units": 1,
+        "charge": 234
+      },
+      {
+        "line_no": 2,
+        "date": "2026-04-02",
+        "code": "80061",
+        "description": "Lipid panel (cholesterol test)",
+        "units": 1,
+        "charge": 97
+      },
+      {
+        "line_no": 3,
+        "date": "2026-04-02",
+        "code": "85025",
+        "description": "Complete blood count (CBC)",
+        "units": 1,
+        "charge": 70
+      },
+      {
+        "line_no": 4,
+        "date": "2026-04-02",
+        "code": "36415",
+        "description": "Blood draw",
+        "units": 1,
+        "charge": 34
+      },
+      {
+        "line_no": 5,
+        "date": "2026-04-02",
+        "code": "84443",
+        "description": "Thyroid test (TSH)",
+        "units": 1,
+        "charge": 115
+      }
+    ],
+    "adjustments": [
+      {
+        "description": "Contractual adjustment",
+        "amount": 224
+      }
+    ],
+    "insurance_payments": [
+      {
+        "date": "2026-04-23",
+        "payer": "Evergreen Mutual Health",
+        "amount": 170
+      }
+    ],
+    "patient_payments": [],
+    "amount_due": 156
+  },
+  "eob": {
+    "id": "EOB-case-08",
+    "insurer": "Evergreen Mutual Health",
+    "member": {
+      "name": "Rosa Torres",
+      "id": "EVM771208"
+    },
+    "claim_number": "CLM-492282359",
+    "provider_name": "Brightwater Family Practice",
+    "network": "in-network",
+    "service_type": "office",
+    "lines": [
+      {
+        "date": "2026-04-02",
+        "code": "99213",
+        "description": "Office visit, established patient",
+        "units": 1,
+        "billed": 234,
+        "allowed": 104,
+        "insurer_paid": 74,
+        "patient_resp": 30
+      },
+      {
+        "date": "2026-04-02",
+        "code": "80061",
+        "description": "Lipid panel (cholesterol test)",
+        "units": 1,
+        "billed": 97,
+        "allowed": 57,
+        "insurer_paid": 51,
+        "patient_resp": 6
+      },
+      {
+        "date": "2026-04-02",
+        "code": "85025",
+        "description": "Complete blood count (CBC)",
+        "units": 1,
+        "billed": 70,
+        "allowed": 34,
+        "insurer_paid": 31,
+        "patient_resp": 3
+      },
+      {
+        "date": "2026-04-02",
+        "code": "36415",
+        "description": "Blood draw",
+        "units": 1,
+        "billed": 34,
+        "allowed": 16,
+        "insurer_paid": 14,
+        "patient_resp": 2
+      }
+    ],
+    "totals": {
+      "billed": 435,
+      "allowed": 211,
+      "insurer_paid": 170,
+      "patient_resp": 41
+    }
+  }
+}

@@ -1,0 +1,124 @@
+{
+  "id": "case-18",
+  "title": "Leo, blood tests at a lab",
+  "profile": {
+    "id": "leo",
+    "name": "Leo Torres",
+    "relation": "child"
+  },
+  "bill": {
+    "id": "BILL-case-18",
+    "provider": {
+      "name": "Kestrel Lab Services",
+      "address": "9 Harbor Point Dr, Millbrook, PA 19001"
+    },
+    "patient": {
+      "name": "Leo Torres"
+    },
+    "account_number": "ACCT-10341237",
+    "statement_date": "2026-09-07",
+    "lines": [
+      {
+        "line_no": 1,
+        "date": "2026-08-04",
+        "code": "80053",
+        "description": "Comprehensive metabolic panel",
+        "units": 1,
+        "charge": 197
+      },
+      {
+        "line_no": 2,
+        "date": "2026-08-04",
+        "code": "80061",
+        "description": "Lipid panel (cholesterol test)",
+        "units": 1,
+        "charge": 93
+      },
+      {
+        "line_no": 3,
+        "date": "2026-08-04",
+        "code": "84443",
+        "description": "Thyroid test (TSH)",
+        "units": 1,
+        "charge": 125
+      },
+      {
+        "line_no": 4,
+        "date": "2026-08-04",
+        "code": "36415",
+        "description": "Blood draw",
+        "units": 1,
+        "charge": 28
+      }
+    ],
+    "adjustments": [
+      {
+        "description": "Contractual adjustment",
+        "amount": 219
+      }
+    ],
+    "insurance_payments": [],
+    "patient_payments": [],
+    "amount_due": 224
+  },
+  "eob": {
+    "id": "EOB-case-18",
+    "insurer": "Bluefinch Health Plan",
+    "member": {
+      "name": "Leo Torres",
+      "id": "BFH482915"
+    },
+    "claim_number": "CLM-910119885",
+    "provider_name": "Kestrel Lab Services",
+    "network": "in-network",
+    "service_type": "lab",
+    "lines": [
+      {
+        "date": "2026-08-04",
+        "code": "80053",
+        "description": "Comprehensive metabolic panel",
+        "units": 1,
+        "billed": 197,
+        "allowed": 94,
+        "insurer_paid": 85,
+        "patient_resp": 9
+      },
+      {
+        "date": "2026-08-04",
+        "code": "80061",
+        "description": "Lipid panel (cholesterol test)",
+        "units": 1,
+        "billed": 93,
+        "allowed": 51,
+        "insurer_paid": 46,
+        "patient_resp": 5
+      },
+      {
+        "date": "2026-08-04",
+        "code": "84443",
+        "description": "Thyroid test (TSH)",
+        "units": 1,
+        "billed": 125,
+        "allowed": 62,
+        "insurer_paid": 56,
+        "patient_resp": 6
+      },
+      {
+        "date": "2026-08-04",
+        "code": "36415",
+        "description": "Blood draw",
+        "units": 1,
+        "billed": 28,
+        "allowed": 17,
+        "insurer_paid": 15,
+        "patient_resp": 2
+      }
+    ],
+    "totals": {
+      "billed": 443,
+      "allowed": 224,
+      "insurer_paid": 202,
+      "patient_resp": 22
+    }
+  }
+}

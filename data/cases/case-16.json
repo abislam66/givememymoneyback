@@ -1,0 +1,84 @@
+{
+  "id": "case-16",
+  "title": "Daniel, MRI of the lower back",
+  "profile": {
+    "id": "daniel",
+    "name": "Daniel Torres",
+    "relation": "spouse"
+  },
+  "bill": {
+    "id": "BILL-case-16",
+    "provider": {
+      "name": "Quillfield Imaging Center",
+      "address": "310 Mercer Ave, Fairhaven, PA 19002"
+    },
+    "patient": {
+      "name": "Daniel Torres"
+    },
+    "account_number": "ACCT-05976001",
+    "statement_date": "2026-08-10",
+    "lines": [
+      {
+        "line_no": 1,
+        "date": "2026-07-07",
+        "code": "72148",
+        "description": "MRI lower back, no contrast",
+        "units": 1,
+        "charge": 1889
+      },
+      {
+        "line_no": 2,
+        "date": "2026-07-07",
+        "code": "99070",
+        "description": "Supplies and materials",
+        "units": 1,
+        "charge": 140
+      }
+    ],
+    "adjustments": [
+      {
+        "description": "Contractual adjustment",
+        "amount": 1116
+      }
+    ],
+    "insurance_payments": [
+      {
+        "date": "2026-07-28",
+        "payer": "Bluefinch Health Plan",
+        "amount": 618
+      }
+    ],
+    "patient_payments": [],
+    "amount_due": 295
+  },
+  "eob": {
+    "id": "EOB-case-16",
+    "insurer": "Bluefinch Health Plan",
+    "member": {
+      "name": "Daniel Torres",
+      "id": "BFH482914"
+    },
+    "claim_number": "CLM-794892551",
+    "provider_name": "Quillfield Imaging Center",
+    "network": "in-network",
+    "service_type": "imaging",
+    "lines": [
+      {
+        "date": "2026-07-07",
+        "code": "72148",
+        "description": "MRI lower back, no contrast",
+        "units": 1,
+        "billed": 1889,
+        "allowed": 773,
+        "insurer_paid": 618,
+        "patient_resp": 155
+      }
+    ],
+    "totals": {
+      "billed": 1889,
+      "allowed": 773,
+      "insurer_paid": 618,
+      "patient_resp": 155
+    }
+  }
+}

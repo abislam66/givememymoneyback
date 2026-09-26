@@ -1,0 +1,40 @@
+{
+  "id": "hw-08",
+  "title": "Two errors plus clean lines: overcharged IV and a short insurance payment",
+  "profile": { "id": "hw-ruth", "name": "Ruth Abernathy", "relation": "self" },
+  "bill": {
+    "id": "BILL-hw-08",
+    "provider": { "name": "Owlbrook Regional Hospital", "address": "1200 Linden Ridge Rd, Fairhaven, PA 19000" },
+    "patient": { "name": "Ruth Abernathy" },
+    "account_number": "ACCT-55121112",
+    "statement_date": "2026-07-27",
+    "lines": [
+      { "line_no": 1, "date": "2026-06-18", "code": "99284", "description": "ER visit, serious (level 4)", "units": 1, "charge": 1180.00 },
+      { "line_no": 2, "date": "2026-06-18", "code": "70450", "description": "CT scan of head, no contrast", "units": 1, "charge": 1525.00 },
+      { "line_no": 3, "date": "2026-06-18", "code": "96374", "description": "IV push medication", "units": 1, "charge": 280.50 },
+      { "line_no": 4, "date": "2026-06-18", "code": "85025", "description": "Complete blood count (CBC)", "units": 1, "charge": 98.00 },
+      { "line_no": 5, "date": "2026-06-18", "code": "36415", "description": "Blood draw", "units": 1, "charge": 32.00 }
+    ],
+    "adjustments": [{ "description": "Contractual adjustment", "amount": 1613.85 }],
+    "insurance_payments": [{ "date": "2026-07-10", "payer": "Cardinal Shield Insurance", "amount": 933.00 }],
+    "patient_payments": [],
+    "amount_due": 568.65
+  },
+  "eob": {
+    "id": "EOB-hw-08",
+    "insurer": "Cardinal Shield Insurance",
+    "member": { "name": "Ruth Abernathy", "id": "CSI-301159" },
+    "claim_number": "CLM-640118548",
+    "provider_name": "Owlbrook Regional Hospital",
+    "network": "in-network",
+    "service_type": "emergency",
+    "lines": [
+      { "date": "2026-06-18", "code": "99284", "description": "ER visit, serious (level 4)", "units": 1, "billed": 1180.00, "allowed": 612.40, "insurer_paid": 462.40, "patient_resp": 150.00 },
+      { "date": "2026-06-18", "code": "70450", "description": "CT scan of head, no contrast", "units": 1, "billed": 1525.00, "allowed": 690.25, "insurer_paid": 552.20, "patient_resp": 138.05 },
+      { "date": "2026-06-18", "code": "96374", "description": "IV push medication", "units": 1, "billed": 245.00, "allowed": 110.00, "insurer_paid": 88.00, "patient_resp": 22.00 },
+      { "date": "2026-06-18", "code": "85025", "description": "Complete blood count (CBC)", "units": 1, "billed": 98.00, "allowed": 41.50, "insurer_paid": 33.20, "patient_resp": 8.30 },
+      { "date": "2026-06-18", "code": "36415", "description": "Blood draw", "units": 1, "billed": 32.00, "allowed": 12.00, "insurer_paid": 9.60, "patient_resp": 2.40 }
+    ],
+    "totals": { "billed": 3080.00, "allowed": 1466.15, "insurer_paid": 1145.40, "patient_resp": 320.75 }
+  }
+}

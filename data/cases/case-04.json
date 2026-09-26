@@ -1,0 +1,135 @@
+{
+  "id": "case-04",
+  "title": "Leo, ER visit for a cut hand",
+  "profile": {
+    "id": "leo",
+    "name": "Leo Torres",
+    "relation": "child"
+  },
+  "bill": {
+    "id": "BILL-case-04",
+    "provider": {
+      "name": "Owlbrook Regional Hospital",
+      "address": "1200 Linden Ridge Rd, Fairhaven, PA 19000"
+    },
+    "patient": {
+      "name": "Leo Torres"
+    },
+    "account_number": "ACCT-40145782",
+    "statement_date": "2026-03-15",
+    "lines": [
+      {
+        "line_no": 1,
+        "date": "2026-02-09",
+        "code": "99283",
+        "description": "ER visit, moderate (level 3)",
+        "units": 1,
+        "charge": 899
+      },
+      {
+        "line_no": 2,
+        "date": "2026-02-09",
+        "code": "12002",
+        "description": "Wound repair, 2.6 to 7.5 cm",
+        "units": 1,
+        "charge": 637
+      },
+      {
+        "line_no": 3,
+        "date": "2026-02-09",
+        "code": "90715",
+        "description": "Tdap vaccine",
+        "units": 1,
+        "charge": 108
+      },
+      {
+        "line_no": 4,
+        "date": "2026-02-09",
+        "code": "90471",
+        "description": "Vaccine administration",
+        "units": 1,
+        "charge": 48
+      }
+    ],
+    "adjustments": [
+      {
+        "description": "Contractual adjustment",
+        "amount": 939
+      }
+    ],
+    "insurance_payments": [
+      {
+        "date": "2026-03-02",
+        "payer": "Bluefinch Health Plan",
+        "amount": 532
+      }
+    ],
+    "patient_payments": [
+      {
+        "date": "2026-02-09",
+        "amount": 100
+      }
+    ],
+    "amount_due": 121
+  },
+  "eob": {
+    "id": "EOB-case-04",
+    "insurer": "Bluefinch Health Plan",
+    "member": {
+      "name": "Leo Torres",
+      "id": "BFH482915"
+    },
+    "claim_number": "CLM-465378525",
+    "provider_name": "Owlbrook Regional Hospital",
+    "network": "in-network",
+    "service_type": "emergency",
+    "lines": [
+      {
+        "date": "2026-02-09",
+        "code": "99283",
+        "description": "ER visit, moderate (level 3)",
+        "units": 1,
+        "billed": 899,
+        "allowed": 400,
+        "insurer_paid": 250,
+        "patient_resp": 150
+      },
+      {
+        "date": "2026-02-09",
+        "code": "12002",
+        "description": "Wound repair, 2.6 to 7.5 cm",
+        "units": 1,
+        "billed": 637,
+        "allowed": 288,
+        "insurer_paid": 230,
+        "patient_resp": 58
+      },
+      {
+        "date": "2026-02-09",
+        "code": "90715",
+        "description": "Tdap vaccine",
+        "units": 1,
+        "billed": 108,
+        "allowed": 43,
+        "insurer_paid": 34,
+        "patient_resp": 9
+      },
+      {
+        "date": "2026-02-09",
+        "code": "90471",
+        "description": "Vaccine administration",
+        "units": 1,
+        "billed": 48,
+        "allowed": 22,
+        "insurer_paid": 18,
+        "patient_resp": 4
+      }
+    ],
+    "totals": {
+      "billed": 1692,
+      "allowed": 753,
+      "insurer_paid": 532,
+      "patient_resp": 221
+    }
+  }
+}

@@ -1,0 +1,114 @@
+{
+  "id": "case-01",
+  "title": "Maya, ER visit for a sprained ankle",
+  "profile": {
+    "id": "maya",
+    "name": "Maya Torres",
+    "relation": "self"
+  },
+  "bill": {
+    "id": "BILL-case-01",
+    "provider": {
+      "name": "Owlbrook Regional Hospital",
+      "address": "1200 Linden Ridge Rd, Fairhaven, PA 19000"
+    },
+    "patient": {
+      "name": "Maya Torres"
+    },
+    "account_number": "ACCT-40218837",
+    "statement_date": "2026-04-06",
+    "lines": [
+      {
+        "line_no": 1,
+        "date": "2026-03-03",
+        "code": "99284",
+        "description": "ER visit, serious (level 4)",
+        "units": 1,
+        "charge": 1100
+      },
+      {
+        "line_no": 2,
+        "date": "2026-03-03",
+        "code": "73610",
+        "description": "Ankle X-ray, 3 or more views",
+        "units": 1,
+        "charge": 380
+      },
+      {
+        "line_no": 3,
+        "date": "2026-03-03",
+        "code": "73610",
+        "description": "Ankle X-ray, 3 or more views",
+        "units": 1,
+        "charge": 380
+      },
+      {
+        "line_no": 4,
+        "date": "2026-03-03",
+        "code": "29540",
+        "description": "Ankle strapping",
+        "units": 1,
+        "charge": 180
+      }
+    ],
+    "adjustments": [
+      {
+        "description": "Contractual adjustment",
+        "amount": 800
+      }
+    ],
+    "insurance_payments": [],
+    "patient_payments": [],
+    "amount_due": 1240
+  },
+  "eob": {
+    "id": "EOB-case-01",
+    "insurer": "Bluefinch Health Plan",
+    "member": {
+      "name": "Maya Torres",
+      "id": "BFH482913"
+    },
+    "claim_number": "CLM-771045213",
+    "provider_name": "Owlbrook Regional Hospital",
+    "network": "in-network",
+    "service_type": "emergency",
+    "lines": [
+      {
+        "date": "2026-03-03",
+        "code": "99284",
+        "description": "ER visit, serious (level 4)",
+        "units": 1,
+        "billed": 1100,
+        "allowed": 560,
+        "insurer_paid": 410,
+        "patient_resp": 150
+      },
+      {
+        "date": "2026-03-03",
+        "code": "73610",
+        "description": "Ankle X-ray, 3 or more views",
+        "units": 1,
+        "billed": 380,
+        "allowed": 180,
+        "insurer_paid": 110,
+        "patient_resp": 70
+      },
+      {
+        "date": "2026-03-03",
+        "code": "29540",
+        "description": "Ankle strapping",
+        "units": 1,
+        "billed": 180,
+        "allowed": 120,
+        "insurer_paid": 90,
+        "patient_resp": 30
+      }
+    ],
+    "totals": {
+      "billed": 1660,
+      "allowed": 860,
+      "insurer_paid": 610,
+      "patient_resp": 250
+    }
+  }
+}

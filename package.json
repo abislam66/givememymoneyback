@@ -1,0 +1,23 @@
+{
+  "name": "secondlook",
+  "version": "1.0.0",
+  "description": "Check a hospital bill against the insurer's explanation of benefits, find errors with deterministic rules, and help the patient dispute them.",
+  "main": "server.js",
+  "private": true,
+  "scripts": {
+    "start": "node server.js",
+    "generate": "node data/generate.js",
+    "score": "node scripts/score.js",
+    "render": "node scripts/render.js",
+    "score:extraction": "node scripts/score-extraction.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "puppeteer": "^25.12.0"
+  }
+}

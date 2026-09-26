@@ -1,0 +1,35 @@
+{
+  "id": "hw-03",
+  "title": "Units split: bill has two lines, EOB has one line x 2 units",
+  "profile": { "id": "hw-samuel", "name": "Samuel Okafor", "relation": "self" },
+  "bill": {
+    "id": "BILL-hw-03",
+    "provider": { "name": "Northgate Physical Therapy", "address": "702 North Gate Blvd, Fairhaven, PA 19003" },
+    "patient": { "name": "Samuel Okafor" },
+    "account_number": "ACCT-55121007",
+    "statement_date": "2026-06-15",
+    "lines": [
+      { "line_no": 1, "date": "2026-05-11", "code": "97161", "description": "Physical therapy evaluation", "units": 1, "charge": 250 },
+      { "line_no": 2, "date": "2026-05-11", "code": "97110", "description": "Therapeutic exercise", "units": 1, "charge": 120 },
+      { "line_no": 3, "date": "2026-05-11", "code": "97110", "description": "Therapeutic exercise", "units": 1, "charge": 120 }
+    ],
+    "adjustments": [{ "description": "Contractual adjustment", "amount": 250 }],
+    "insurance_payments": [{ "date": "2026-06-01", "payer": "Cardinal Shield Insurance", "amount": 192 }],
+    "patient_payments": [],
+    "amount_due": 48
+  },
+  "eob": {
+    "id": "EOB-hw-03",
+    "insurer": "Cardinal Shield Insurance",
+    "member": { "name": "Samuel Okafor", "id": "CSI-300617" },
+    "claim_number": "CLM-640118342",
+    "provider_name": "Northgate Physical Therapy",
+    "network": "in-network",
+    "service_type": "therapy",
+    "lines": [
+      { "date": "2026-05-11", "code": "97161", "description": "Physical therapy evaluation", "units": 1, "billed": 250, "allowed": 120, "insurer_paid": 96, "patient_resp": 24 },
+      { "date": "2026-05-11", "code": "97110", "description": "Therapeutic exercise", "units": 2, "billed": 240, "allowed": 120, "insurer_paid": 96, "patient_resp": 24 }
+    ],
+    "totals": { "billed": 490, "allowed": 240, "insurer_paid": 192, "patient_resp": 48 }
+  }
+}

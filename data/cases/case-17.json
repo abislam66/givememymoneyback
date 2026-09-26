@@ -1,0 +1,166 @@
+{
+  "id": "case-17",
+  "title": "Maya, ER visit for chest pain",
+  "profile": {
+    "id": "maya",
+    "name": "Maya Torres",
+    "relation": "self"
+  },
+  "bill": {
+    "id": "BILL-case-17",
+    "provider": {
+      "name": "Owlbrook Regional Hospital",
+      "address": "1200 Linden Ridge Rd, Fairhaven, PA 19000"
+    },
+    "patient": {
+      "name": "Maya Torres"
+    },
+    "account_number": "ACCT-62172797",
+    "statement_date": "2026-08-23",
+    "lines": [
+      {
+        "line_no": 1,
+        "date": "2026-07-20",
+        "code": "99285",
+        "description": "ER visit, severe (level 5)",
+        "units": 1,
+        "charge": 2615
+      },
+      {
+        "line_no": 2,
+        "date": "2026-07-20",
+        "code": "93000",
+        "description": "Heart tracing (ECG)",
+        "units": 1,
+        "charge": 196
+      },
+      {
+        "line_no": 3,
+        "date": "2026-07-20",
+        "code": "71046",
+        "description": "Chest X-ray, 2 views",
+        "units": 1,
+        "charge": 360
+      },
+      {
+        "line_no": 4,
+        "date": "2026-07-20",
+        "code": "80053",
+        "description": "Comprehensive metabolic panel",
+        "units": 1,
+        "charge": 201
+      },
+      {
+        "line_no": 5,
+        "date": "2026-07-20",
+        "code": "85025",
+        "description": "Complete blood count (CBC)",
+        "units": 1,
+        "charge": 101
+      },
+      {
+        "line_no": 6,
+        "date": "2026-07-20",
+        "code": "36415",
+        "description": "Blood draw",
+        "units": 1,
+        "charge": 39
+      }
+    ],
+    "adjustments": [
+      {
+        "description": "Contractual adjustment",
+        "amount": 1249
+      }
+    ],
+    "insurance_payments": [
+      {
+        "date": "2026-08-10",
+        "payer": "Bluefinch Health Plan",
+        "amount": 1498
+      }
+    ],
+    "patient_payments": [],
+    "amount_due": 765
+  },
+  "eob": {
+    "id": "EOB-case-17",
+    "insurer": "Bluefinch Health Plan",
+    "member": {
+      "name": "Maya Torres",
+      "id": "BFH482913"
+    },
+    "claim_number": "CLM-725885247",
+    "provider_name": "Owlbrook Regional Hospital",
+    "network": "in-network",
+    "service_type": "emergency",
+    "lines": [
+      {
+        "date": "2026-07-20",
+        "code": "99285",
+        "description": "ER visit, severe (level 5)",
+        "units": 1,
+        "billed": 2615,
+        "allowed": 1325,
+        "insurer_paid": 1175,
+        "patient_resp": 150
+      },
+      {
+        "date": "2026-07-20",
+        "code": "93000",
+        "description": "Heart tracing (ECG)",
+        "units": 1,
+        "billed": 196,
+        "allowed": 72,
+        "insurer_paid": 58,
+        "patient_resp": 14
+      },
+      {
+        "date": "2026-07-20",
+        "code": "71046",
+        "description": "Chest X-ray, 2 views",
+        "units": 1,
+        "billed": 360,
+        "allowed": 171,
+        "insurer_paid": 137,
+        "patient_resp": 34
+      },
+      {
+        "date": "2026-07-20",
+        "code": "80053",
+        "description": "Comprehensive metabolic panel",
+        "units": 1,
+        "billed": 201,
+        "allowed": 91,
+        "insurer_paid": 73,
+        "patient_resp": 18
+      },
+      {
+        "date": "2026-07-20",
+        "code": "85025",
+        "description": "Complete blood count (CBC)",
+        "units": 1,
+        "billed": 101,
+        "allowed": 52,
+        "insurer_paid": 42,
+        "patient_resp": 10
+      },
+      {
+        "date": "2026-07-20",
+        "code": "36415",
+        "description": "Blood draw",
+        "units": 1,
+        "billed": 39,
+        "allowed": 16,
+        "insurer_paid": 13,
+        "patient_resp": 3
+      }
+    ],
+    "totals": {
+      "billed": 3512,
+      "allowed": 1727,
+      "insurer_paid": 1498,
+      "patient_resp": 229
+    }
+  }
+}

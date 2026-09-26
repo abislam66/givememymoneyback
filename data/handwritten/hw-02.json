@@ -1,0 +1,35 @@
+{
+  "id": "hw-02",
+  "title": "Units split: bill has one line x 2 units, EOB has two lines",
+  "profile": { "id": "hw-alicia", "name": "Alicia Moreno", "relation": "self" },
+  "bill": {
+    "id": "BILL-hw-02",
+    "provider": { "name": "Northgate Physical Therapy", "address": "702 North Gate Blvd, Fairhaven, PA 19003" },
+    "patient": { "name": "Alicia Moreno" },
+    "account_number": "ACCT-55120991",
+    "statement_date": "2026-06-08",
+    "lines": [
+      { "line_no": 1, "date": "2026-05-04", "code": "97161", "description": "Physical therapy evaluation", "units": 1, "charge": 250 },
+      { "line_no": 2, "date": "2026-05-04", "code": "97110", "description": "Therapeutic exercise", "units": 2, "charge": 240 }
+    ],
+    "adjustments": [{ "description": "Contractual adjustment", "amount": 250 }],
+    "insurance_payments": [{ "date": "2026-05-26", "payer": "Cardinal Shield Insurance", "amount": 192 }],
+    "patient_payments": [],
+    "amount_due": 48
+  },
+  "eob": {
+    "id": "EOB-hw-02",
+    "insurer": "Cardinal Shield Insurance",
+    "member": { "name": "Alicia Moreno", "id": "CSI-300522" },
+    "claim_number": "CLM-640118305",
+    "provider_name": "Northgate Physical Therapy",
+    "network": "in-network",
+    "service_type": "therapy",
+    "lines": [
+      { "date": "2026-05-04", "code": "97161", "description": "Physical therapy evaluation", "units": 1, "billed": 250, "allowed": 120, "insurer_paid": 96, "patient_resp": 24 },
+      { "date": "2026-05-04", "code": "97110", "description": "Therapeutic exercise", "units": 1, "billed": 120, "allowed": 60, "insurer_paid": 48, "patient_resp": 12 },
+      { "date": "2026-05-04", "code": "97110", "description": "Therapeutic exercise", "units": 1, "billed": 120, "allowed": 60, "insurer_paid": 48, "patient_resp": 12 }
+    ],
+    "totals": { "billed": 490, "allowed": 240, "insurer_paid": 192, "patient_resp": 48 }
+  }
+}

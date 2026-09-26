@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>SecondLook</title>
+  <meta name="description" content="Check your medical bill against your insurer's explanation of benefits. Find errors, see the math, and dispute them.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='3' y='4' width='17' height='22' rx='2' fill='white' stroke='%230b5f6e' stroke-width='2'/%3E%3Ccircle cx='21' cy='19' r='6' fill='%23ffe98a' stroke='%230b5f6e' stroke-width='2'/%3E%3Cpath d='M25.5 23.5 29 27' stroke='%230b5f6e' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Atkinson+Hyperlegible+Mono:wght@400;600&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to main content</a>
+
+  <header class="top">
+    <div class="wrap top-inner">
+      <div class="brand">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+          <rect x="3" y="4" width="17" height="22" rx="2" fill="var(--surface)" stroke="currentColor" stroke-width="2"/>
+          <path d="M7 10h9M7 14h9M7 18h5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="21" cy="19" r="6" fill="var(--hl)" stroke="currentColor" stroke-width="2"/>
+          <path d="M25.5 23.5 29 27" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+        <div>
+          <h1 class="brand-name">SecondLook<span class="sr-only">: check your medical bill against your insurance.</span></h1>
+          <p class="brand-tag" aria-hidden="true">Check your medical bill against your insurance.</p>
+        </div>
+      </div>
+      <p class="saved-pill" id="total-saved" aria-live="polite" hidden></p>
+      <div class="toolbar" role="group" aria-label="Display settings">
+        <button type="button" id="btn-large" class="chip" aria-pressed="false">Larger text</button>
+        <button type="button" id="btn-theme" class="chip" aria-pressed="false">Dark mode</button>
+        <button type="button" id="btn-demo" class="chip" aria-pressed="false" title="Loads Maya's bill with no outside services, so the demo can't break">Demo mode</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="notice">
+    <div class="wrap">
+      <p><strong>Demo uses made-up bills. Nothing you upload is stored.</strong> SecondLook checks your bill against your insurer's statement. It does not judge whether the medical care or coding was right.</p>
+      <p id="demo-note" class="demo-note" hidden><b>Demo mode is on.</b> Maya's bill is loaded from saved data. No AI or voice services are used.</p>
+    </div>
+  </div>
+
+  <main id="main" class="wrap">
+
+    <!-- ============ Pick a bill ============ -->
+    <section class="panel pick" aria-labelledby="pick-h">
+      <h2 id="pick-h" class="h-sec">Pick a bill to check</h2>
+      <fieldset class="people" id="people">
+        <legend>Whose bills?</legend>
+        <div class="people-row" id="people-row"></div>
+      </fieldset>
+      <div class="pick-row">
+        <div class="field">
+          <label for="case-select">Test bill (made up)</label>
+          <select id="case-select"></select>
+        </div>
+        <p class="or" aria-hidden="true">or</p>
+        <button type="button" id="btn-upload-toggle" class="btn ghost" aria-expanded="false" aria-controls="upload-box">Upload your own</button>
+      </div>
+
+      <details class="claims" id="claims-details">
+        <summary id="claims-summary">See all claims</summary>
+        <div class="table-scroll" role="region" aria-labelledby="claims-summary" tabindex="0">
+          <table class="claims-table" id="claims-table"></table>
+        </div>
+      </details>
+
+      <form id="upload-box" class="upload" hidden novalidate>
+        <p class="hint">Upload a <b>PDF</b> or a clear photo (<b>PNG or JPG</b>) of each document. Gemini reads them, <b>you check the numbers</b>, and then SecondLook's rules look for errors. Nothing you upload is saved.</p>
+        <p class="hint" id="upload-nokey" hidden>Reading documents needs a Gemini key on this server, and none is set. You can still type the numbers in yourself.</p>
+        <div class="upload-grid">
+          <div class="drop" id="drop-bill" data-doc="bill">
+            <label for="file-bill"><b>Your hospital or doctor bill</b><span>Drag a file here, or choose one</span></label>
+            <input id="file-bill" type="file" accept=".pdf,.png,.jpg,.jpeg,application/pdf,image/png,image/jpeg">
+            <p class="drop-name" id="name-bill">No file chosen</p>
+          </div>
+          <div class="drop" id="drop-eob" data-doc="eob">
+            <label for="file-eob"><b>Your insurer's explanation of benefits (EOB)</b><span>Drag a file here, or choose one</span></label>
+            <input id="file-eob" type="file" accept=".pdf,.png,.jpg,.jpeg,application/pdf,image/png,image/jpeg">
+            <p class="drop-name" id="name-eob">No file chosen</p>
+          </div>
+        </div>
+        <div class="row">
+          <button type="submit" id="btn-read" class="btn">Read my documents</button>
+          <button type="button" id="btn-manual" class="btn ghost">Type the numbers in myself</button>
+          <p id="upload-msg" class="msg" role="status"></p>
+        </div>
+      </form>
+
+      <section id="review" class="review" hidden aria-labelledby="review-h">
+        <h3 id="review-h" tabindex="-1">Check what we read</h3>
+        <p class="hint">Compare these numbers with your papers and fix anything that's wrong. SecondLook only looks for errors after you press <b>Confirm &amp; Analyze</b>.</p>
+        <div id="review-issues" class="review-issues" aria-live="polite"></div>
+        <form id="review-form" class="review-form" novalidate></form>
+        <div class="row">
+          <button type="button" id="btn-analyze" class="btn">Confirm &amp; Analyze</button>
+          <button type="button" id="btn-review-cancel" class="btn ghost">Cancel</button>
+          <p id="review-msg" class="msg" role="status"></p>
+        </div>
+      </section>
+    </section>
+
+    <!-- ============ Result ============ -->
+    <section id="result" class="result" aria-labelledby="result-h" aria-live="polite">
+      <p class="eyebrow" id="reviewing">Loading…</p>
+      <h2 id="result-h" class="verdict">Checking your bill…</h2>
+      <div class="tiles" id="tiles"></div>
+      <ul class="notes" id="notes"></ul>
+    </section>
+
+    <!-- ============ Math + findings ============ -->
+    <div class="two-col">
+      <section class="panel" aria-labelledby="math-h">
+        <h2 id="math-h" class="h-sec">The math</h2>
+        <ol class="math" id="math"></ol>
+      </section>
+
+      <section class="panel" aria-labelledby="find-h">
+        <h2 id="find-h" class="h-sec">What we found</h2>
+        <p class="hint">Each finding comes from a fixed rule, not a guess. Tap <b>Show me</b> to see the exact lines.</p>
+        <ol class="findings" id="findings"></ol>
+      </section>
+    </div>
+
+    <!-- ============ Reconciliation ============ -->
+    <section class="panel recon-panel" id="recon-section" aria-labelledby="recon-h">
+      <div class="recon-head">
+        <div>
+          <h2 id="recon-h" class="h-sec">Your bill, line by line, next to your insurer's statement</h2>
+          <ul class="legend" aria-label="What the line labels mean">
+            <li><span class="st st-ok"><span aria-hidden="true">✓</span> Matched</span></li>
+            <li><span class="st st-dup"><span aria-hidden="true">×2</span> Duplicate</span></li>
+            <li><span class="st st-miss"><span aria-hidden="true">?</span> Not on insurer statement</span></li>
+            <li><span class="st st-diff"><span aria-hidden="true">≠</span> Price differs</span></li>
+            <li><span class="st st-dup"><span aria-hidden="true">+</span> Extra units</span></li>
+          </ul>
+        </div>
+        <div class="breakit-controls">
+          <button type="button" id="btn-break" class="btn ghost" aria-pressed="false">Break it (for judges)</button>
+        </div>
+      </div>
+
+      <div id="break-bar" class="break-bar" hidden>
+        <p><b>Break-it mode.</b> Change a charge, date or code, duplicate or delete a line, or change the totals. Then re-check. The rules run again on the server.</p>
+        <div class="row">
+          <button type="button" id="btn-recheck" class="btn">Re-check</button>
+          <button type="button" id="btn-reset" class="btn ghost">Reset to original</button>
+          <p id="break-msg" class="msg" role="status"></p>
+        </div>
+      </div>
+
+      <div class="recon" id="recon">
+        <svg class="connectors" id="connectors" aria-hidden="true" focusable="false"></svg>
+        <div class="doc doc-bill">
+          <h3 class="doc-h"><span class="doc-kind">The bill</span> <span id="bill-from" class="doc-from"></span></h3>
+          <div class="table-scroll" role="region" aria-label="Bill lines" tabindex="0">
+            <table class="lines" id="bill-table"></table>
+          </div>
+          <dl class="totals" id="bill-totals"></dl>
+        </div>
+        <div class="gutter" aria-hidden="true"></div>
+        <div class="doc doc-eob">
+          <h3 class="doc-h"><span class="doc-kind">Insurer statement (EOB)</span> <span id="eob-from" class="doc-from"></span></h3>
+          <div class="table-scroll" role="region" aria-label="Insurer statement lines" tabindex="0">
+            <table class="lines" id="eob-table"></table>
+          </div>
+          <dl class="totals" id="eob-totals"></dl>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ Letter + call script ============ -->
+    <section class="panel" aria-labelledby="letter-h">
+      <h2 id="letter-h" class="h-sec">Your dispute letter and call script</h2>
+      <p class="hint">Fill in the parts in [brackets]. Every fact in the letter comes from the checks above.</p>
+      <div class="tabs" role="tablist" aria-label="Letter or call script">
+        <button type="button" role="tab" id="tab-letter" aria-selected="true" aria-controls="pane-letter" class="tab">Letter</button>
+        <button type="button" role="tab" id="tab-script" aria-selected="false" aria-controls="pane-script" class="tab" tabindex="-1">Call script</button>
+      </div>
+      <div role="tabpanel" id="pane-letter" aria-labelledby="tab-letter">
+        <label for="letter-text" class="sr-only">Dispute letter</label>
+        <textarea id="letter-text" class="doc-text" rows="18" spellcheck="true"></textarea>
+      </div>
+      <div role="tabpanel" id="pane-script" aria-labelledby="tab-script" hidden>
+        <label for="script-text" class="sr-only">Call script</label>
+        <textarea id="script-text" class="doc-text" rows="12" spellcheck="true"></textarea>
+      </div>
+      <div class="row">
+        <button type="button" id="btn-copy" class="btn">Copy</button>
+        <button type="button" id="btn-read-results" class="btn ghost">Read results aloud</button>
+        <button type="button" id="btn-play-script" class="btn ghost">Play call script</button>
+        <button type="button" id="btn-stop" class="btn ghost" hidden>Stop</button>
+        <p id="letter-msg" class="msg" role="status"></p>
+      </div>
+    </section>
+
+    <!-- ============ Dispute tracker ============ -->
+    <section class="panel" id="dispute-section" aria-labelledby="dispute-h">
+      <h2 id="dispute-h" class="h-sec">Track your dispute</h2>
+      <p class="hint">SecondLook keeps track of your dispute, tells you when to follow up, and drafts the next letter. Only a resolved dispute counts as money saved.</p>
+      <div id="dispute-box" class="dispute-box"></div>
+      <p id="dispute-msg" class="msg" role="status"></p>
+    </section>
+
+    <!-- ============ Call practice ============ -->
+    <section class="panel" id="practice-section" aria-labelledby="practice-h">
+      <h2 id="practice-h" class="h-sec">Practice your billing call</h2>
+      <p class="hint"><b>Practice only. SecondLook never places real phone calls.</b> A pretend billing rep answers using only the facts we found. After the call, a fixed checklist scores what you said.</p>
+      <div class="row">
+        <button type="button" id="btn-practice-start" class="btn">Practice my dispute call</button>
+        <label class="check"><input type="checkbox" id="practice-voice" checked> Read the rep's lines aloud</label>
+        <p id="practice-mode" class="msg"></p>
+      </div>
+      <ol id="transcript" class="transcript" aria-live="polite" aria-label="Call transcript"></ol>
+      <form id="practice-form" class="practice-form" hidden>
+        <label for="practice-input">What you say to the rep <span class="msg">(Enter to send, Shift+Enter for a new line)</span></label>
+        <textarea id="practice-input" rows="3" placeholder="Hi, I'm calling about account…"></textarea>
+        <div class="row">
+          <button type="submit" id="btn-practice-say" class="btn">Say it</button>
+          <button type="button" id="btn-practice-finish" class="btn ghost">Finish and score my call</button>
+          <p id="turn-count" class="msg"></p>
+        </div>
+      </form>
+      <div id="checklist" class="checklist" aria-live="polite"></div>
+      <p id="practice-msg" class="msg" role="status"></p>
+    </section>
+
+    <!-- ============ Family cost history ============ -->
+    <section class="panel" id="family-section" aria-labelledby="family-h">
+      <h2 id="family-h" class="h-sec">Family costs and savings</h2>
+      <div class="family-top">
+        <div class="saving confirmed" id="family-saved-box">
+          <span class="k">Total saved</span><span class="v" id="family-saved">$0</span>
+          <span class="s">Counts resolved disputes only.</span>
+        </div>
+        <div class="saving potential">
+          <span class="k">Potential savings</span><span class="v" id="family-potential">$0</span>
+          <span class="s">Found by the checks. Not saved yet, and never added to Total saved.</span>
+        </div>
+      </div>
+      <div class="table-scroll" role="region" aria-label="Cost history by family member" tabindex="0">
+        <table class="cost-table" id="cost-table"></table>
+      </div>
+      <p class="hint"><b>Billed</b> is the provider's full price. <b>Allowed</b>, <b>Insurer paid</b> and <b>Your share</b> come from the insurer statements. <b>Potential</b> is what the checks found. <b>Saved</b> counts resolved disputes only.</p>
+      <p id="family-msg" class="msg" role="status"></p>
+    </section>
+
+    <!-- ============ Scoreboard ============ -->
+    <section class="panel scoreboard" aria-labelledby="score-h">
+      <h2 id="score-h" class="h-sec">How well does it work?</h2>
+      <p class="hint">The rules are tested on two separate sets of made-up bills. Neither set is used to build the other.</p>
+      <div id="score-sets" class="score-sets">Loading the test results…</div>
+      <div id="extraction-score" class="score-set" hidden></div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap">
+      <p>SecondLook compares a bill with the insurer's statement. The rules in code decide what is an error. AI only reads photos and rewords explanations, and its numbers are checked against the rules. This is not legal or medical advice. Built for OwlHacks 2026.</p>
+    </div>
+  </footer>
+
+  <!-- ============ Explainer panel ============ -->
+  <div id="explain" class="explain" role="dialog" aria-modal="false" aria-labelledby="explain-title" hidden>
+    <div class="explain-head">
+      <h2 id="explain-title" tabindex="-1">Explanation</h2>
+      <button type="button" id="explain-close" class="icon-btn" aria-label="Close explanation">
+        <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div id="explain-body" class="explain-body" aria-live="polite"></div>
+    <p id="explain-source" class="explain-source"></p>
+  </div>
+
+  <div id="sr-announce" class="sr-only" aria-live="assertive"></div>
+
+  <script src="demo-data.js"></script>
+  <script src="app.js"></script>
+  <script src="dispute-ui.js"></script>
+  <script src="family-ui.js"></script>
+  <script src="/validate.js"></script>
+  <script src="upload-ui.js"></script>
+</body>
+</html>

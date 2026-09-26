@@ -1,0 +1,130 @@
+{
+  "id": "case-10",
+  "title": "Maya, blood tests at a lab",
+  "profile": {
+    "id": "maya",
+    "name": "Maya Torres",
+    "relation": "self"
+  },
+  "bill": {
+    "id": "BILL-case-10",
+    "provider": {
+      "name": "Kestrel Lab Services",
+      "address": "9 Harbor Point Dr, Millbrook, PA 19001"
+    },
+    "patient": {
+      "name": "Maya Torres"
+    },
+    "account_number": "ACCT-94354732",
+    "statement_date": "2026-05-31",
+    "lines": [
+      {
+        "line_no": 1,
+        "date": "2026-04-27",
+        "code": "80053",
+        "description": "Comprehensive metabolic panel",
+        "units": 1,
+        "charge": 234
+      },
+      {
+        "line_no": 2,
+        "date": "2026-04-27",
+        "code": "80061",
+        "description": "Lipid panel (cholesterol test)",
+        "units": 1,
+        "charge": 114
+      },
+      {
+        "line_no": 3,
+        "date": "2026-04-27",
+        "code": "84443",
+        "description": "Thyroid test (TSH)",
+        "units": 1,
+        "charge": 124
+      },
+      {
+        "line_no": 4,
+        "date": "2026-04-27",
+        "code": "36415",
+        "description": "Blood draw",
+        "units": 1,
+        "charge": 32
+      }
+    ],
+    "adjustments": [
+      {
+        "description": "Contractual adjustment",
+        "amount": 215
+      }
+    ],
+    "insurance_payments": [
+      {
+        "date": "2026-05-18",
+        "payer": "Bluefinch Health Plan",
+        "amount": 201
+      }
+    ],
+    "patient_payments": [],
+    "amount_due": 88
+  },
+  "eob": {
+    "id": "EOB-case-10",
+    "insurer": "Bluefinch Health Plan",
+    "member": {
+      "name": "Maya Torres",
+      "id": "BFH482913"
+    },
+    "claim_number": "CLM-484948157",
+    "provider_name": "Kestrel Lab Services",
+    "network": "in-network",
+    "service_type": "lab",
+    "lines": [
+      {
+        "date": "2026-04-27",
+        "code": "80053",
+        "description": "Comprehensive metabolic panel",
+        "units": 1,
+        "billed": 169,
+        "allowed": 87,
+        "insurer_paid": 78,
+        "patient_resp": 9
+      },
+      {
+        "date": "2026-04-27",
+        "code": "80061",
+        "description": "Lipid panel (cholesterol test)",
+        "units": 1,
+        "billed": 114,
+        "allowed": 58,
+        "insurer_paid": 52,
+        "patient_resp": 6
+      },
+      {
+        "date": "2026-04-27",
+        "code": "84443",
+        "description": "Thyroid test (TSH)",
+        "units": 1,
+        "billed": 124,
+        "allowed": 60,
+        "insurer_paid": 54,
+        "patient_resp": 6
+      },
+      {
+        "date": "2026-04-27",
+        "code": "36415",
+        "description": "Blood draw",
+        "units": 1,
+        "billed": 32,
+        "allowed": 19,
+        "insurer_paid": 17,
+        "patient_resp": 2
+      }
+    ],
+    "totals": {
+      "billed": 439,
+      "allowed": 224,
+      "insurer_paid": 201,
+      "patient_resp": 23
+    }
+  }
+}

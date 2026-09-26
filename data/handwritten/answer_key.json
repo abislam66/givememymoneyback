@@ -1,0 +1,10 @@
+{
+  "hw-01": { "errors": [], "expected_owe": 28, "why": "97110 on April 2 and April 9 are different visits; both are on the EOB." },
+  "hw-02": { "errors": [], "expected_owe": 48, "why": "Bill: 97110 x 2 units ($240). EOB: two 97110 lines x 1 unit ($120 each). Same total units and charges." },
+  "hw-03": { "errors": [], "expected_owe": 48, "why": "Bill: two 97110 lines x 1 unit. EOB: one 97110 line x 2 units. Same total units and charges." },
+  "hw-04": { "errors": [{ "type": "duplicate_charge", "amount": 120 }], "expected_owe": 48, "why": "Billed 3 units of 97110 at $120 each; the insurer processed 2. One extra unit = $120." },
+  "hw-05": { "errors": [], "expected_owe": 75, "why": "Supplies (99070) were denied: allowed $0, insurer paid $0, patient owes the full $45. No contractual adjustment applies to a denied line. $30 copay + $45 = $75." },
+  "hw-06": { "errors": [], "expected_owe": 12, "why": "amount_due $87 includes a $75 previous balance that is set aside, not checked. This visit's share is $12." },
+  "hw-07": { "errors": [], "expected_owe": 36.32, "why": "Correct bill with cents: 220.55 - 100.75 - 83.48 = 36.32." },
+  "hw-08": { "errors": [{ "type": "charge_mismatch", "amount": 35.5 }, { "type": "missing_insurance_payment", "amount": 212.4 }], "expected_owe": 320.75, "why": "96374 billed $280.50 vs $245.00 on the EOB; bill shows $933.00 of the $1,145.40 the insurer paid. 568.65 - 35.50 - 212.40 = 320.75." }
+}

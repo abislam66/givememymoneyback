@@ -1,0 +1,107 @@
+{
+  "id": "case-11",
+  "title": "Leo, ER visit for a twisted ankle (out-of-network)",
+  "profile": {
+    "id": "leo",
+    "name": "Leo Torres",
+    "relation": "child"
+  },
+  "bill": {
+    "id": "BILL-case-11",
+    "provider": {
+      "name": "Stonebridge Emergency Center",
+      "address": "88 Quarry Lane, Millbrook, PA 19001"
+    },
+    "patient": {
+      "name": "Leo Torres"
+    },
+    "account_number": "ACCT-83863983",
+    "statement_date": "2026-06-11",
+    "lines": [
+      {
+        "line_no": 1,
+        "date": "2026-05-08",
+        "code": "99284",
+        "description": "ER visit, serious (level 4)",
+        "units": 1,
+        "charge": 1146
+      },
+      {
+        "line_no": 2,
+        "date": "2026-05-08",
+        "code": "73610",
+        "description": "Ankle X-ray, 3 or more views",
+        "units": 1,
+        "charge": 385
+      },
+      {
+        "line_no": 3,
+        "date": "2026-05-08",
+        "code": "29540",
+        "description": "Ankle strapping",
+        "units": 1,
+        "charge": 151
+      }
+    ],
+    "adjustments": [],
+    "insurance_payments": [
+      {
+        "date": "2026-05-29",
+        "payer": "Bluefinch Health Plan",
+        "amount": 654
+      }
+    ],
+    "patient_payments": [],
+    "amount_due": 1028
+  },
+  "eob": {
+    "id": "EOB-case-11",
+    "insurer": "Bluefinch Health Plan",
+    "member": {
+      "name": "Leo Torres",
+      "id": "BFH482915"
+    },
+    "claim_number": "CLM-120217036",
+    "provider_name": "Stonebridge Emergency Center",
+    "network": "out-of-network",
+    "service_type": "emergency",
+    "lines": [
+      {
+        "date": "2026-05-08",
+        "code": "99284",
+        "description": "ER visit, serious (level 4)",
+        "units": 1,
+        "billed": 1146,
+        "allowed": 587,
+        "insurer_paid": 437,
+        "patient_resp": 150
+      },
+      {
+        "date": "2026-05-08",
+        "code": "73610",
+        "description": "Ankle X-ray, 3 or more views",
+        "units": 1,
+        "billed": 385,
+        "allowed": 214,
+        "insurer_paid": 171,
+        "patient_resp": 43
+      },
+      {
+        "date": "2026-05-08",
+        "code": "29540",
+        "description": "Ankle strapping",
+        "units": 1,
+        "billed": 151,
+        "allowed": 57,
+        "insurer_paid": 46,
+        "patient_resp": 11
+      }
+    ],
+    "totals": {
+      "billed": 1682,
+      "allowed": 858,
+      "insurer_paid": 654,
+      "patient_resp": 204
+    }
+  }
+}

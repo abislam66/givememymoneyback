@@ -1,0 +1,37 @@
+{
+  "id": "hw-06",
+  "title": "Previous balance of $75 carried over onto a correct lab bill",
+  "profile": { "id": "hw-hana", "name": "Hana Kobayashi", "relation": "self" },
+  "bill": {
+    "id": "BILL-hw-06",
+    "provider": { "name": "Kestrel Lab Services", "address": "9 Harbor Point Dr, Millbrook, PA 19001" },
+    "patient": { "name": "Hana Kobayashi" },
+    "account_number": "ACCT-55121076",
+    "statement_date": "2026-07-20",
+    "previous_balance": 75,
+    "lines": [
+      { "line_no": 1, "date": "2026-06-16", "code": "80053", "description": "Comprehensive metabolic panel", "units": 1, "charge": 190 },
+      { "line_no": 2, "date": "2026-06-16", "code": "85025", "description": "Complete blood count (CBC)", "units": 1, "charge": 70 },
+      { "line_no": 3, "date": "2026-06-16", "code": "36415", "description": "Blood draw", "units": 1, "charge": 30 }
+    ],
+    "adjustments": [{ "description": "Contractual adjustment", "amount": 170 }],
+    "insurance_payments": [{ "date": "2026-07-07", "payer": "Cardinal Shield Insurance", "amount": 108 }],
+    "patient_payments": [],
+    "amount_due": 87
+  },
+  "eob": {
+    "id": "EOB-hw-06",
+    "insurer": "Cardinal Shield Insurance",
+    "member": { "name": "Hana Kobayashi", "id": "CSI-300934" },
+    "claim_number": "CLM-640118466",
+    "provider_name": "Kestrel Lab Services",
+    "network": "in-network",
+    "service_type": "lab",
+    "lines": [
+      { "date": "2026-06-16", "code": "80053", "description": "Comprehensive metabolic panel", "units": 1, "billed": 190, "allowed": 80, "insurer_paid": 72, "patient_resp": 8 },
+      { "date": "2026-06-16", "code": "85025", "description": "Complete blood count (CBC)", "units": 1, "billed": 70, "allowed": 30, "insurer_paid": 27, "patient_resp": 3 },
+      { "date": "2026-06-16", "code": "36415", "description": "Blood draw", "units": 1, "billed": 30, "allowed": 10, "insurer_paid": 9, "patient_resp": 1 }
+    ],
+    "totals": { "billed": 290, "allowed": 120, "insurer_paid": 108, "patient_resp": 12 }
+  }
+}

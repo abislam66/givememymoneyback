@@ -1,0 +1,130 @@
+{
+  "id": "case-02",
+  "title": "Daniel, yearly checkup at the family doctor",
+  "profile": {
+    "id": "daniel",
+    "name": "Daniel Torres",
+    "relation": "spouse"
+  },
+  "bill": {
+    "id": "BILL-case-02",
+    "provider": {
+      "name": "Brightwater Family Practice",
+      "address": "45 Elm Court, Fairhaven, PA 19000"
+    },
+    "patient": {
+      "name": "Daniel Torres"
+    },
+    "account_number": "ACCT-78939727",
+    "statement_date": "2026-02-17",
+    "lines": [
+      {
+        "line_no": 1,
+        "date": "2026-01-14",
+        "code": "99213",
+        "description": "Office visit, established patient",
+        "units": 1,
+        "charge": 213
+      },
+      {
+        "line_no": 2,
+        "date": "2026-01-14",
+        "code": "80061",
+        "description": "Lipid panel (cholesterol test)",
+        "units": 1,
+        "charge": 130
+      },
+      {
+        "line_no": 3,
+        "date": "2026-01-14",
+        "code": "85025",
+        "description": "Complete blood count (CBC)",
+        "units": 1,
+        "charge": 81
+      },
+      {
+        "line_no": 4,
+        "date": "2026-01-14",
+        "code": "36415",
+        "description": "Blood draw",
+        "units": 1,
+        "charge": 28
+      }
+    ],
+    "adjustments": [
+      {
+        "description": "Contractual adjustment",
+        "amount": 235
+      }
+    ],
+    "insurance_payments": [
+      {
+        "date": "2026-02-04",
+        "payer": "Bluefinch Health Plan",
+        "amount": 174
+      }
+    ],
+    "patient_payments": [],
+    "amount_due": 43
+  },
+  "eob": {
+    "id": "EOB-case-02",
+    "insurer": "Bluefinch Health Plan",
+    "member": {
+      "name": "Daniel Torres",
+      "id": "BFH482914"
+    },
+    "claim_number": "CLM-522909128",
+    "provider_name": "Brightwater Family Practice",
+    "network": "in-network",
+    "service_type": "office",
+    "lines": [
+      {
+        "date": "2026-01-14",
+        "code": "99213",
+        "description": "Office visit, established patient",
+        "units": 1,
+        "billed": 213,
+        "allowed": 93,
+        "insurer_paid": 63,
+        "patient_resp": 30
+      },
+      {
+        "date": "2026-01-14",
+        "code": "80061",
+        "description": "Lipid panel (cholesterol test)",
+        "units": 1,
+        "billed": 130,
+        "allowed": 75,
+        "insurer_paid": 67,
+        "patient_resp": 8
+      },
+      {
+        "date": "2026-01-14",
+        "code": "85025",
+        "description": "Complete blood count (CBC)",
+        "units": 1,
+        "billed": 81,
+        "allowed": 33,
+        "insurer_paid": 30,
+        "patient_resp": 3
+      },
+      {
+        "date": "2026-01-14",
+        "code": "36415",
+        "description": "Blood draw",
+        "units": 1,
+        "billed": 28,
+        "allowed": 16,
+        "insurer_paid": 14,
+        "patient_resp": 2
+      }
+    ],
+    "totals": {
+      "billed": 452,
+      "allowed": 217,
+      "insurer_paid": 174,
+      "patient_resp": 43
+    }
+  }
+}

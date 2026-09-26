@@ -1,0 +1,36 @@
+{
+  "id": "hw-07",
+  "title": "Cents and rounding: a correct bill with odd amounts",
+  "profile": { "id": "hw-marcus", "name": "Marcus Bell", "relation": "self" },
+  "bill": {
+    "id": "BILL-hw-07",
+    "provider": { "name": "Brightwater Family Practice", "address": "45 Elm Court, Fairhaven, PA 19000" },
+    "patient": { "name": "Marcus Bell" },
+    "account_number": "ACCT-55121094",
+    "statement_date": "2026-08-03",
+    "lines": [
+      { "line_no": 1, "date": "2026-07-01", "code": "99213", "description": "Office visit, established patient", "units": 1, "charge": 142.37 },
+      { "line_no": 2, "date": "2026-07-01", "code": "80061", "description": "Lipid panel (cholesterol test)", "units": 1, "charge": 58.19 },
+      { "line_no": 3, "date": "2026-07-01", "code": "36415", "description": "Blood draw", "units": 1, "charge": 19.99 }
+    ],
+    "adjustments": [{ "description": "Contractual adjustment", "amount": 100.75 }],
+    "insurance_payments": [{ "date": "2026-07-22", "payer": "Cardinal Shield Insurance", "amount": 83.48 }],
+    "patient_payments": [],
+    "amount_due": 36.32
+  },
+  "eob": {
+    "id": "EOB-hw-07",
+    "insurer": "Cardinal Shield Insurance",
+    "member": { "name": "Marcus Bell", "id": "CSI-301046" },
+    "claim_number": "CLM-640118503",
+    "provider_name": "Brightwater Family Practice",
+    "network": "in-network",
+    "service_type": "office",
+    "lines": [
+      { "date": "2026-07-01", "code": "99213", "description": "Office visit, established patient", "units": 1, "billed": 142.37, "allowed": 88.19, "insurer_paid": 58.19, "patient_resp": 30.00 },
+      { "date": "2026-07-01", "code": "80061", "description": "Lipid panel (cholesterol test)", "units": 1, "billed": 58.19, "allowed": 23.47, "insurer_paid": 18.78, "patient_resp": 4.69 },
+      { "date": "2026-07-01", "code": "36415", "description": "Blood draw", "units": 1, "billed": 19.99, "allowed": 8.14, "insurer_paid": 6.51, "patient_resp": 1.63 }
+    ],
+    "totals": { "billed": 220.55, "allowed": 119.80, "insurer_paid": 83.48, "patient_resp": 36.32 }
+  }
+}
