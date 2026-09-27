@@ -1,0 +1,26 @@
+GiveMeMyMoneyBack test documents: ANSWER KEY
+All six documents are fictional (made-up people, providers, insurers and numbers) for software testing.
+Upload each Medical_Bill together with the EOB of the same number.
+
+TEST 1: DUPLICATE CHARGE
+Files: Test_1_Medical_Bill.pdf + Test_1_EOB.pdf  (Pinecrest Regional Hospital, ER visit, 09/06/2026)
+The chest X-ray (CPT 71046, $342.00) is billed twice; the EOB processed it once (remark M86).
+Bill: charges $2,008.00 - insurance $622.23 - adjustments $888.22 = amount due $497.55
+Expected finding: Charged twice, $342.00
+Expected "you likely owe": $155.55 (matches the EOB)
+Potential savings: $342.00
+
+TEST 2: MISSING INSURANCE PAYMENT
+Files: Test_2_Medical_Bill.pdf + Test_2_EOB.pdf  (Riverbend Imaging, MRI visit, 08/28/2026)
+The insurer paid $1,083.98, but the bill credits only $399.71.
+Bill: charges $3,133.00 - insurance $399.71 - adjustments $1,778.02 = amount due $955.27
+Expected finding: Insurance payment not applied, $684.27
+Expected "you likely owe": $271.00 (matches the EOB)
+Potential savings: $684.27
+
+TEST 3: CORRECT BILL (NO PROBLEMS)
+Files: Test_3_Medical_Bill.pdf + Test_3_EOB.pdf  (Willow Creek Medical Group, office visit, 09/03/2026)
+Several services, a deductible and cents; the bill matches the EOB exactly.
+Bill: charges $641.00 - insurance $230.42 - adjustments $310.88 = amount due $99.70
+Expected finding: none (the bill matches your insurer's statement)
+Expected "you likely owe": $99.70
