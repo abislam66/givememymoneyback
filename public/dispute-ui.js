@@ -19,6 +19,10 @@
   };
 
   function currentDispute() {
+    if (state.analysisId) {
+      const saved = [...disputes.values()].filter((d) => d.analysis_id === state.analysisId);
+      return saved.find((d) => d.status !== 'resolved') || saved[saved.length - 1] || null;
+    }
     if (!state.caseId) return uploadDisputeId ? disputes.get(uploadDisputeId) : null;
     const mine = [...disputes.values()].filter((d) => d.case_id === state.caseId);
     return mine.find((d) => d.status !== 'resolved') || mine[mine.length - 1] || null;
@@ -129,8 +133,10 @@
       const d = await fn();
       disputes.set(d.id, d);
       if (!d.case_id) uploadDisputeId = d.id;
+      if (!d.case_id && d.analysis_id) state.analysisId = d.analysis_id;
       renderDispute();
       if (window.SecondLookRefreshFamily) window.SecondLookRefreshFamily();
+      if (window.SecondLookRefreshAnalyses) window.SecondLookRefreshAnalyses();
       setMsg(msg, doneText(d), 'good');
       announce(doneText(d));
       const f = focusSel && $(focusSel);
@@ -146,7 +152,7 @@
     const d = currentDispute();
     if (b.id === 'btn-track') {
       act(async () => {
-        const out = await api('/api/disputes', { case_id: state.caseId, profile: state.profile, bill: state.bill, eob: state.eob });
+        const out = await api('/api/disputes', { case_id: state.caseId, analysis_id: state.analysisId, profile: state.profile, bill: state.bill, eob: state.eob });
         return out.dispute;
       }, '#btn-sent', (x) => `Tracking dispute ${x.id} for ${money(x.disputed_amount)}.`);
     } else if (b.id === 'btn-sent' && d) {
@@ -263,7 +269,7 @@
 
   // ---------- hooks ----------
   window.SecondLookAfterRender = () => {
-    const key = state.caseId || 'upload';
+    const key = state.caseId || (state.analysisId ? `saved-${state.analysisId}` : 'upload');
     if (key !== lastKey) {
       lastKey = key;
       resetPractice();

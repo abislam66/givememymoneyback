@@ -591,3 +591,47 @@ details summary { cursor: pointer; font-weight: 700; color: var(--accent); paddi
 .hear-hint { font-size: var(--fs-0); color: var(--muted); }
 kbd { font-family: var(--mono); font-size: .8rem; border: 1px solid var(--line-strong); border-bottom-width: 2px; border-radius: 6px; padding: 0 6px; background: var(--surface); color: var(--ink); }
 #hear-status { color: var(--ok); font-weight: 700; }
+
+/* ================= Account (top bar) + My analyses ================= */
+.account { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; min-width: 0; }
+.account:empty { display: none; }
+.avatar {
+  width: 38px; height: 38px; flex: none; border-radius: 50%; display: grid; place-items: center;
+  background: var(--side-grad); color: #fff; font-family: var(--display); font-weight: 700; font-size: 1.05rem;
+}
+.account.guest .avatar { background: var(--surface-3); color: var(--muted); }
+.acct-text { display: grid; line-height: 1.2; min-width: 0; }
+.acct-name { font-weight: 700; max-width: 22ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.acct-sub { font-size: .8rem; color: var(--muted); }
+a.chip { text-decoration: none; }
+
+.mine-items { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.mine-item {
+  display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 2fr) auto; gap: 12px 20px; align-items: center;
+  padding: 14px 16px; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--surface);
+}
+.mine-item.is-open { border-color: var(--primary); box-shadow: inset 4px 0 0 var(--primary); }
+.mine-main { display: grid; gap: 2px; min-width: 0; }
+.mine-title { font-weight: 700; overflow-wrap: anywhere; }
+.mine-now { font-size: .78rem; font-weight: 700; color: var(--primary); background: var(--primary-soft); border-radius: 999px; padding: 2px 8px; margin-left: 4px; white-space: nowrap; }
+.mine-meta { font-size: var(--fs-0); color: var(--muted); }
+.mine-nums { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px 14px; margin: 0; }
+.mine-nums div { display: grid; gap: 2px; min-width: 0; }
+.mine-nums dt { font-size: .76rem; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+.mine-nums dd { margin: 0; font-weight: 700; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.mine-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+@media (max-width: 1100px) {
+  .mine-item { grid-template-columns: minmax(0, 1fr) auto; }
+  .mine-nums { grid-column: 1 / -1; grid-row: 2; }
+}
+@media (max-width: 560px) {
+  .mine-item { grid-template-columns: minmax(0, 1fr); }
+  .mine-nums { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-row: auto; }
+  .acct-sub { display: none; }
+}
+
+/* ================= Empty states (nothing checked yet) ================= */
+.empty-state { display: none; }
+body.no-result .empty-state { display: block; color: var(--muted); }
+body.no-result #result, body.no-result .problems, body.no-result #ask-section, body.no-result #math-details,
+body.no-result #recon-section, body.no-result #step-dispute .actions, body.no-result #letter-panel, body.no-result #dispute-section { display: none; }

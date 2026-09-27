@@ -1,5 +1,7 @@
 // Family Bill Manager and Cost History. Numbers come from /api/family (documents + rules + disputes).
 // Total saved counts resolved disputes only; potential savings are always shown apart from it.
+// The Family section is hidden on the main page (its bills are fictional); /classic/ still shows it.
+// Here this file only keeps the "Total saved" pill in the top bar up to date.
 
 (() => {
   'use strict';
@@ -21,6 +23,14 @@
 
   function people() {
     return family ? [...family.people].sort((a, b) => (ORDER[a.profile.relation] ?? 9) - (ORDER[b.profile.relation] ?? 9)) : [];
+  }
+
+  function renderPill() {
+    const pill = $('#total-saved');
+    if (!pill) return;
+    pill.hidden = false;
+    pill.textContent = `Total saved: ${money(family.total_saved)}`;
+    pill.title = 'Counts resolved disputes only';
   }
 
   function renderPeople() {
@@ -76,14 +86,14 @@
     $('#family-saved').textContent = money(family.total_saved);
     $('#family-saved-box').classList.toggle('is-saved', family.total_saved > 0);
     $('#family-potential').textContent = money(family.family.potential_savings);
-    const pill = $('#total-saved');
-    pill.hidden = false;
-    pill.textContent = `Total saved: ${money(family.total_saved)}`;
-    pill.title = 'Counts resolved disputes only';
   }
+
+  const hasFamily = Boolean(document.getElementById('family-section'));
 
   function renderAll() {
     if (!family) return;
+    renderPill();
+    if (!hasFamily) return;
     renderPeople();
     renderClaims();
     renderCost();
@@ -92,10 +102,10 @@
   async function refresh() {
     try {
       family = await api('/api/family');
-      setMsg($('#family-msg'), '');
+      if (hasFamily) setMsg($('#family-msg'), '');
       renderAll();
     } catch (e) {
-      setMsg($('#family-msg'), "Family totals aren't available right now. Is the server running?", 'err');
+      if (hasFamily) setMsg($('#family-msg'), "Family totals aren't available right now. Is the server running?", 'err');
     }
   }
 
@@ -116,7 +126,7 @@
   const prevAfter = window.SecondLookAfterRender;
   window.SecondLookAfterRender = (s) => {
     if (typeof prevAfter === 'function') prevAfter(s);
-    if (family) renderClaims();
+    if (family && hasFamily) renderClaims();
   };
   window.SecondLookRefreshFamily = refresh;
 

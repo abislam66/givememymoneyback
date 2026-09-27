@@ -19,6 +19,7 @@
     breakIt: false,
     status: { gemini: false, elevenlabs: false },
     demo: false,
+    analysisId: null, // the saved analysis on screen (signed-in users), if any
   };
 
   // ---------- small helpers ----------
@@ -64,9 +65,11 @@
     const ctrl = new AbortController();
     const timer = setTimeout(() => ctrl.abort(), timeout);
     try {
+      // Who is asking: a signed-in token, a demo guest id, or nothing (public/auth.js).
+      const who = window.SecondLookAuth ? await window.SecondLookAuth.headers() : {};
       const res = await fetch(path, {
         method: method || (body ? 'POST' : 'GET'),
-        headers: { ...(body ? { 'Content-Type': 'application/json' } : {}), ...(state.demo ? { 'X-SecondLook-Demo': '1' } : {}) },
+        headers: { ...(body ? { 'Content-Type': 'application/json' } : {}), ...(state.demo ? { 'X-SecondLook-Demo': '1' } : {}), ...who },
         body: body ? JSON.stringify(body) : undefined,
         signal: ctrl.signal,
       });
@@ -125,6 +128,9 @@
   }
 
   // ---------- loading cases ----------
+  // Three fictional example bills are offered to people. The other test cases stay in the test sets and scoreboards.
+  const EXAMPLES = ['case-01', 'case-11', 'case-02'];
+
   async function loadCaseList() {
     state.cases = await api('/api/cases');
     fillCaseSelect();
@@ -133,30 +139,22 @@
   // Fill the dropdown, optionally with one family member's claims only.
   function fillCaseSelect(profileId) {
     const sel = $('#case-select');
-    const groups = new Map();
-    state.cases.filter((c) => !profileId || (c.profile && c.profile.id === profileId)).forEach((c) => {
-      const k = c.profile ? c.profile.id : 'other';
-      if (!groups.has(k)) groups.set(k, { profile: c.profile, items: [] });
-      groups.get(k).items.push(c);
+    const shown = EXAMPLES.map((id) => state.cases.find((c) => c.id === id)).filter(Boolean)
+      .filter((c) => !profileId || (c.profile && c.profile.id === profileId));
+    sel.innerHTML = '<option value="">Choose an example…</option>';
+    shown.forEach((c) => {
+      const o = document.createElement('option');
+      o.value = c.id;
+      o.textContent = `${c.title} (fictional)`;
+      sel.appendChild(o);
     });
-    sel.innerHTML = '';
-    for (const { profile, items } of groups.values()) {
-      const og = document.createElement('optgroup');
-      og.label = profile ? `${profile.name} (${profile.relation})` : 'Other';
-      items.forEach((c) => {
-        const o = document.createElement('option');
-        o.value = c.id;
-        o.textContent = c.title;
-        og.appendChild(o);
-      });
-      sel.appendChild(og);
-    }
     if (state.caseId && sel.querySelector(`option[value="${state.caseId}"]`)) sel.value = state.caseId;
   }
 
   async function loadCase(id) {
     const c = await api(`/api/cases/${encodeURIComponent(id)}`);
     state.caseId = c.id;
+    state.analysisId = null;
     state.title = c.title;
     state.profile = c.profile;
     state.original = { bill: clone(c.bill), eob: clone(c.eob) };
@@ -182,6 +180,7 @@
   function loadDemoHero() {
     const c = DEMO.case;
     state.caseId = c.id;
+    state.analysisId = null;
     state.title = c.title;
     state.profile = c.profile;
     state.original = { bill: clone(c.bill), eob: clone(c.eob) };
@@ -193,23 +192,29 @@
     renderAll();
   }
 
+  // Offline fallback only: if the server can't be reached, show the saved example (Maya's fictional bill)
+  // with no outside services. There is no button for this; it is not a separate mode for people to pick.
   function setDemo(on) {
     state.demo = on && Boolean(DEMO);
-    $('#btn-demo').setAttribute('aria-pressed', String(state.demo));
     $('#demo-note').hidden = !state.demo;
-    pref('demo', state.demo ? '1' : '0');
     stopSpeaking();
     if (state.demo) {
       loadDemoHero();
       renderScoreboard(DEMO.scoreboard);
-      announce("Demo mode on. Maya's bill is loaded. No outside services are used.");
-    } else {
-      announce('Demo mode off.');
     }
+  }
+
+  // Nothing checked yet (a signed-in person who hasn't uploaded or opened anything): show the empty states.
+  function renderEmpty() {
+    document.body.classList.add('no-result');
+    $('#result-h').textContent = 'No bill checked yet.';
+    $('#reviewing').textContent = 'Upload your bill and EOB, open a saved analysis, or try an example.';
+    if (typeof window.SecondLookAfterRender === 'function') window.SecondLookAfterRender(state);
   }
 
   // ---------- render ----------
   function renderAll() {
+    document.body.classList.toggle('no-result', !state.result);
     keepFocus(() => {
       renderHero();
       renderMath();
@@ -767,10 +772,12 @@
 
   // ---------- documents from the upload + review screen (public/upload-ui.js) ----------
   // The person has confirmed the numbers; from here the deterministic rules take over.
-  async function useDocuments({ bill, eob, title }) {
+  async function useDocuments({ bill, eob, title, analysisId = null }) {
     stopSpeaking();
     if (state.breakIt) setBreakIt(false);
     state.caseId = null;
+    state.analysisId = analysisId;
+    $('#case-select').value = '';
     state.title = title || 'Your uploaded bill';
     state.profile = null;
     state.bill = clone(bill);
@@ -810,7 +817,7 @@
   function renderScoreboard(sb) {
     const sets = sb.sets || [{ id: 'generated', name: `Generated set (${sb.totals.cases} cases)`, totals: sb.totals, cases: sb.cases }];
     const fmt = (a) => (a.length ? a.map((x) => `<code>${esc(x)}</code>`).join('<br>') : '<span aria-label="none">–</span>');
-    const what = { generated: 'Made-up bills built by a program, with errors planted on purpose.', handwritten: 'Tricky cases written by hand: units split across lines, denied lines, carried-over balances, cents.' };
+    const what = { generated: 'Fictional bills built by a program, with errors planted on purpose.', handwritten: 'Tricky cases written by hand: units split across lines, denied lines, carried-over balances, cents.' };
     $('#score-sets').innerHTML = sets.map((set) => {
       const t = set.totals;
       const all = t.caught === t.planted && t.false_alarms === 0 && t.owe_correct === t.cases;
@@ -831,6 +838,7 @@
   // ---------- wire up ----------
   function bind() {
     $('#case-select').addEventListener('change', async (e) => {
+      if (!e.target.value) return;
       stopSpeaking();
       try { await loadCase(e.target.value); announce(`Loaded ${state.title}.`); } catch (err) { showFatal(err.message); }
     });
@@ -857,7 +865,6 @@
     });
 
     $('#btn-break').addEventListener('click', () => setBreakIt(!state.breakIt));
-    $('#btn-demo').addEventListener('click', () => setDemo(!state.demo));
     $('#btn-recheck').addEventListener('click', () => recheck());
     $('#btn-reset').addEventListener('click', async () => {
       state.bill = clone(state.original.bill);
@@ -903,22 +910,19 @@
   async function start() {
     initSettings();
     bind();
-    if (!DEMO) $('#btn-demo').hidden = true;
-    if (pref('demo') === '1' && DEMO) {
-      // Demo mode: everything on screen comes from the bundle first, then the case list loads if the server answers.
-      setDemo(true);
-      api('/api/cases').then(() => loadCaseList()).then(() => { $('#case-select').value = state.caseId || 'case-01'; }).catch(() => {});
-      return;
-    }
+    pref('demo', '0'); // an old saved "demo mode" choice no longer applies
+    // "Try an example" (no account) opens on Maya's fictional bill; signed-in people start at the upload step.
+    const exampleVisit = Boolean(window.SecondLookAuth && window.SecondLookAuth.isGuest());
     try {
       const st = await api('/api/status').catch(() => null);
       if (st) state.status = st;
       await loadCaseList();
-      await loadCase('case-01');
+      if (exampleVisit) await loadCase('case-01');
+      else renderEmpty();
     } catch (e) {
       if (DEMO) {
         setDemo(true);
-        announce("We couldn't reach the server, so demo mode is on.");
+        announce("We couldn't reach the server, so we're showing a saved example.");
       } else showFatal(e.message);
     }
     loadScoreboard();

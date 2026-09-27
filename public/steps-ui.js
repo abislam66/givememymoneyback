@@ -1,6 +1,6 @@
 // Sidebar navigation (compact top navigation on phones): marks the section on screen (aria-current),
 // shows its name in the top bar, and shows small status badges read from what the page already rendered.
-// Also: "Try demo", the dispute letter button, and the no-key note on the upload cards. Computes no money itself.
+// Also: "Try an example", the dispute letter button, and the no-key note on the upload cards. Computes no money itself.
 
 (() => {
   'use strict';
@@ -54,7 +54,7 @@
     // The upload cards are always shown, so the "no Gemini key" note follows the server status here.
     $('#upload-nokey').hidden = Boolean(state.status && state.status.gemini) && !state.demo;
     const reviewing = !$('#review').hidden;
-    badge('sn-upload', state.caseId ? 'Test bill' : (state.result ? 'Your papers' : ''));
+    badge('sn-upload', state.caseId ? 'Example' : (state.result ? 'Your papers' : ''));
     badge('sn-review', reviewing ? 'Check the numbers' : (state.caseId ? 'Not needed' : (state.result ? 'Done' : '')), reviewing ? 'warn' : '');
     const r = state.result;
     if (!r) return;
@@ -69,10 +69,9 @@
   const tiles = $('#tiles');
   if (tiles) new MutationObserver(update).observe(tiles, { childList: true });
   new MutationObserver(update).observe($('#review'), { attributes: true, attributeFilter: ['hidden'] });
-  $('#btn-demo').addEventListener('click', () => setTimeout(update, 0));
   update();
 
-  // "Try demo": load Maya's ER bill (the hero case) and go to the results.
+  // "Try an example": load Maya's fictional ER bill (the hero case) and go to the results.
   const tryDemo = $('#btn-try-demo');
   if (tryDemo) {
     tryDemo.addEventListener('click', () => {

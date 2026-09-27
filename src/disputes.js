@@ -1,4 +1,6 @@
 // In-memory dispute tracker. Status: draft -> sent -> follow_up_due -> resolved.
+// Every dispute has an owner (a signed-in user, a guest viewing an example, or 'public' for /classic/) and is only
+// visible to that owner. src/accounts.js saves signed-in users' disputes to Supabase after each change.
 // Flags always come from the rules engine. Confirmed savings only exist after resolution.
 
 const { check, normalize, round2, money } = require('./rules');
@@ -30,19 +32,20 @@ function escalationPath(d) {
 }
 
 function publicView(d) {
-  const { bill, eob, ...rest } = d; // eslint-disable-line no-unused-vars
+  const { bill, eob, owner, ...rest } = d; // eslint-disable-line no-unused-vars
   return rest;
 }
 
-function create({ case_id, profile, bill: rawBill, eob: rawEob }) {
+function create({ owner = 'public', case_id, analysis_id, profile, bill: rawBill, eob: rawEob }) {
   const { bill, eob } = normalize(rawBill, rawEob);
   if (!bill.lines.length || !eob.lines.length) throw new DisputeError('A dispute needs a bill and an insurer statement.');
   const result = check(bill, eob);
   if (!result.flags.length) throw new DisputeError('There is nothing to dispute on this bill. It matches your insurer\'s statement.');
 
-  // One open dispute per test case at a time.
-  if (case_id) {
-    const open = [...store.values()].find((d) => d.case_id === case_id && d.status !== 'resolved');
+  // One open dispute per test case (or saved analysis) at a time, per owner.
+  if (case_id || analysis_id) {
+    const open = [...store.values()].find((d) => d.owner === owner && d.status !== 'resolved'
+      && ((analysis_id && d.analysis_id === analysis_id) || (!analysis_id && case_id && d.case_id === case_id)));
     if (open) return { dispute: publicView(open), existing: true };
   }
 
@@ -50,6 +53,8 @@ function create({ case_id, profile, bill: rawBill, eob: rawEob }) {
   const s = result.summary;
   const d = {
     id: `D${String(seq).padStart(3, '0')}`,
+    owner,
+    analysis_id: analysis_id || null,
     case_id: case_id || null,
     profile_id: (profile && profile.id) || null,
     profile_name: (profile && profile.name) || (bill.patient && bill.patient.name) || '',
@@ -85,14 +90,14 @@ function create({ case_id, profile, bill: rawBill, eob: rawEob }) {
   return { dispute: publicView(d), existing: false };
 }
 
-function get(id) {
+function get(id, owner = 'public') {
   const d = store.get(id);
-  if (!d) throw new DisputeError('We could not find that dispute. The server may have restarted.', 404);
+  if (!d || d.owner !== owner) throw new DisputeError('We could not find that dispute. The server may have restarted.', 404);
   return d;
 }
 
-function markSent(id, { date } = {}) {
-  const d = get(id);
+function markSent(id, { date } = {}, owner) {
+  const d = get(id, owner);
   if (d.status === 'resolved') throw new DisputeError('This dispute is already resolved.');
   if (d.status !== 'draft') throw new DisputeError('This dispute was already sent.');
   const sent = validDate(date) ? date : d.today;
@@ -104,8 +109,8 @@ function markSent(id, { date } = {}) {
 }
 
 // "Simulate 30 days passing": the agent notices no answer, drafts the follow-up, and lays out the escalation path.
-async function advance(id, { noAI = false } = {}) {
-  const d = get(id);
+async function advance(id, { noAI = false } = {}, owner) {
+  const d = get(id, owner);
   if (d.status === 'draft') throw new DisputeError('Mark the letter as sent first.');
   if (d.status === 'resolved') throw new DisputeError('This dispute is already resolved.');
   if (d.status === 'follow_up_due') return publicView(d);
@@ -122,8 +127,8 @@ async function advance(id, { noAI = false } = {}) {
   return publicView(d);
 }
 
-function resolve(id, { amount } = {}) {
-  const d = get(id);
+function resolve(id, { amount } = {}, owner) {
+  const d = get(id, owner);
   if (d.status === 'resolved') throw new DisputeError('This dispute is already resolved.');
   const n = typeof amount === 'number' ? amount : Number(String(amount === undefined ? '' : amount).replace(/[$,\s]/g, ''));
   if (String(amount === undefined ? '' : amount).trim() === '' || !Number.isFinite(n) || n < 0) {
@@ -137,8 +142,21 @@ function resolve(id, { amount } = {}) {
   return publicView(d);
 }
 
-function list({ profile_id } = {}) {
-  return [...store.values()].filter((d) => !profile_id || d.profile_id === profile_id).map(publicView);
+function list({ owner = 'public', profile_id } = {}) {
+  return [...store.values()].filter((d) => d.owner === owner && (!profile_id || d.profile_id === profile_id)).map(publicView);
 }
 
-module.exports = { create, markSent, advance, resolve, list, DisputeError };
+// For src/accounts.js: the full record (to save), a saved record loaded back, a new id after saving, and removal.
+const raw = (id, owner) => get(id, owner);
+function adopt(d) { store.set(d.id, d); }
+function rekey(oldId, newId) {
+  const d = store.get(oldId);
+  store.delete(oldId);
+  d.id = newId;
+  store.set(newId, d);
+  return d;
+}
+function forget(id) { store.delete(id); }
+function forgetOwner(owner) { for (const [id, d] of store) if (d.owner === owner) store.delete(id); }
+
+module.exports = { create, markSent, advance, resolve, list, raw, adopt, rekey, forget, forgetOwner, publicView, DisputeError };

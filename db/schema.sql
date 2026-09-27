@@ -5,7 +5,7 @@ create table if not exists public.analyses (
   id                bigint generated always as identity primary key,
   user_id           uuid not null default auth.uid() references auth.users(id) on delete cascade,
   title             text not null,
-  source            text not null check (source in ('upload','manual')),
+  source            text not null check (source in ('upload','manual','sample')),  -- sample = a made-up test bill
   bill              jsonb not null,   -- user-confirmed numbers, never the file
   eob               jsonb not null,
   result            jsonb not null,   -- rules output: flags, math, summary

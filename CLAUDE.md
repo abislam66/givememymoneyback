@@ -14,9 +14,9 @@ Built solo for **OwlHacks 2026** (Temple University). Submission deadline: about
 1. **Code decides what's an error, never the AI.** Gemini may only extract JSON from images, rewrite already-computed findings, explain terms from the documents and verified findings, and play the billing rep without inventing facts. Every flag comes from `src/rules.js` with evidence and arithmetic.
 2. **Verify AI text.** Whenever Gemini rewrites anything containing numbers, dates or codes, check they all match the deterministic version. If not, use the deterministic version.
 3. **No API keys required.** Every feature has a deterministic fallback. Gemini and ElevenLabs are optional layers with timeouts (20s Gemini, 15s ElevenLabs).
-4. **Made-up data only.** Never store uploaded files. Keep extracted JSON in memory only. The UI states that the demo uses made-up bills.
+4. **Uploaded files are never stored.** Only confirmed numbers + rules results may be saved to a signed-in user's account (rule 6). The 3 example bills offered to people (case-01, case-11, case-02; `EXAMPLES` in public/app.js) are fictional and labeled so; the UI never calls the product a demo. Privacy wording everywhere: "Uploaded files are not permanently stored. Confirmed structured analysis/results may be saved to your account."
 5. **Money is never invented.** Potential savings (detected) and confirmed savings (after resolution) are always separate. Only resolved disputes count as saved.
-6. **Stack:** Node 18+, Express, plain HTML/CSS/JS in `public/`, no framework, no build step, no database, in-memory state only.
+6. **Stack:** Node 18+, Express, plain HTML/CSS/JS in `public/`, no framework, no build step. **Accounts (user decision, 2026-09-26):** name-only sign-in (Supabase anonymous auth) and Supabase Postgres for each signed-in user's analyses and disputes (`src/accounts.js`, `db/schema.sql`). Rows are written with the user's own token so row-level security applies; the service role key is never used. Uploaded files are never stored (no Supabase Storage); only confirmed numbers + rules results. Demo guests and `/classic/` stay in memory and are never saved. Without `SUPABASE_URL`/`SUPABASE_ANON_KEY` the app still runs (the demo works; sign-in says it isn't set up).
 7. **Depth over breadth.** Don't add features that aren't in `BUILD_PROMPT.md`. If a phase's check fails, fix it before moving on.
 
 ## Commands
@@ -24,13 +24,16 @@ Built solo for **OwlHacks 2026** (Temple University). Submission deadline: about
 - `npm run score`: run the rules on both test sets (generated + hand-written), print both scoreboards, write `data/scoreboard.json` and `public/demo-data.js`
 - `npm run render`: render every case as a realistic bill + EOB (PNG + PDF, 3 layouts) into `data/rendered/`
 - `npm run score:extraction`: needs `GEMINI_API_KEY`; read rendered documents (and `data/photos/`) with Gemini and score field, header and end-to-end accuracy into `data/extraction-scoreboard.json`
-- `npm start`: start the server on http://localhost:3000
+- `npm start`: start the server on http://localhost:3000 (`/` is the start page with the name sign-in; `/app.html` is the dashboard; `/app.html?guest=1` is "Try an example", no account)
+- Deploy: Vercel, per `vercel.json` (static `public/`, Express as one function in `api/index.js`, `npm ci --omit=dev`). Request bodies are capped at 4.5 MB there, so upload-ui.js resizes big photos and caps PDFs at 3 MB.
 
 ## Key files
 - `src/rules.js`: rules engine (pure functions). The heart of the project; keep it tested.
 - `src/letter.js`: dispute letter, follow-up letter, call script (templates)
 - `src/explain.js`: glossary and finding explanations
-- `src/disputes.js`: in-memory dispute store and status changes
+- `src/disputes.js`: dispute store and status changes (in memory, scoped by owner; `src/accounts.js` saves signed-in users' disputes to Supabase)
+- `src/accounts.js`: who is asking (token / guest id / public), saved analyses, dispute persistence
+- `public/index.html` + `landing.js` + `landing.css`: start page; `public/auth.js`: name-only sign-in; `public/account-ui.js`: name, Sign out, My analyses
 - `src/callpractice.js`: scripted rep, optional Gemini rep, deterministic checklist
 - `src/extract.js`: the one extraction pipeline (`readDocument` + `finish`), used by live uploads and the extraction scoreboard
 - `src/validate.js`: "do the extracted numbers add up" checks for the review step; runs on the server and is served to the browser as `/validate.js`

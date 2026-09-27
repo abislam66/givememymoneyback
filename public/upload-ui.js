@@ -14,6 +14,10 @@
   const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 
   const MAX_BYTES = 12e6;
+  // Hosting limits a request to about 4.5 MB, and a file grows by a third when sent as text (base64).
+  // So big photos are resized in the browser first, and PDFs (which we can't shrink here) must be 3 MB or less.
+  const MAX_PDF_BYTES = 3e6;
+  const MAX_SEND_BYTES = 3e6;
   const TYPES = { pdf: 'application/pdf', png: 'image/png', jpg: 'image/jpeg', jpeg: 'image/jpeg' };
   const files = { bill: null, eob: null };
   let draft = null; // { bill, eob } being reviewed
@@ -31,6 +35,7 @@
     if (!file) return;
     if (!mimeOf(file)) { setMsg(msg, `${file.name} isn't a PDF, PNG or JPG. Please choose one of those.`, 'err'); return; }
     if (file.size > MAX_BYTES) { setMsg(msg, `${file.name} is larger than 12 MB. Please use a smaller file.`, 'err'); return; }
+    if (mimeOf(file) === 'application/pdf' && file.size > MAX_PDF_BYTES) { setMsg(msg, `${file.name} is larger than 3 MB. Please use a smaller PDF, or a photo or screenshot of each page.`, 'err'); return; }
     files[doc] = file;
     box.classList.add('has-file');
     $(`#name-${doc}`).textContent = `${file.name} (${Math.max(1, Math.round(file.size / 1024))} KB)`;
@@ -63,19 +68,37 @@
     });
   }
 
+  // Photos over the limit are redrawn smaller as a JPEG (in the browser; nothing is saved).
+  async function prepare(file) {
+    const mime = mimeOf(file);
+    if (mime === 'application/pdf' || file.size <= MAX_SEND_BYTES) return { b64: await readAsBase64(file), mime };
+    let img;
+    try { img = await createImageBitmap(file); } catch (e) { throw new Error(`We couldn't open ${file.name}. Try a different photo.`); }
+    for (const side of [2400, 1800, 1400]) {
+      const scale = Math.min(1, side / Math.max(img.width, img.height));
+      const c = document.createElement('canvas');
+      c.width = Math.round(img.width * scale);
+      c.height = Math.round(img.height * scale);
+      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+      const blob = await new Promise((r) => c.toBlob(r, 'image/jpeg', 0.85));
+      if (blob && blob.size <= MAX_SEND_BYTES) return { b64: await readAsBase64(blob), mime: 'image/jpeg' };
+    }
+    throw new Error(`${file.name} is too big to send. Please use a smaller photo.`);
+  }
+
   // ---------- reading with Gemini ----------
   async function onRead(e) {
     e.preventDefault();
     const msg = $('#upload-msg');
     if (!files.bill || !files.eob) { setMsg(msg, 'Please choose both files: your bill and your EOB.', 'err'); return; }
-    if (state.demo) { setMsg(msg, 'Reading documents is off in demo mode. Turn off demo mode, or type the numbers in yourself.', 'err'); return; }
+    if (state.demo) { setMsg(msg, "We can't reach the server right now, so we can't read documents. Try again soon, or type the numbers in yourself.", 'err'); return; }
     $('#btn-read').disabled = true;
     setMsg(msg, 'Reading your documents with Gemini. This can take up to 20 seconds…');
     try {
-      const [b64b, b64e] = await Promise.all([readAsBase64(files.bill), readAsBase64(files.eob)]);
+      const [pb, pe] = await Promise.all([prepare(files.bill), prepare(files.eob)]);
       const [rb, re] = await Promise.allSettled([
-        api('/api/extract', { image_base64: b64b, mime_type: mimeOf(files.bill), doc_type: 'bill' }, { timeout: 45000 }),
-        api('/api/extract', { image_base64: b64e, mime_type: mimeOf(files.eob), doc_type: 'eob' }, { timeout: 45000 }),
+        api('/api/extract', { image_base64: pb.b64, mime_type: pb.mime, doc_type: 'bill' }, { timeout: 45000 }),
+        api('/api/extract', { image_base64: pe.b64, mime_type: pe.mime, doc_type: 'eob' }, { timeout: 45000 }),
       ]);
       const failed = [rb, re].filter((r) => r.status === 'rejected');
       if (failed.length === 2 && failed.every((r) => r.reason.status === 501)) {
@@ -256,8 +279,14 @@
     }
   }
 
+  // Signed-in users: the confirmed numbers (never the files) are saved once per review; analyzing again updates that save.
+  let draftSource = 'upload';
+  let draftSavedId = null;
+
   function openReview({ bill, eob, warnings = [], source }) {
     draft = { bill: clone(bill), eob: clone(eob) };
+    draftSource = source === 'manual' ? 'manual' : 'upload';
+    draftSavedId = null;
     if (!draft.bill.lines || !draft.bill.lines.length) draft.bill.lines = blankBill().lines;
     if (!draft.eob.lines || !draft.eob.lines.length) draft.eob.lines = blankEob().lines;
     draft.eob.totals = draft.eob.totals || blankEob().totals;
@@ -285,7 +314,13 @@
       Object.keys(eob.totals).forEach((k) => { eob.totals[k] = zero(eob.totals[k]); });
       delete bill.printed_total_charges;
       await SL.useDocuments({ bill, eob, title: 'Your uploaded bill' });
-      setMsg($('#review-msg'), 'Analyzed. Your results are below. You can change numbers here and analyze again.', 'good');
+      let savedNote = '';
+      if (window.SecondLookAccount) {
+        const saved = await window.SecondLookAccount.save({ bill, eob, source: draftSource, id: draftSavedId });
+        if (saved && saved.id) { draftSavedId = saved.id; savedNote = ' Saved to My analyses.'; }
+        else if (saved && saved.error) savedNote = ` ${saved.error}`;
+      }
+      setMsg($('#review-msg'), `Analyzed.${savedNote} Your results are below. You can change numbers here and analyze again.`, 'good');
       $('#result').scrollIntoView({ block: 'start' });
       announce(`Analyzed. ${$('#result-h').textContent}`);
     } catch (e) {

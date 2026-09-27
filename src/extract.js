@@ -261,7 +261,7 @@ async function extract({ image_base64, mime_type, doc_type }) {
   const mime = str(mime_type).toLowerCase() || 'image/jpeg';
   if (!MIME_OK.test(mime)) throw new ExtractError('Please upload a PDF, PNG or JPG file.', 400);
   if (!hasGemini()) {
-    throw new ExtractError('Reading documents needs a Gemini API key, and none is set up. You can type the numbers in yourself, or try the made-up test bills.', 501);
+    throw new ExtractError('Reading documents needs a Gemini API key, and none is set up. You can type the numbers in yourself, or try an example.', 501);
   }
   const data = image_base64.replace(/^data:[^;]+;base64,/, '');
   const hash = crypto.createHash('sha256').update(doc_type).update(data).digest('hex');
