@@ -1,0 +1,75 @@
+{
+  "hash": "bad010e741209196b3e566ca29b16a9929d2f89a1c287ec614b815fe78a450e5",
+  "model": "gemini-3.5-flash-lite",
+  "file": "data\\rendered\\hw-08-eob.png",
+  "read_at": "2026-09-27T05:52:25.639Z",
+  "raw": {
+    "lines": [
+      {
+        "date": "2026-06-18",
+        "code": "99284",
+        "billed": 1180,
+        "allowed": 612.4,
+        "insurer_paid": 462.4,
+        "patient_resp": 150,
+        "description": "ER visit, serious (level 4)",
+        "units": 1
+      },
+      {
+        "date": "2026-06-18",
+        "code": "70450",
+        "billed": 1525,
+        "allowed": 690.25,
+        "insurer_paid": 552.2,
+        "patient_resp": 138.05,
+        "description": "CT scan of head, no contrast",
+        "units": 1
+      },
+      {
+        "date": "2026-06-18",
+        "code": "96374",
+        "billed": 245,
+        "allowed": 110,
+        "insurer_paid": 88,
+        "patient_resp": 22,
+        "description": "IV push medication",
+        "units": 1
+      },
+      {
+        "date": "2026-06-18",
+        "code": "85025",
+        "billed": 98,
+        "allowed": 41.5,
+        "insurer_paid": 33.2,
+        "patient_resp": 8.3,
+        "description": "Complete blood count (CBC)",
+        "units": 1
+      },
+      {
+        "date": "2026-06-18",
+        "code": "36415",
+        "billed": 32,
+        "allowed": 12,
+        "insurer_paid": 9.6,
+        "patient_resp": 2.4,
+        "description": "Blood draw",
+        "units": 1
+      }
+    ],
+    "totals": {
+      "allowed": 1466.15,
+      "billed": 3080,
+      "insurer_paid": 1145.4,
+      "patient_resp": 320.75
+    },
+    "network": "in-network",
+    "service_type": "emergency",
+    "claim_number": "CLM-640118548",
+    "insurer": "Cardinal Shield Insurance",
+    "member": {
+      "id": "CSI-301159",
+      "name": "Ruth Abernathy"
+    },
+    "provider_name": "Owlbrook Regional Hospital"
+  }
+}

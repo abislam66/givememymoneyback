@@ -7,7 +7,7 @@
   "functions": {
     "api/index.js": {
       "maxDuration": 60,
-      "includeFiles": "{data/cases/**,data/scoreboard.json,src/**}"
+      "includeFiles": "{data/cases/**,data/scoreboard.json,data/extraction-scoreboard.json,src/**}"
     }
   },
   "rewrites": [

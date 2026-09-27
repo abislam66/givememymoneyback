@@ -1,4 +1,4 @@
-// Dispute tracker and call practice UI. Uses the helpers app.js exposes on window.SecondLook.
+// Dispute tracker UI. Uses the helpers app.js exposes on window.SecondLook.
 // All amounts shown here come from the server's dispute record; nothing is computed from AI text.
 
 (() => {
@@ -6,7 +6,7 @@
 
   const SL = window.SecondLook;
   if (!SL) return;
-  const { state, api, money, esc, speak, stopSpeaking, announce, setMsg, shortDate } = SL;
+  const { state, api, money, esc, announce, setMsg, shortDate } = SL;
   const $ = (sel) => document.querySelector(sel);
 
   const disputes = new Map(); // id -> record
@@ -170,109 +170,11 @@
     }
   }
 
-  // ---------- call practice ----------
-  // The main page replaced this with Ask GiveMeMyMoneyBack; /classic/ still has it. Everything below is a no-op without it.
-  const hasPractice = Boolean(document.getElementById('btn-practice-start'));
-  let session = null;
-
-  function resetPractice() {
-    session = null;
-    if (!hasPractice) return;
-    $('#transcript').innerHTML = '';
-    $('#checklist').innerHTML = '';
-    $('#practice-form').hidden = true;
-    setMsg($('#practice-msg'), '');
-    setMsg($('#turn-count'), '');
-    setMsg($('#practice-mode'), '');
-  }
-
-  function addLine(role, text) {
-    const li = document.createElement('li');
-    li.className = role;
-    li.innerHTML = `<span class="who">${role === 'rep' ? 'Jordan, billing rep' : 'You'}</span><span>${esc(text)}</span>`;
-    $('#transcript').appendChild(li);
-    if (role === 'rep' && $('#practice-voice').checked) speak(text);
-  }
-
-  function updateTurns() {
-    if (!session) return;
-    setMsg($('#turn-count'), session.done ? 'The rep ended the call. Press "Finish and score my call".' : `Rep turn ${session.turn} of ${session.max_turns}`);
-  }
-
-  async function startPractice() {
-    stopSpeaking();
-    resetPractice();
-    const msg = $('#practice-msg');
-    try {
-      const s = await api('/api/practice/start', { bill: state.bill, eob: state.eob, case_id: state.caseId });
-      session = { id: s.id, turn: s.turn, max_turns: s.max_turns, done: false };
-      setMsg($('#practice-mode'), s.mode === 'gemini' ? 'AI rep (Gemini), limited to your verified findings.' : 'Scripted rep (no AI key needed).');
-      addLine('rep', s.rep);
-      $('#practice-form').hidden = false;
-      $('#btn-practice-say').disabled = false;
-      $('#practice-input').disabled = false;
-      $('#practice-input').focus();
-      updateTurns();
-    } catch (e) {
-      setMsg(msg, e.message, 'err');
-    }
-  }
-
-  async function sayIt(e) {
-    e.preventDefault();
-    if (!session) return;
-    const input = $('#practice-input');
-    const text = input.value.trim();
-    if (!text) { setMsg($('#practice-msg'), 'Type what you would say first.', 'err'); return; }
-    addLine('you', text);
-    input.value = '';
-    $('#btn-practice-say').disabled = true;
-    setMsg($('#practice-msg'), 'The rep is answering…');
-    try {
-      const r = await api(`/api/practice/${session.id}/reply`, { text }, { timeout: 30000 });
-      session.turn = r.turn;
-      session.done = r.done;
-      addLine('rep', r.rep);
-      setMsg($('#practice-msg'), '');
-      if (r.done) {
-        input.disabled = true;
-        $('#btn-practice-finish').focus();
-      } else {
-        $('#btn-practice-say').disabled = false;
-        input.focus();
-      }
-      updateTurns();
-    } catch (err) {
-      $('#btn-practice-say').disabled = false;
-      setMsg($('#practice-msg'), err.message, 'err');
-    }
-  }
-
-  async function finishPractice() {
-    if (!session) return;
-    try {
-      const r = await api(`/api/practice/${session.id}/finish`, {});
-      session.done = true;
-      $('#practice-input').disabled = true;
-      $('#btn-practice-say').disabled = true;
-      $('#checklist').innerHTML = `<h4 tabindex="-1" id="checklist-h">Your call checklist: ${r.got} of ${r.total}</h4>
-        <ul>${r.checklist.map((i) => `<li>
-          <span class="mark ${i.ok ? 'yes' : 'no'}">${i.ok ? '✓ Done' : '✗ Missed'}</span><span>${esc(i.item)}</span>
-          ${i.ok ? '' : `<span class="tip">Tip: ${esc(i.tip)}</span>`}</li>`).join('')}</ul>
-        <p class="hint">Scored by fixed rules that look for what you said, not by AI.</p>`;
-      $('#checklist-h').focus();
-      setMsg($('#turn-count'), '');
-    } catch (e) {
-      setMsg($('#practice-msg'), e.message, 'err');
-    }
-  }
-
   // ---------- hooks ----------
   window.SecondLookAfterRender = () => {
     const key = state.caseId || (state.analysisId ? `saved-${state.analysisId}` : 'upload');
     if (key !== lastKey) {
       lastKey = key;
-      resetPractice();
       setMsg($('#dispute-msg'), '');
     }
     renderDispute();
@@ -285,14 +187,6 @@
     } catch (e) { /* server may be starting; fine */ }
     if (state.result) renderDispute();
     $('#dispute-box').addEventListener('click', onDisputeClick);
-    if (hasPractice) {
-      $('#btn-practice-start').addEventListener('click', startPractice);
-      $('#practice-form').addEventListener('submit', sayIt);
-      $('#practice-input').addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' && !e.shiftKey) sayIt(e);
-      });
-      $('#btn-practice-finish').addEventListener('click', finishPractice);
-    }
   }
 
   init();

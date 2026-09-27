@@ -3,7 +3,7 @@
 //   we check it with Supabase and read/write rows *with that token*, so row-level security keeps every
 //   user's analyses and disputes private. The service role key is never used.
 // - Guest ("Try an example"): a random id per browser tab. Kept in server memory only, never saved.
-// - No header (the /classic/ page): the shared in-memory store, as before.
+// - No header (e.g. a direct API call): a shared in-memory store, never saved.
 // Uploaded files never come here; only the numbers the person confirmed and the rules' results.
 
 // Accept the project URL as Supabase shows it in different places: with or without /rest/v1 or /auth/v1.

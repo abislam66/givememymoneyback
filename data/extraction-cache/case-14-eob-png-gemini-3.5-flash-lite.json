@@ -1,0 +1,65 @@
+{
+  "hash": "3645d428fca4a87bfdba440d70691ad5e118a75f6f432ba541c6dbf66f1a81d3",
+  "model": "gemini-3.5-flash-lite",
+  "file": "data\\rendered\\case-14-eob.png",
+  "read_at": "2026-09-27T05:51:45.434Z",
+  "raw": {
+    "lines": [
+      {
+        "date": "2026-06-15",
+        "code": "99213",
+        "billed": 213,
+        "allowed": 104,
+        "insurer_paid": 74,
+        "patient_resp": 30,
+        "description": "Office visit, established patient",
+        "units": 1
+      },
+      {
+        "date": "2026-06-15",
+        "code": "80061",
+        "billed": 97,
+        "allowed": 47,
+        "insurer_paid": 42,
+        "patient_resp": 5,
+        "description": "Lipid panel (cholesterol test)",
+        "units": 1
+      },
+      {
+        "date": "2026-06-15",
+        "code": "85025",
+        "billed": 89,
+        "allowed": 32,
+        "insurer_paid": 29,
+        "patient_resp": 3,
+        "description": "Complete blood count (CBC)",
+        "units": 1
+      },
+      {
+        "date": "2026-06-15",
+        "code": "36415",
+        "billed": 29,
+        "allowed": 17,
+        "insurer_paid": 15,
+        "patient_resp": 2,
+        "description": "Blood draw",
+        "units": 1
+      }
+    ],
+    "totals": {
+      "allowed": 200,
+      "billed": 428,
+      "insurer_paid": 160,
+      "patient_resp": 40
+    },
+    "network": "in-network",
+    "service_type": "office",
+    "claim_number": "CLM-072042958",
+    "insurer": "Bluefinch Health Plan",
+    "member": {
+      "id": "BFH482915",
+      "name": "Leo Torres"
+    },
+    "provider_name": "Brightwater Family Practice"
+  }
+}

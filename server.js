@@ -1,5 +1,5 @@
 // GiveMeMyMoneyBack server. Express. Works with no API keys. Signed-in users' analyses and disputes are saved
-// in Supabase (src/accounts.js); people without an account and /classic/ stay in memory only.
+// in Supabase (src/accounts.js); people without an account stay in memory only.
 
 const fs = require('fs');
 const path = require('path');
@@ -11,10 +11,10 @@ const { check, normalize } = require('./src/rules');
 const { buildLetter, buildCallScript } = require('./src/letter');
 const { explainTerm, explainFinding, explainTermSmart, explainFindingSmart } = require('./src/explain');
 const { extract } = require('./src/extract');
-const { speak, hasTTS } = require('./src/tts');
+const { speak, hasTTS, VOICES, DEFAULT_VOICE } = require('./src/tts');
+const { forVoice } = require('./src/translate');
 const { hasGemini, config: geminiConfig, lastError: geminiLastError } = require('./src/gemini');
 const disputes = require('./src/disputes');
-const practice = require('./src/callpractice');
 const ask = require('./src/ask');
 const accounts = require('./src/accounts');
 
@@ -53,7 +53,7 @@ function fullCheck(rawBill, rawEob) {
 }
 
 // ---------- routes ----------
-// Offline example (and /classic/'s demo mode): the page sends this header, and the server skips every outside AI service.
+// Offline example: the page sends this header, and the server skips every outside AI service.
 const noAI = (req) => req.get('X-SecondLook-Demo') === '1';
 
 class HttpError extends Error {
@@ -123,9 +123,15 @@ app.post('/api/tts', safe(async (req, res) => {
   const text = req.body && req.body.text;
   if (!text || typeof text !== 'string') throw new HttpError(400, 'No text to read.');
   if (!hasTTS() || noAI(req)) throw new HttpError(501, 'Voice is not set up. Using your browser voice instead.');
-  const audio = await speak(text);
+  // Optional: which voice (calm / clear / direct) and which spoken language (en / es).
+  // Spanish is translated by Gemini only for listening, and only if every fact survives (src/translate.js).
+  const b = req.body;
+  const voice = Object.prototype.hasOwnProperty.call(VOICES, b.voice) ? b.voice : DEFAULT_VOICE;
+  const keep = Array.isArray(b.keep) ? b.keep.filter((k) => typeof k === 'string').map((k) => k.slice(0, 120)).slice(0, 8) : [];
+  const said = b.lang && b.lang !== 'en' && !noAI(req) ? await forVoice(text, b.lang, keep) : { text, lang: 'en', translated: false };
+  const audio = await speak(said.text, { voice, lang: said.lang });
   if (!audio) throw new HttpError(502, 'The voice service did not answer. Using your browser voice instead.');
-  res.set('Content-Type', 'audio/mpeg').send(audio);
+  res.set({ 'Content-Type': 'audio/mpeg', 'X-Voice-Lang': said.lang, 'X-Voice-Note': said.note || (said.translated ? 'translated' : 'original') }).send(audio);
 }));
 
 app.get('/api/scoreboard', safe((req, res) => {
@@ -305,16 +311,6 @@ app.post('/api/ask', safe((req) => {
   if (bad) throw new HttpError(400, bad);
   return ask.answer({ question, intent, history, bill, eob, noAI: noAI(req) });
 }));
-
-// ---------- call practice (still used by /classic/) ----------
-app.post('/api/practice/start', safe((req) => {
-  const { bill, eob, case_id } = req.body || {};
-  const bad = badDocs(bill, eob);
-  if (bad) throw new HttpError(400, bad);
-  return practice.start({ bill, eob, case_id, noAI: noAI(req) });
-}));
-app.post('/api/practice/:id/reply', safe((req) => practice.reply(req.params.id, (req.body || {}).text)));
-app.post('/api/practice/:id/finish', safe((req) => practice.finish(req.params.id)));
 
 app.use('/api', (req, res) => res.status(404).json({ error: 'Unknown API route.' }));
 

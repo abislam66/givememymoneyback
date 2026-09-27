@@ -1,0 +1,70 @@
+{
+  "hash": "342d3133df56789f782b2006d24766681ac1fe3094d5f0ca455fef8c4e379e9e",
+  "model": "gemini-3.5-flash-lite",
+  "file": "data\\rendered\\hw-08-bill.png",
+  "read_at": "2026-09-27T05:52:15.756Z",
+  "raw": {
+    "lines": [
+      {
+        "date": "2026-06-18",
+        "code": "99284",
+        "description": "ER visit, serious (level 4)",
+        "units": 1,
+        "charge": 1180
+      },
+      {
+        "date": "2026-06-18",
+        "code": "70450",
+        "description": "CT scan of head, no contrast",
+        "units": 1,
+        "charge": 1525
+      },
+      {
+        "date": "2026-06-18",
+        "code": "96374",
+        "description": "IV push medication",
+        "units": 1,
+        "charge": 280.5
+      },
+      {
+        "date": "2026-06-18",
+        "code": "85025",
+        "description": "Complete blood count (CBC)",
+        "units": 1,
+        "charge": 98
+      },
+      {
+        "date": "2026-06-18",
+        "code": "36415",
+        "description": "Blood draw",
+        "units": 1,
+        "charge": 32
+      }
+    ],
+    "amount_due": 568.65,
+    "account_number": "ACCT-55121112",
+    "adjustments": [
+      {
+        "amount": 1613.85,
+        "description": "Contractual adjustment"
+      }
+    ],
+    "insurance_payments": [
+      {
+        "amount": 933,
+        "payer": "Cardinal Shield Insurance"
+      }
+    ],
+    "patient": {
+      "name": "Ruth Abernathy"
+    },
+    "patient_payments": [],
+    "previous_balance": 0,
+    "printed_total_charges": 3115.5,
+    "provider": {
+      "address": "1200 Linden Ridge Rd, Fairhaven, PA 19000",
+      "name": "Owlbrook Regional Hospital"
+    },
+    "statement_date": "2026-07-27"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "hash": "78778eda4ef83ab82bb6dee48d431e0ca2f38cb0632c2446acac8f4840bb7054",
+  "model": "gemini-3.5-flash-lite",
+  "file": "data\\rendered\\hw-06-bill.png",
+  "read_at": "2026-09-27T05:52:03.223Z",
+  "raw": {
+    "lines": [
+      {
+        "date": "2026-06-16",
+        "code": "80053",
+        "description": "COMPREHENSIVE METABOLIC PANEL",
+        "units": 1,
+        "charge": 190
+      },
+      {
+        "date": "2026-06-16",
+        "code": "85025",
+        "description": "COMPLETE BLOOD COUNT (CBC)",
+        "units": 1,
+        "charge": 70
+      },
+      {
+        "date": "2026-06-16",
+        "code": "36415",
+        "description": "BLOOD DRAW",
+        "units": 1,
+        "charge": 30
+      }
+    ],
+    "amount_due": 87,
+    "account_number": "ACCT-55121076",
+    "adjustments": [
+      {
+        "amount": 170,
+        "description": "CONTRACTUAL ADJUSTMENT"
+      }
+    ],
+    "insurance_payments": [
+      {
+        "amount": 108,
+        "payer": "CARDINAL SHIELD INSURANCE"
+      }
+    ],
+    "patient": {
+      "name": "HANA KOBAYASHI"
+    },
+    "patient_payments": [],
+    "previous_balance": 75,
+    "printed_total_charges": 290,
+    "provider": {
+      "address": "9 HARBOR POINT DR, MILLBROOK, PA 19001",
+      "name": "KESTREL LAB SERVICES"
+    },
+    "statement_date": "2026-07-20"
+  }
+}

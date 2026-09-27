@@ -1,0 +1,48 @@
+{
+  "hash": "ba31342f49a2d29148ec1b64a57f869b24c1be326485434691f06a6e9996f2b1",
+  "model": "gemini-3.5-flash-lite",
+  "file": "data\\rendered\\hw-04-bill.png",
+  "read_at": "2026-09-27T05:51:51.184Z",
+  "raw": {
+    "lines": [
+      {
+        "date": "2026-05-18",
+        "code": "97161",
+        "description": "Physical therapy evaluation",
+        "units": 1,
+        "charge": 250
+      },
+      {
+        "date": "2026-05-18",
+        "code": "97110",
+        "description": "Therapeutic exercise",
+        "units": 3,
+        "charge": 360
+      }
+    ],
+    "amount_due": 168,
+    "account_number": "ACCT-55121033",
+    "adjustments": [
+      {
+        "amount": 250,
+        "description": "Contractual adjustment"
+      }
+    ],
+    "insurance_payments": [
+      {
+        "amount": 192,
+        "date": "",
+        "payer": "Cardinal Shield Insurance"
+      }
+    ],
+    "patient": {
+      "name": "Grace Lindqvist"
+    },
+    "printed_total_charges": 610,
+    "provider": {
+      "address": "702 North Gate Blvd, Fairhaven, PA 19003",
+      "name": "Northgate Physical Therapy"
+    },
+    "statement_date": "2026-06-22"
+  }
+}

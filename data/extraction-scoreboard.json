@@ -1,0 +1,464 @@
+{
+  "generated_at": "2026-09-27T05:50:48.778Z",
+  "model": "gemini-3.5-flash-lite",
+  "format": "png",
+  "sets": [
+    {
+      "id": "rendered",
+      "name": "Rendered documents (8 cases)",
+      "totals": {
+        "cases": 8,
+        "errors": 0,
+        "line_items_exact": 56,
+        "line_items_total": 56,
+        "headers_exact": 40,
+        "headers_total": 40,
+        "flags_correct": 8,
+        "owe_correct": 8,
+        "review_flagged": 0
+      },
+      "cases": [
+        {
+          "id": "case-01",
+          "cached": false,
+          "bill_lines": {
+            "exact": 4,
+            "total": 4,
+            "extra": 0,
+            "wrong": []
+          },
+          "eob_lines": {
+            "exact": 3,
+            "total": 3,
+            "extra": 0,
+            "wrong": []
+          },
+          "headers": {
+            "checks": [
+              {
+                "name": "amount_due",
+                "ok": true
+              },
+              {
+                "name": "insurance_payments",
+                "ok": true
+              },
+              {
+                "name": "adjustments",
+                "ok": true
+              },
+              {
+                "name": "network",
+                "ok": true
+              },
+              {
+                "name": "service_type",
+                "ok": true
+              }
+            ],
+            "exact": 5,
+            "total": 5
+          },
+          "review_issues": 0,
+          "end_to_end": {
+            "flags_ok": true,
+            "owe_ok": true,
+            "found": [
+              "duplicate_charge 380",
+              "missing_insurance_payment 610"
+            ],
+            "expected": [
+              "duplicate_charge 380",
+              "missing_insurance_payment 610"
+            ],
+            "likely_owe": 250,
+            "expected_owe": 250
+          }
+        },
+        {
+          "id": "case-05",
+          "cached": false,
+          "bill_lines": {
+            "exact": 3,
+            "total": 3,
+            "extra": 0,
+            "wrong": []
+          },
+          "eob_lines": {
+            "exact": 3,
+            "total": 3,
+            "extra": 0,
+            "wrong": []
+          },
+          "headers": {
+            "checks": [
+              {
+                "name": "amount_due",
+                "ok": true
+              },
+              {
+                "name": "insurance_payments",
+                "ok": true
+              },
+              {
+                "name": "adjustments",
+                "ok": true
+              },
+              {
+                "name": "network",
+                "ok": true
+              },
+              {
+                "name": "service_type",
+                "ok": true
+              }
+            ],
+            "exact": 5,
+            "total": 5
+          },
+          "review_issues": 0,
+          "end_to_end": {
+            "flags_ok": true,
+            "owe_ok": true,
+            "found": [],
+            "expected": [],
+            "likely_owe": 335,
+            "expected_owe": 335
+          }
+        },
+        {
+          "id": "case-09",
+          "cached": false,
+          "bill_lines": {
+            "exact": 4,
+            "total": 4,
+            "extra": 0,
+            "wrong": []
+          },
+          "eob_lines": {
+            "exact": 4,
+            "total": 4,
+            "extra": 0,
+            "wrong": []
+          },
+          "headers": {
+            "checks": [
+              {
+                "name": "amount_due",
+                "ok": true
+              },
+              {
+                "name": "insurance_payments",
+                "ok": true
+              },
+              {
+                "name": "adjustments",
+                "ok": true
+              },
+              {
+                "name": "network",
+                "ok": true
+              },
+              {
+                "name": "service_type",
+                "ok": true
+              }
+            ],
+            "exact": 5,
+            "total": 5
+          },
+          "review_issues": 0,
+          "end_to_end": {
+            "flags_ok": true,
+            "owe_ok": true,
+            "found": [
+              "adjustment_missing 107"
+            ],
+            "expected": [
+              "adjustment_missing 107"
+            ],
+            "likely_owe": 68,
+            "expected_owe": 68
+          }
+        },
+        {
+          "id": "case-12",
+          "cached": false,
+          "bill_lines": {
+            "exact": 4,
+            "total": 4,
+            "extra": 0,
+            "wrong": []
+          },
+          "eob_lines": {
+            "exact": 3,
+            "total": 3,
+            "extra": 0,
+            "wrong": []
+          },
+          "headers": {
+            "checks": [
+              {
+                "name": "amount_due",
+                "ok": true
+              },
+              {
+                "name": "insurance_payments",
+                "ok": true
+              },
+              {
+                "name": "adjustments",
+                "ok": true
+              },
+              {
+                "name": "network",
+                "ok": true
+              },
+              {
+                "name": "service_type",
+                "ok": true
+              }
+            ],
+            "exact": 5,
+            "total": 5
+          },
+          "review_issues": 0,
+          "end_to_end": {
+            "flags_ok": true,
+            "owe_ok": true,
+            "found": [
+              "duplicate_charge 1897",
+              "surprise_bill_nsa 1547"
+            ],
+            "expected": [
+              "surprise_bill_nsa 1547",
+              "duplicate_charge 1897"
+            ],
+            "likely_owe": 382,
+            "expected_owe": 382
+          }
+        },
+        {
+          "id": "case-14",
+          "cached": false,
+          "bill_lines": {
+            "exact": 4,
+            "total": 4,
+            "extra": 0,
+            "wrong": []
+          },
+          "eob_lines": {
+            "exact": 4,
+            "total": 4,
+            "extra": 0,
+            "wrong": []
+          },
+          "headers": {
+            "checks": [
+              {
+                "name": "amount_due",
+                "ok": true
+              },
+              {
+                "name": "insurance_payments",
+                "ok": true
+              },
+              {
+                "name": "adjustments",
+                "ok": true
+              },
+              {
+                "name": "network",
+                "ok": true
+              },
+              {
+                "name": "service_type",
+                "ok": true
+              }
+            ],
+            "exact": 5,
+            "total": 5
+          },
+          "review_issues": 0,
+          "end_to_end": {
+            "flags_ok": true,
+            "owe_ok": true,
+            "found": [
+              "missing_insurance_payment 160",
+              "adjustment_missing 228"
+            ],
+            "expected": [
+              "adjustment_missing 228",
+              "missing_insurance_payment 160"
+            ],
+            "likely_owe": 40,
+            "expected_owe": 40
+          }
+        },
+        {
+          "id": "hw-04",
+          "cached": false,
+          "bill_lines": {
+            "exact": 2,
+            "total": 2,
+            "extra": 0,
+            "wrong": []
+          },
+          "eob_lines": {
+            "exact": 2,
+            "total": 2,
+            "extra": 0,
+            "wrong": []
+          },
+          "headers": {
+            "checks": [
+              {
+                "name": "amount_due",
+                "ok": true
+              },
+              {
+                "name": "insurance_payments",
+                "ok": true
+              },
+              {
+                "name": "adjustments",
+                "ok": true
+              },
+              {
+                "name": "network",
+                "ok": true
+              },
+              {
+                "name": "service_type",
+                "ok": true
+              }
+            ],
+            "exact": 5,
+            "total": 5
+          },
+          "review_issues": 0,
+          "end_to_end": {
+            "flags_ok": true,
+            "owe_ok": true,
+            "found": [
+              "duplicate_charge 120"
+            ],
+            "expected": [
+              "duplicate_charge 120"
+            ],
+            "likely_owe": 48,
+            "expected_owe": 48
+          }
+        },
+        {
+          "id": "hw-06",
+          "cached": false,
+          "bill_lines": {
+            "exact": 3,
+            "total": 3,
+            "extra": 0,
+            "wrong": []
+          },
+          "eob_lines": {
+            "exact": 3,
+            "total": 3,
+            "extra": 0,
+            "wrong": []
+          },
+          "headers": {
+            "checks": [
+              {
+                "name": "amount_due",
+                "ok": true
+              },
+              {
+                "name": "insurance_payments",
+                "ok": true
+              },
+              {
+                "name": "adjustments",
+                "ok": true
+              },
+              {
+                "name": "network",
+                "ok": true
+              },
+              {
+                "name": "service_type",
+                "ok": true
+              }
+            ],
+            "exact": 5,
+            "total": 5
+          },
+          "review_issues": 0,
+          "end_to_end": {
+            "flags_ok": true,
+            "owe_ok": true,
+            "found": [],
+            "expected": [],
+            "likely_owe": 12,
+            "expected_owe": 12
+          }
+        },
+        {
+          "id": "hw-08",
+          "cached": false,
+          "bill_lines": {
+            "exact": 5,
+            "total": 5,
+            "extra": 0,
+            "wrong": []
+          },
+          "eob_lines": {
+            "exact": 5,
+            "total": 5,
+            "extra": 0,
+            "wrong": []
+          },
+          "headers": {
+            "checks": [
+              {
+                "name": "amount_due",
+                "ok": true
+              },
+              {
+                "name": "insurance_payments",
+                "ok": true
+              },
+              {
+                "name": "adjustments",
+                "ok": true
+              },
+              {
+                "name": "network",
+                "ok": true
+              },
+              {
+                "name": "service_type",
+                "ok": true
+              }
+            ],
+            "exact": 5,
+            "total": 5
+          },
+          "review_issues": 0,
+          "end_to_end": {
+            "flags_ok": true,
+            "owe_ok": true,
+            "found": [
+              "charge_mismatch 35.5",
+              "missing_insurance_payment 212.4"
+            ],
+            "expected": [
+              "charge_mismatch 35.5",
+              "missing_insurance_payment 212.4"
+            ],
+            "likely_owe": 320.75,
+            "expected_owe": 320.75
+          }
+        }
+      ]
+    }
+  ]
+}

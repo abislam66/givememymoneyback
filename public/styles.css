@@ -641,3 +641,10 @@ body.no-result #recon-section, body.no-result #step-dispute .actions, body.no-re
 .allowed { background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: .75rem 1rem; margin-block: .75rem; max-width: 70ch; }
 .allowed-h { font-weight: 700; margin: 0 0 .35rem; }
 .allowed ul { margin: 0; padding-left: 1.2rem; display: grid; gap: .25rem; font-size: var(--fs-0); }
+
+/* Listening settings in Ask */
+.voice-prefs { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--surface-2); }
+.voice-prefs-h { font-weight: 700; margin: 0; }
+.voice-prefs label { display: flex; gap: 6px; align-items: center; font-size: var(--fs-0); }
+.voice-prefs select { min-height: 36px; }
+.voice-prefs .hint { flex-basis: 100%; margin: 0; }

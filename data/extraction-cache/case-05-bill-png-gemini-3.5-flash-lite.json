@@ -1,0 +1,56 @@
+{
+  "hash": "7a5159a6fc9a38ca331d8ec89e69d52d9596a50d472919687851b93251b8fbe2",
+  "model": "gemini-3.5-flash-lite",
+  "file": "data\\rendered\\case-05-bill.png",
+  "read_at": "2026-09-27T05:51:03.082Z",
+  "raw": {
+    "lines": [
+      {
+        "date": "2026-02-21",
+        "code": "99284",
+        "description": "ER visit, serious (level 4)",
+        "units": 1,
+        "charge": 1197
+      },
+      {
+        "date": "2026-02-21",
+        "code": "70450",
+        "description": "CT scan of head, no contrast",
+        "units": 1,
+        "charge": 1664
+      },
+      {
+        "date": "2026-02-21",
+        "code": "96374",
+        "description": "IV push medication",
+        "units": 1,
+        "charge": 255
+      }
+    ],
+    "amount_due": 335,
+    "account_number": "ACCT-4132099",
+    "adjustments": [
+      {
+        "amount": 1519,
+        "description": "Contractual adjustment"
+      }
+    ],
+    "insurance_payments": [
+      {
+        "amount": 1262,
+        "payer": "Bluefinch Health Plan"
+      }
+    ],
+    "patient": {
+      "name": "Daniel Torres"
+    },
+    "patient_payments": [],
+    "previous_balance": 0,
+    "printed_total_charges": 3116,
+    "provider": {
+      "address": "88 Quarry Lane, Millbrook, PA 19001",
+      "name": "Stonebridge Emergency Center"
+    },
+    "statement_date": "2026-03-27"
+  }
+}

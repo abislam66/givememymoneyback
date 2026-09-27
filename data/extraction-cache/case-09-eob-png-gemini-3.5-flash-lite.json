@@ -1,0 +1,65 @@
+{
+  "hash": "d658c757c84f502908c310ef3f425514729c6dc9dbd2751875112251ea25d184",
+  "model": "gemini-3.5-flash-lite",
+  "file": "data\\rendered\\case-09-eob.png",
+  "read_at": "2026-09-27T05:51:21.416Z",
+  "raw": {
+    "lines": [
+      {
+        "date": "2026-04-13",
+        "code": "97161",
+        "billed": 229,
+        "allowed": 134,
+        "insurer_paid": 107,
+        "patient_resp": 27,
+        "description": "PHYSICAL THERAPY EVALUATION",
+        "units": 1
+      },
+      {
+        "date": "2026-04-13",
+        "code": "97110",
+        "billed": 116,
+        "allowed": 60,
+        "insurer_paid": 48,
+        "patient_resp": 12,
+        "description": "THERAPEUTIC EXERCISE",
+        "units": 1
+      },
+      {
+        "date": "2026-04-20",
+        "code": "97110",
+        "billed": 121,
+        "allowed": 69,
+        "insurer_paid": 55,
+        "patient_resp": 14,
+        "description": "THERAPEUTIC EXERCISE",
+        "units": 1
+      },
+      {
+        "date": "2026-04-27",
+        "code": "97110",
+        "billed": 142,
+        "allowed": 77,
+        "insurer_paid": 62,
+        "patient_resp": 15,
+        "description": "THERAPEUTIC EXERCISE",
+        "units": 1
+      }
+    ],
+    "totals": {
+      "allowed": 340,
+      "billed": 608,
+      "insurer_paid": 272,
+      "patient_resp": 68
+    },
+    "network": "in-network",
+    "service_type": "therapy",
+    "claim_number": "CLM-264973127",
+    "insurer": "Bluefinch Health Plan",
+    "member": {
+      "id": "BFH482914",
+      "name": "DANIEL TORRES"
+    },
+    "provider_name": "NORTHGATE PHYSICAL THERAPY"
+  }
+}

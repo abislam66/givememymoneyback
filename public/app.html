@@ -222,6 +222,23 @@
               <p class="hint">Answers come only from your bill, your insurance statement and the results above. It can't find new problems or change any amount. If the answer isn't in your papers, it will say so.</p>
             </div>
           </div>
+          <div class="voice-prefs" role="group" aria-labelledby="voice-prefs-h">
+            <p id="voice-prefs-h" class="voice-prefs-h">Listening</p>
+            <label>Voice
+              <select id="voice-pick">
+                <option value="clear">Clear</option>
+                <option value="calm">Calm</option>
+                <option value="direct">Direct</option>
+              </select>
+            </label>
+            <label>Language
+              <select id="voice-lang">
+                <option value="en">English</option>
+                <option value="es" lang="es">Español (Spanish)</option>
+              </select>
+            </label>
+            <p class="hint small">Used for answers here, <b>Why?</b>, <b>Alt + R</b> and <b>Read results aloud</b>. Spanish is for listening only: every amount, date and code is checked and kept exactly, or you'll hear English. The screen and your results stay in English.</p>
+          </div>
           <div class="ask-suggestions" id="ask-suggestions" role="group" aria-label="Suggested questions"></div>
           <ol class="ask-log" id="ask-log" aria-label="Conversation"></ol>
           <form id="ask-form" class="ask-form" novalidate>

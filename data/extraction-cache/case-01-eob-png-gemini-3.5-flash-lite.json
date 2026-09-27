@@ -1,0 +1,55 @@
+{
+  "hash": "6bae7037167dff8d7cbaff9643abebe414fe44dfe4013c4de0f9346bda048bf5",
+  "model": "gemini-3.5-flash-lite",
+  "file": "data\\rendered\\case-01-eob.png",
+  "read_at": "2026-09-27T05:50:57.584Z",
+  "raw": {
+    "lines": [
+      {
+        "date": "2026-03-03",
+        "code": "99284",
+        "billed": 1100,
+        "allowed": 560,
+        "insurer_paid": 410,
+        "patient_resp": 150,
+        "description": "ER visit, serious (level 4)",
+        "units": 1
+      },
+      {
+        "date": "2026-03-03",
+        "code": "73610",
+        "billed": 380,
+        "allowed": 180,
+        "insurer_paid": 110,
+        "patient_resp": 70,
+        "description": "Ankle X-ray, 3 or more views",
+        "units": 1
+      },
+      {
+        "date": "2026-03-03",
+        "code": "29540",
+        "billed": 180,
+        "allowed": 120,
+        "insurer_paid": 90,
+        "patient_resp": 30,
+        "description": "Ankle strapping",
+        "units": 1
+      }
+    ],
+    "totals": {
+      "allowed": 860,
+      "billed": 1660,
+      "insurer_paid": 610,
+      "patient_resp": 250
+    },
+    "network": "in-network",
+    "service_type": "emergency",
+    "claim_number": "CLM-771045213",
+    "insurer": "Bluefinch Health Plan",
+    "member": {
+      "id": "BFH482913",
+      "name": "Maya Torres"
+    },
+    "provider_name": "Owlbrook Regional Hospital"
+  }
+}

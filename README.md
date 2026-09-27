@@ -2,9 +2,20 @@
 
 **Check your medical bill against your insurance.**
 
-GiveMeMyMoneyBack compares a hospital bill with the insurer's explanation of benefits (EOB). It lines up every charge and finds errors: duplicate charges, insurance payments that were never applied, missing in-network discounts, and more. It shows the evidence and the math side by side, explains confusing terms, writes the dispute letter, tracks the dispute, and lets you practice the billing phone call.
+GiveMeMyMoneyBack compares a hospital bill with the insurer's explanation of benefits (EOB). It lines up every charge and finds errors: duplicate charges, insurance payments that were never applied, missing in-network discounts, and more. It shows the evidence and the math side by side, explains confusing terms, writes the dispute letter, and tracks the dispute until the money is back. You can ask questions about your result and listen to the answers in English or Spanish.
+
+**Live: [givememymoneyback.ink](https://www.givememymoneyback.ink)**
 
 Built solo for **OwlHacks 2026** at Temple University. Tracks: Health & Wellness, AI & Agents, HCI.
+
+### Built with
+
+| Service | What it does here |
+|---|---|
+| **Google Gemini** (`gemini-3.5-flash-lite`) | Reads uploaded bills and EOBs (PDF, Word, PNG, JPG) into numbers; answers questions in Ask GiveMeMyMoneyBack; rewords "Why?" explanations; translates spoken answers into Spanish. Every number Gemini writes is checked against the rules' version, or Gemini's text is thrown away. **Extraction accuracy: 56 of 56 line items, 40 of 40 header fields and 8 of 8 cases correct end to end** on the rendered test documents (see below). |
+| **ElevenLabs** (`eleven_turbo_v2_5`) | Reads answers, "Why?" explanations, the Alt + R summary and results aloud. Three voices (Clear, Calm, Direct) and English or Spanish, with Play/Pause, Replay, Stop and 0.75×–1.25× speed. The API key stays on the server; the browser's own voice is the fallback. |
+| **Supabase** | Name-only sign-in (anonymous auth) and Postgres for each person's saved analyses and disputes, with row-level security. Uploaded files are never stored. |
+| **GoDaddy domain + Vercel** | The custom domain **givememymoneyback.ink** (registered with GoDaddy) points to the Vercel deployment; the bare domain redirects to www over HTTPS. |
 
 > Uploaded files are not permanently stored. The numbers you confirm and your results may be saved to your account. The example bills are fictional.
 
@@ -38,10 +49,9 @@ Copy `.env.example` to `.env` and fill in what you have:
 
 | Variable | What it turns on | Without it |
 |---|---|---|
-| `GEMINI_API_KEY` | Reading your own bill and EOB (PDF, Word .docx, PNG, JPG), friendlier wording, an AI billing rep for call practice | Test bills, typing numbers in by hand, glossary wording, scripted rep |
+| `GEMINI_API_KEY` | Reading your own bill and EOB (PDF, Word .docx, PNG, JPG), Ask answers, friendlier wording, Spanish for spoken answers | Examples, typing numbers in by hand, the rules' own wording, English only |
 | `GEMINI_MODEL` | The model used for document extraction, rewording and the AI rep. Must be a currently available **multimodal** Gemini model (reads images and PDFs) that your key can use. Default `gemini-2.5-flash` | |
-| `ELEVENLABS_API_KEY` | Natural voice for "Read results aloud", the call script and the practice rep | The browser's built-in voice |
-| `ELEVENLABS_VOICE_ID` | Which ElevenLabs voice (default: a premade voice) | |
+| `ELEVENLABS_API_KEY` | Natural voices (Clear, Calm, Direct; set in `src/tts.js`) for Ask, "Why?", Alt + R, results and the call script | The browser's built-in voice |
 | `SUPABASE_URL`, `SUPABASE_ANON_KEY` | Name-only sign-in and **My analyses**: each person's checked bills and disputes are saved to their own account | Only the examples work; nothing is saved |
 
 **Setting up Supabase (free):** create a project, turn on Authentication → Sign In / Providers → **Allow anonymous sign-ins**, run [db/schema.sql](db/schema.sql) in the SQL Editor, and copy the Project URL and anon key into `.env.local`. Row-level security keeps every user's rows private. GiveMeMyMoneyBack never uses the service role key.
@@ -66,7 +76,7 @@ Gemini calls time out after 20 seconds and ElevenLabs after 15. If either fails,
 
 The other two examples: **Leo, out-of-network ER visit** (a surprise bill protected by the No Surprises Act) and **Daniel, yearly checkup** (a bill that matches). The 18 test cases and 8 hand-written edge cases stay in the test sets and scoreboards.
 
-If the server can't be reached, the page falls back to a saved copy of Maya's example with no outside services. The previous look is still at **/classic/** (not linked).
+If the server can't be reached, the page falls back to a saved copy of Maya's example with no outside services.
 
 ### Checking a new document live
 
@@ -88,19 +98,19 @@ test bills ───────────────────────
                                            │
              ┌─────────────────────────────┼────────────────────────────┐
              ▼                             ▼                            ▼
-   letter + call script            explanations                dispute tracker
-   (templates)                     (glossary; Gemini may       + call practice
-                                   reword, numbers checked)    (checklist scored by code)
+   letter + call script            explanations + Ask          dispute tracker
+   (templates)                     (Gemini may reword or       (saved per account)
+                                   translate; facts checked)
 ```
 
 **The rules decide. AI only reads and rewords.**
 
 - `src/rules.js` finds every error with fixed rules. Each finding carries evidence (which bill line, which EOB line) and arithmetic. Gemini never decides what is an error.
-- Gemini may only: turn a document into JSON, reword a finding or a glossary entry, and play the billing rep in practice.
+- Gemini may only: turn a document into JSON, reword a finding or a glossary entry, answer questions from the verified findings, and translate text that is about to be spoken.
 - After Gemini reads a document, `src/validate.js` checks that its numbers add up and the person reviews them before any rule runs. The same checks run on the server and in the browser.
 - Whenever Gemini rewrites text with numbers, dates or codes, the code checks that every one of them appears in the template version. If not, the template is used.
-- The practice rep is limited to a fact sheet of verified findings, and its replies go through the same number check.
-- The call checklist is scored by keyword and number matching, not by AI.
+- Ask GiveMeMyMoneyBack answers only from a fact sheet of verified findings; a reply with a number or date that isn't in the facts is dropped.
+- Spanish (listening only): Gemini translates the text just before it is spoken. The translation is used only if every dollar amount, number, date, code, ID and name comes through exactly and nothing new is added (`src/translate.js`); otherwise you hear the English. The screen, the rules and the results stay in English.
 - Money is never invented. **Potential savings** (found by the checks) and **confirmed savings** (after a dispute is resolved) are always separate. Only resolved disputes count as saved.
 
 ### Error types
@@ -144,6 +154,8 @@ A planted error only counts as caught if the type matches and the amount is with
 
 Defaults: 8 cases (the hero, 4 generated, 3 hand-written), PNG, one request every 6 seconds to stay within free-tier limits. Options: `--cases=case-01,hw-04` or `--cases=3`, `--delay=10`, `--format=pdf`, `--no-cache`. Answers are cached in `data/extraction-cache/` (sample documents only, never real uploads). Phone photos of printed documents go in `data/photos/<case_id>-bill.jpg` and `<case_id>-eob.jpg`; they're scored and reported separately as "Phone photos." Results go to `data/extraction-scoreboard.json` and appear on the page. Without a key the script says so and exits.
 
+**Measured 2026-09-27 with `gemini-3.5-flash-lite` (PNG, default 8 cases):** 56 of 56 line items exact, 40 of 40 header fields, findings correct on 8 of 8 cases and owed amount correct on 8 of 8; the review step would have flagged 0 of 8. Separately, the 3 pairs in `test-documents/` (PDF) and the Word version of Test 1 went through the same pipeline: 4 of 4 matched their answer key end to end. Phone photos haven't been measured.
+
 ### Files
 
 | Path | What it does |
@@ -155,23 +167,25 @@ Defaults: 8 cases (the hero, 4 generated, 3 hand-written), PNG, one request ever
 | `src/disputes.js` | Dispute tracker (per owner; signed-in users' disputes are saved by `src/accounts.js`) |
 | `src/accounts.js` | Who is asking, saved analyses, saving disputes to Supabase with the user's own token |
 | `db/schema.sql` | The two tables (`analyses`, `disputes`) with row-level security |
-| `src/callpractice.js` | Scripted or Gemini billing rep, checklist scoring |
 | `src/extract.js` | Document extraction (prompt + response schema), shared by live uploads and the extraction scoreboard |
 | `src/validate.js` | "Do these numbers add up?" checks for the review step (server and browser) |
-| `src/gemini.js`, `src/tts.js` | Gemini and ElevenLabs layers with timeouts, fallbacks and clear model errors |
+| `src/gemini.js`, `src/tts.js` | Gemini and ElevenLabs layers with timeouts, fallbacks and clear model errors; `tts.js` holds the three voice IDs |
+| `src/translate.js` | Spanish for spoken answers, with the fact check that rejects any changed number, date, code or name |
+| `src/docx.js` | Plain text from Word (.docx) uploads, in memory |
+| `src/ask.js`, `src/askfacts.js` | Ask GiveMeMyMoneyBack answers and the Alt + R summary |
 | `src/cpt.js` | Plain names for the CPT codes in the test data |
 | `data/generate.js`, `scripts/score.js` | Generated test data and both deterministic scoreboards |
 | `data/handwritten/` | Hand-written edge cases and their answer key |
 | `scripts/render.js`, `scripts/score-extraction.js` | Realistic sample documents and the extraction scoreboard |
-| `public/` | The web app (plain HTML, CSS and JavaScript); `upload-ui.js` is the upload and review screen, `steps-ui.js` the step bar; `public/classic/` is the previous look |
+| `public/` | The web app (plain HTML, CSS and JavaScript); `upload-ui.js` is the upload and review screen, `ask-ui.js` Ask and the voice player, `steps-ui.js` the step bar |
 
 ### API
 
-`GET /api/cases`, `GET /api/cases/:id`, `POST /api/check`, `POST /api/explain`, `POST /api/extract`, `POST /api/tts`, `GET /api/scoreboard`, `GET /api/extraction-scoreboard`, `GET /api/config`, `GET|POST /api/analyses`, `GET|PUT|DELETE /api/analyses/:id`, `GET|POST /api/disputes`, `POST /api/disputes/:id/send|advance|resolve`, `POST /api/practice/start`, `POST /api/practice/:id/reply|finish`.
+`GET /api/cases`, `GET /api/cases/:id`, `POST /api/check`, `POST /api/explain`, `POST /api/extract`, `POST /api/tts`, `GET /api/scoreboard`, `GET /api/extraction-scoreboard`, `GET /api/config`, `GET|POST /api/analyses`, `GET|PUT|DELETE /api/analyses/:id`, `GET|POST /api/disputes`, `POST /api/disputes/:id/send|advance|resolve`, `POST /api/ask`, `GET /api/family` (Total saved). `POST /api/tts` takes `{ text, voice: clear|calm|direct, lang: en|es }`.
 
 ## Deploy to Vercel
 
-The repo is ready for Vercel: static pages are served from `public/`, and the Express app runs as one function (`api/index.js` → `server.js`), as set in [vercel.json](vercel.json). Import the repo, keep the settings from `vercel.json`, and add the environment variables `GEMINI_API_KEY`, `GEMINI_MODEL`, `ELEVENLABS_API_KEY`, `ELEVENLABS_VOICE_ID`, `SUPABASE_URL` and `SUPABASE_ANON_KEY`. Never add the Supabase service role key. Custom domain: **givememymoneyback.ink** (Vercel → Settings → Domains). Signed-in users' disputes are re-read from Supabase on every request, so multiple function instances stay in sync; disputes made without an account are in memory and can be lost when Vercel starts a new instance.
+The repo is ready for Vercel: static pages are served from `public/`, and the Express app runs as one function (`api/index.js` → `server.js`), as set in [vercel.json](vercel.json). Import the repo, keep the settings from `vercel.json`, and add the environment variables `GEMINI_API_KEY`, `GEMINI_MODEL`, `ELEVENLABS_API_KEY`, `SUPABASE_URL` and `SUPABASE_ANON_KEY`. Never add the Supabase service role key. Custom domain: **givememymoneyback.ink** (Vercel → Settings → Domains). Signed-in users' disputes are re-read from Supabase on every request, so multiple function instances stay in sync; disputes made without an account are in memory and can be lost when Vercel starts a new instance.
 
 ## Limits
 
@@ -179,6 +193,6 @@ The repo is ready for Vercel: static pages are served from `public/`, and the Ex
 - Lines are matched by date and CPT code. Bills that use different codes than the EOB will show as "not on insurer statement."
 - Uploaded files are never saved. Signed-in users' confirmed numbers, results and disputes are saved in Supabase; disputes made without an account live in server memory only and vanish on restart.
 - Sign-in is name-only (a Supabase anonymous account in this browser). Clearing the browser, switching devices or signing out means the saved analyses can't be opened again. A later version could add email sign-in.
-- Extraction accuracy depends on the Gemini model and the document. The review step is there because reading can go wrong. Accuracy numbers appear only after `npm run score:extraction` has been run with a real key.
-- Call practice is practice only. GiveMeMyMoneyBack never places real phone calls.
+- Extraction accuracy depends on the Gemini model and the document. The review step is there because reading can go wrong. The measured accuracy is for clean rendered documents; phone photos haven't been measured.
+- Spanish is for listening only. Other languages aren't offered.
 - Reading documents needs a Gemini key. Clear, flat photos or PDFs work best.

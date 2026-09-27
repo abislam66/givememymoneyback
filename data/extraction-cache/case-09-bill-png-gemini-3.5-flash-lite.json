@@ -1,0 +1,63 @@
+{
+  "hash": "8307414b57b6d0119466486b8d76bd24a245c8157594aa275ff11172f01e3b7d",
+  "model": "gemini-3.5-flash-lite",
+  "file": "data\\rendered\\case-09-bill.png",
+  "read_at": "2026-09-27T05:51:15.464Z",
+  "raw": {
+    "lines": [
+      {
+        "date": "2026-04-13",
+        "code": "97161",
+        "description": "PHYSICAL THERAPY EVALUATION",
+        "units": 1,
+        "charge": 229
+      },
+      {
+        "date": "2026-04-13",
+        "code": "97110",
+        "description": "THERAPEUTIC EXERCISE",
+        "units": 1,
+        "charge": 116
+      },
+      {
+        "date": "2026-04-20",
+        "code": "97110",
+        "description": "THERAPEUTIC EXERCISE",
+        "units": 1,
+        "charge": 121
+      },
+      {
+        "date": "2026-04-27",
+        "code": "97110",
+        "description": "THERAPEUTIC EXERCISE",
+        "units": 1,
+        "charge": 142
+      }
+    ],
+    "amount_due": 175,
+    "account_number": "ACCT-87273462",
+    "adjustments": [
+      {
+        "amount": 161,
+        "description": "CONTRACTUAL ADJUSTMENT"
+      }
+    ],
+    "insurance_payments": [
+      {
+        "amount": 272,
+        "payer": "BLUEFINCH HEALTH PLAN"
+      }
+    ],
+    "patient": {
+      "name": "DANIEL TORRES"
+    },
+    "patient_payments": [],
+    "previous_balance": 0,
+    "printed_total_charges": 608,
+    "provider": {
+      "address": "702 NORTH GATE BLVD, FAIRHAVEN, PA 19003",
+      "name": "NORTHGATE PHYSICAL THERAPY"
+    },
+    "statement_date": "2026-05-31"
+  }
+}

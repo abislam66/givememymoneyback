@@ -1,5 +1,5 @@
 // In-memory dispute tracker. Status: draft -> sent -> follow_up_due -> resolved.
-// Every dispute has an owner (a signed-in user, a guest viewing an example, or 'public' for /classic/) and is only
+// Every dispute has an owner (a signed-in user, a guest viewing an example, or 'public' when no one is identified) and is only
 // visible to that owner. src/accounts.js saves signed-in users' disputes to Supabase after each change.
 // Flags always come from the rules engine. Confirmed savings only exist after resolution.
 

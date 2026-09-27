@@ -643,30 +643,66 @@
     $('#btn-stop').hidden = true;
   }
 
+  // ---------- voice + spoken language (shared by every Listen / Play button) ----------
+  // Voice: calm / clear / direct (the server maps each to an ElevenLabs voice). Language: en / es.
+  // Spanish is for listening only: the server translates with Gemini and keeps English if any fact changes.
+  const VOICE_NAMES = { clear: 'Clear', calm: 'Calm', direct: 'Direct' };
+  const LANG_NAMES = { en: 'English', es: 'Spanish' };
+  state.voice = VOICE_NAMES[pref('voice')] ? pref('voice') : 'clear';
+  state.lang = LANG_NAMES[pref('lang')] ? pref('lang') : 'en';
+
+  // Names that a translation must copy exactly (the numbers, dates and codes are checked on the server too).
+  function keepNames() {
+    const b = state.bill || {}; const e = state.eob || {};
+    return [b.provider && b.provider.name, b.patient && b.patient.name, e.insurer, e.claim_number, b.account_number].filter(Boolean);
+  }
+
+  // -> { url, lang, note } or null (then the caller uses the browser voice). Audio is cached per voice + language + text,
+  // so hearing the same thing again doesn't use more ElevenLabs credits.
+  const voiceCache = new Map();
+  async function voiceAudio(text, { translate = false } = {}) {
+    if (state.demo || !state.status.elevenlabs) return null;
+    const lang = translate ? state.lang : 'en';
+    const key = `${state.voice}|${lang}|${text}`;
+    if (voiceCache.has(key)) return voiceCache.get(key);
+    const res = await fetch('/api/tts', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text, voice: state.voice, lang, keep: lang === 'en' ? [] : keepNames() }) });
+    if (!res.ok) return null;
+    const out = { url: URL.createObjectURL(await res.blob()), lang: res.headers.get('X-Voice-Lang') || 'en', note: res.headers.get('X-Voice-Note') || '', asked: lang };
+    voiceCache.set(key, out);
+    return out;
+  }
+  // A short line saying what is playing, e.g. "Playing in Spanish (Calm voice)."
+  function voiceNote(v) {
+    const who = `${VOICE_NAMES[state.voice]} voice`;
+    if (!v) return state.lang !== 'en' ? `Playing in English (browser voice). ${LANG_NAMES[state.lang]} needs the ElevenLabs voice.` : 'Playing (browser voice).';
+    if (v.asked !== 'en' && v.lang === 'en') {
+      return v.note === 'rejected'
+        ? `The ${LANG_NAMES[v.asked]} version didn't keep every number exactly, so this is in English (${who}).`
+        : `${LANG_NAMES[v.asked]} isn't available right now, so this is in English (${who}).`;
+    }
+    return `Playing${v.lang !== 'en' ? ` in ${LANG_NAMES[v.lang]}` : ''} (${who}).`;
+  }
+
   // Speak with ElevenLabs when the server has it; otherwise (501 or any error) use the browser voice.
-  const voiceCache = new Map(); // text -> audio URL: hearing the same text again doesn't use more ElevenLabs credits
-  async function speak(text, msgEl) {
+  // translate: true only for the short summaries and "Why?" explanations (never the letter or call script).
+  async function speak(text, msgEl, { translate = false } = {}) {
     stopSpeaking();
     const seq = speakSeq;
     $('#btn-stop').hidden = false;
     const done = () => { if (seq === speakSeq) $('#btn-stop').hidden = true; };
-    if (!state.demo && state.status.elevenlabs) {
-      try {
-        let url = voiceCache.get(text);
-        if (!url) {
-          const res = await fetch('/api/tts', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text }) });
-          if (res.ok) { url = URL.createObjectURL(await res.blob()); voiceCache.set(text, url); }
-        }
-        if (url) {
-          if (seq !== speakSeq) return;
-          audio = new Audio(url);
-          audio.onended = done;
-          await audio.play();
-          if (msgEl) setMsg(msgEl, 'Playing (ElevenLabs voice).');
-          return;
-        }
-      } catch (e) { /* fall through to the browser voice */ }
-    }
+    if (msgEl && translate && state.lang !== 'en') setMsg(msgEl, `Getting it ready in ${LANG_NAMES[state.lang]}…`);
+    try {
+      const v = await voiceAudio(text, { translate });
+      if (v) {
+        if (seq !== speakSeq) return;
+        audio = new Audio(v.url);
+        audio.onended = done;
+        await audio.play();
+        if (msgEl) setMsg(msgEl, voiceNote(v));
+        return;
+      }
+    } catch (e) { /* fall through to the browser voice */ }
     if (seq !== speakSeq) return;
     if (!('speechSynthesis' in window)) {
       if (msgEl) setMsg(msgEl, "Your browser can't read text aloud.", 'err');
@@ -678,7 +714,7 @@
     u.onend = done;
     u.onerror = done;
     window.speechSynthesis.speak(u);
-    if (msgEl) setMsg(msgEl, 'Playing (browser voice).');
+    if (msgEl) setMsg(msgEl, translate ? voiceNote(null) : 'Playing (browser voice).');
   }
 
   function resultsText() {
@@ -881,7 +917,12 @@
     });
 
     $('#explain-close').addEventListener('click', closeExplain);
-    $('#explain-listen').addEventListener('click', () => speak(`${$('#explain-title').textContent}. ${$('#explain-body').textContent}`, $('#explain-voice')));
+    $('#explain-listen').addEventListener('click', () => speak(`${$('#explain-title').textContent}. ${$('#explain-body').textContent}`, $('#explain-voice'), { translate: true }));
+    // Listening settings (voice + language), remembered on this device.
+    $('#voice-pick').value = state.voice;
+    $('#voice-lang').value = state.lang;
+    $('#voice-pick').addEventListener('change', (e) => { state.voice = e.target.value; pref('voice', state.voice); });
+    $('#voice-lang').addEventListener('change', (e) => { state.lang = e.target.value; pref('lang', state.lang); });
     $('#explain-stop').addEventListener('click', () => { stopSpeaking(); setMsg($('#explain-voice'), 'Stopped.'); });
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !$('#explain').hidden) closeExplain(); });
 
@@ -894,7 +935,7 @@
       (toScript ? $('#tab-script') : $('#tab-letter')).focus();
     });
     $('#btn-copy').addEventListener('click', copyCurrent);
-    $('#btn-read-results').addEventListener('click', () => speak(resultsText(), $('#letter-msg')));
+    $('#btn-read-results').addEventListener('click', () => speak(resultsText(), $('#letter-msg'), { translate: true }));
     $('#btn-play-script').addEventListener('click', () => speak($('#script-text').value, $('#letter-msg')));
     $('#btn-stop').addEventListener('click', () => { stopSpeaking(); setMsg($('#letter-msg'), 'Stopped.'); });
 
@@ -913,7 +954,7 @@
 
   // Exposed for the dispute and call-practice module (disputes.js on the page).
   window.SecondLook = {
-    state, api, money, esc, speak, stopSpeaking, announce, setMsg, shortDate, clone,
+    state, api, money, esc, speak, stopSpeaking, announce, setMsg, shortDate, clone, voiceAudio, voiceNote, pref,
     loadCase: (id) => loadCase(id), fillCaseSelect: (p) => fillCaseSelect(p), useDocuments: (d) => useDocuments(d),
   };
 

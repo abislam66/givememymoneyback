@@ -1,0 +1,54 @@
+{
+  "hash": "03135931e881c94f6f16844f5fa365a96e18d050b00dfe390a61d8caa5f22ebf",
+  "model": "gemini-3.5-flash-lite",
+  "file": "data\\rendered\\hw-06-eob.png",
+  "read_at": "2026-09-27T05:52:09.070Z",
+  "raw": {
+    "lines": [
+      {
+        "date": "2026-06-16",
+        "code": "80053",
+        "billed": 190,
+        "allowed": 80,
+        "insurer_paid": 72,
+        "patient_resp": 8,
+        "description": "COMPREHENSIVE METABOLIC PANEL",
+        "units": 1
+      },
+      {
+        "date": "2026-06-16",
+        "code": "85025",
+        "billed": 70,
+        "allowed": 30,
+        "insurer_paid": 27,
+        "patient_resp": 3,
+        "description": "COMPLETE BLOOD COUNT (CBC)",
+        "units": 1
+      },
+      {
+        "date": "2026-06-16",
+        "code": "36415",
+        "billed": 30,
+        "allowed": 10,
+        "insurer_paid": 9,
+        "patient_resp": 1,
+        "description": "BLOOD DRAW",
+        "units": 1
+      }
+    ],
+    "totals": {
+      "billed": 290,
+      "insurer_paid": 108,
+      "patient_resp": 12
+    },
+    "network": "in-network",
+    "service_type": "lab",
+    "claim_number": "CLM-640118466",
+    "insurer": "Cardinal Shield Insurance",
+    "member": {
+      "id": "CSI-300934",
+      "name": "HANA KOBAYASHI"
+    },
+    "provider_name": "KESTREL LAB SERVICES"
+  }
+}

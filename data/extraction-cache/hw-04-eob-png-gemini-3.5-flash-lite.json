@@ -1,0 +1,45 @@
+{
+  "hash": "bed30aed799cc04993e65fde5910a34cdb0f3bd7dcc7e8b3c2589f398fa2b336",
+  "model": "gemini-3.5-flash-lite",
+  "file": "data\\rendered\\hw-04-eob.png",
+  "read_at": "2026-09-27T05:51:56.910Z",
+  "raw": {
+    "lines": [
+      {
+        "date": "2026-05-18",
+        "code": "97161",
+        "billed": 250,
+        "allowed": 120,
+        "insurer_paid": 96,
+        "patient_resp": 24,
+        "description": "Physical therapy evaluation",
+        "units": 1
+      },
+      {
+        "date": "2026-05-18",
+        "code": "97110",
+        "billed": 240,
+        "allowed": 120,
+        "insurer_paid": 96,
+        "patient_resp": 24,
+        "description": "Therapeutic exercise",
+        "units": 2
+      }
+    ],
+    "totals": {
+      "allowed": 240,
+      "billed": 490,
+      "insurer_paid": 192,
+      "patient_resp": 48
+    },
+    "network": "in-network",
+    "service_type": "therapy",
+    "claim_number": "CLM-640118399",
+    "insurer": "Cardinal Shield Insurance",
+    "member": {
+      "id": "CSI-300705",
+      "name": "Grace Lindqvist"
+    },
+    "provider_name": "Northgate Physical Therapy"
+  }
+}

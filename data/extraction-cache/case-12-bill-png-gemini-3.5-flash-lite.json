@@ -1,0 +1,56 @@
+{
+  "hash": "7cda78aec2421cd96a3768cafff8f76bd26424158c3cf14e5d33c8f90a12ff98",
+  "model": "gemini-3.5-flash-lite",
+  "file": "data\\rendered\\case-12-bill.png",
+  "read_at": "2026-09-27T05:51:27.394Z",
+  "raw": {
+    "lines": [
+      {
+        "date": "2026-05-19",
+        "code": "99284",
+        "description": "ER VISIT, SERIOUS (LEVEL 4)",
+        "units": 1,
+        "charge": 1228
+      },
+      {
+        "date": "2026-05-19",
+        "code": "70450",
+        "description": "CT SCAN OF HEAD, NO CONTRAST",
+        "units": 1,
+        "charge": 1897
+      },
+      {
+        "date": "2026-05-19",
+        "code": "70450",
+        "description": "CT SCAN OF HEAD, NO CONTRAST",
+        "units": 1,
+        "charge": 1897
+      },
+      {
+        "date": "2026-05-19",
+        "code": "96374",
+        "description": "IV PUSH MEDICATION",
+        "units": 1,
+        "charge": 279
+      }
+    ],
+    "amount_due": 3826,
+    "account_number": "ACCT-68468670",
+    "insurance_payments": [
+      {
+        "amount": 1475,
+        "payer": "BLUEFINCH HEALTH PLAN"
+      }
+    ],
+    "patient": {
+      "name": "MAYA TORRES"
+    },
+    "previous_balance": 0,
+    "printed_total_charges": 5301,
+    "provider": {
+      "address": "88 QUARRY LANE, MILLBROOK, PA 19001",
+      "name": "STONEBRIDGE EMERGENCY CENTER"
+    },
+    "statement_date": "2026-06-22"
+  }
+}

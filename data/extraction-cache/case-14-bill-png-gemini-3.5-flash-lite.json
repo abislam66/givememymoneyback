@@ -1,0 +1,49 @@
+{
+  "hash": "4a79e40ffc14575e7bcfa56fb062781ae3db78045d5954e8ad721088be7603c4",
+  "model": "gemini-3.5-flash-lite",
+  "file": "data\\rendered\\case-14-bill.png",
+  "read_at": "2026-09-27T05:51:39.641Z",
+  "raw": {
+    "lines": [
+      {
+        "date": "2026-06-15",
+        "code": "99213",
+        "description": "Office visit, established patient",
+        "units": 1,
+        "charge": 213
+      },
+      {
+        "date": "2026-06-15",
+        "code": "80061",
+        "description": "Lipid panel (cholesterol test)",
+        "units": 1,
+        "charge": 97
+      },
+      {
+        "date": "2026-06-15",
+        "code": "85025",
+        "description": "Complete blood count (CBC)",
+        "units": 1,
+        "charge": 89
+      },
+      {
+        "date": "2026-06-15",
+        "code": "36415",
+        "description": "Blood draw",
+        "units": 1,
+        "charge": 29
+      }
+    ],
+    "amount_due": 428,
+    "account_number": "ACCT-68190939",
+    "patient": {
+      "name": "Leo Torres"
+    },
+    "printed_total_charges": 428,
+    "provider": {
+      "address": "45 Elm Court, Fairhaven, PA 19000",
+      "name": "Brightwater Family Practice"
+    },
+    "statement_date": "2026-07-19"
+  }
+}

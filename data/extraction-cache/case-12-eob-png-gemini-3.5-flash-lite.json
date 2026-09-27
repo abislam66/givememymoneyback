@@ -1,0 +1,55 @@
+{
+  "hash": "08178ce9c1b6f94f307fef61ae1f3b6ac29397fc3c2a64db45405080f0f2364b",
+  "model": "gemini-3.5-flash-lite",
+  "file": "data\\rendered\\case-12-eob.png",
+  "read_at": "2026-09-27T05:51:33.759Z",
+  "raw": {
+    "lines": [
+      {
+        "date": "2026-05-19",
+        "code": "99284",
+        "billed": 1228,
+        "allowed": 694,
+        "insurer_paid": 544,
+        "patient_resp": 150,
+        "description": "ER VISIT, SERIOUS (LEVEL 4)",
+        "units": 1
+      },
+      {
+        "date": "2026-05-19",
+        "code": "70450",
+        "billed": 1897,
+        "allowed": 1022,
+        "insurer_paid": 818,
+        "patient_resp": 204,
+        "description": "CT SCAN OF HEAD, NO CONTRAST",
+        "units": 1
+      },
+      {
+        "date": "2026-05-19",
+        "code": "96374",
+        "billed": 279,
+        "allowed": 141,
+        "insurer_paid": 113,
+        "patient_resp": 28,
+        "description": "IV PUSH MEDICATION",
+        "units": 1
+      }
+    ],
+    "totals": {
+      "allowed": 1857,
+      "billed": 3404,
+      "insurer_paid": 1475,
+      "patient_resp": 382
+    },
+    "network": "out-of-network",
+    "service_type": "emergency",
+    "claim_number": "CLM-914546164",
+    "insurer": "Bluefinch Health Plan",
+    "member": {
+      "id": "BFH482913",
+      "name": "MAYA TORRES"
+    },
+    "provider_name": "STONEBRIDGE EMERGENCY CENTER"
+  }
+}

@@ -9,12 +9,12 @@
   const SL = window.SecondLook;
   const A = window.SecondLookAsk;
   if (!SL || !A || !document.getElementById('ask-section')) return;
-  const { state, api, esc, announce, setMsg, stopSpeaking } = SL;
+  const { state, api, esc, announce, setMsg, stopSpeaking, voiceAudio, voiceNote } = SL;
   const $ = (sel) => document.querySelector(sel);
 
   // ---------- voice player (one at a time) ----------
   const RATES = [0.75, 1, 1.25];
-  const player = { owner: null, text: '', rate: 1, mode: null, audio: null, playing: false, paused: false, loading: false, seq: 0, cache: new Map() };
+  const player = { owner: null, text: '', rate: 1, mode: null, audio: null, playing: false, paused: false, loading: false, seq: 0 };
 
   function render() {
     document.querySelectorAll('.speaker').forEach((box) => {
@@ -60,29 +60,28 @@
     const seq = player.seq;
     Object.assign(player, { owner, text, rate: rate || 1, playing: true, paused: false, loading: true });
     render();
-    if (!state.demo) {
-      try {
-        let url = player.cache.get(text);
-        if (!url) {
-          const res = await fetch('/api/tts', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text }) });
-          if (res.ok) { url = URL.createObjectURL(await res.blob()); player.cache.set(text, url); }
-        }
-        if (seq !== player.seq) return;
-        if (url) {
-          player.mode = 'eleven';
-          player.audio = new Audio(url);
-          player.audio.playbackRate = player.rate;
-          player.audio.onended = () => done(seq);
-          player.loading = false;
-          await player.audio.play();
-          render();
-          return;
-        }
-      } catch (e) { /* browser voice below */ }
-    }
+    // Answers and the Alt+R summary follow the Listening settings (voice + English/Spanish); see voiceAudio in app.js.
+    const msg = $('#ask-msg');
+    if (state.lang !== 'en') setMsg(msg, 'Getting it ready in Spanish…');
+    try {
+      const v = await voiceAudio(text, { translate: true });
+      if (seq !== player.seq) return;
+      if (v) {
+        setMsg(msg, voiceNote(v));
+        player.mode = 'eleven';
+        player.audio = new Audio(v.url);
+        player.audio.playbackRate = player.rate;
+        player.audio.onended = () => done(seq);
+        player.loading = false;
+        await player.audio.play();
+        render();
+        return;
+      }
+    } catch (e) { /* browser voice below */ }
     if (seq !== player.seq) return;
     player.loading = false;
     render();
+    setMsg(msg, voiceNote(null));
     speakBrowser(text, seq);
   }
 

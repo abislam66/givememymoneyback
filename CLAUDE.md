@@ -3,7 +3,7 @@
 This file gives Claude Code the standing context for this project. Read it at the start of every session. The full build spec lives in `BUILD_PROMPT.md`; progress lives in `PROGRESS.md`.
 
 ## Project
-GiveMeMyMoneyBack checks a patient's hospital bill against their insurer's explanation of benefits (EOB), finds errors with deterministic rules, shows the evidence and math side by side, explains confusing terms, writes the dispute letter, tracks the dispute, and lets the patient practice the billing phone call.
+GiveMeMyMoneyBack checks a patient's hospital bill against their insurer's explanation of benefits (EOB), finds errors with deterministic rules, shows the evidence and math side by side, explains confusing terms, writes the dispute letter, tracks the dispute, answers questions (Ask GiveMeMyMoneyBack) and reads results aloud in English or Spanish. Live at https://www.givememymoneyback.ink.
 
 Built solo for **OwlHacks 2026** (Temple University). Submission deadline: about **9am Sunday, Sept 27, 2026**. Everything must run for free.
 
@@ -16,7 +16,7 @@ Built solo for **OwlHacks 2026** (Temple University). Submission deadline: about
 3. **No API keys required.** Every feature has a deterministic fallback. Gemini and ElevenLabs are optional layers with timeouts (20s Gemini, 15s ElevenLabs).
 4. **Uploaded files are never stored.** Only confirmed numbers + rules results may be saved to a signed-in user's account (rule 6). The 3 example bills offered to people (case-01, case-11, case-02; `EXAMPLES` in public/app.js) are fictional and labeled so; the UI never calls the product a demo. Privacy wording everywhere: "Uploaded files are not permanently stored. Confirmed structured analysis/results may be saved to your account."
 5. **Money is never invented.** Potential savings (detected) and confirmed savings (after resolution) are always separate. Only resolved disputes count as saved.
-6. **Stack:** Node 18+, Express, plain HTML/CSS/JS in `public/`, no framework, no build step. **Accounts (user decision, 2026-09-26):** name-only sign-in (Supabase anonymous auth) and Supabase Postgres for each signed-in user's analyses and disputes (`src/accounts.js`, `db/schema.sql`). Rows are written with the user's own token so row-level security applies; the service role key is never used. Uploaded files are never stored (no Supabase Storage); only confirmed numbers + rules results. Demo guests and `/classic/` stay in memory and are never saved. Without `SUPABASE_URL`/`SUPABASE_ANON_KEY` the app still runs (the demo works; sign-in says it isn't set up).
+6. **Stack:** Node 18+, Express, plain HTML/CSS/JS in `public/`, no framework, no build step. **Accounts (user decision, 2026-09-26):** name-only sign-in (Supabase anonymous auth) and Supabase Postgres for each signed-in user's analyses and disputes (`src/accounts.js`, `db/schema.sql`). Rows are written with the user's own token so row-level security applies; the service role key is never used. Uploaded files are never stored (no Supabase Storage); only confirmed numbers + rules results. Example guests stay in memory and are never saved. Without `SUPABASE_URL`/`SUPABASE_ANON_KEY` the app still runs (the demo works; sign-in says it isn't set up).
 7. **Depth over breadth.** Don't add features that aren't in `BUILD_PROMPT.md`. If a phase's check fails, fix it before moving on.
 
 ## Commands
@@ -34,7 +34,8 @@ Built solo for **OwlHacks 2026** (Temple University). Submission deadline: about
 - `src/disputes.js`: dispute store and status changes (in memory, scoped by owner; `src/accounts.js` saves signed-in users' disputes to Supabase)
 - `src/accounts.js`: who is asking (token / guest id / public), saved analyses, dispute persistence
 - `public/index.html` + `landing.js` + `landing.css`: start page; `public/auth.js`: name-only sign-in; `public/account-ui.js`: name, Sign out, My analyses
-- `src/callpractice.js`: scripted rep, optional Gemini rep, deterministic checklist
+- `src/ask.js`, `src/askfacts.js`, `public/ask-ui.js`: Ask GiveMeMyMoneyBack, the Alt+R summary, the voice player
+- `src/translate.js`: Spanish for spoken text only; rejected (English kept) if any number, date, code, ID or name changes. `src/tts.js` maps the Clear/Calm/Direct voices to ElevenLabs voice IDs
 - `src/extract.js`: the one extraction pipeline (`readDocument` + `finish`), used by live uploads and the extraction scoreboard
 - `src/validate.js`: "do the extracted numbers add up" checks for the review step; runs on the server and is served to the browser as `/validate.js`
 - `src/gemini.js`, `src/tts.js`: external API layers with fallbacks; `GEMINI_MODEL` picks the model, never switched silently

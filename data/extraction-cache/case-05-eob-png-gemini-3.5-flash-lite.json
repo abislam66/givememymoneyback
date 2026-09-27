@@ -1,0 +1,55 @@
+{
+  "hash": "0715beae5974d3aceaf14f6f3f2d280ae961b8a700c6ce333a5b922d87e22ddf",
+  "model": "gemini-3.5-flash-lite",
+  "file": "data\\rendered\\case-05-eob.png",
+  "read_at": "2026-09-27T05:51:09.476Z",
+  "raw": {
+    "lines": [
+      {
+        "date": "2026-02-21",
+        "code": "99284",
+        "billed": 1197,
+        "allowed": 676,
+        "insurer_paid": 526,
+        "patient_resp": 150,
+        "description": "ER visit, serious (level 4)",
+        "units": 1
+      },
+      {
+        "date": "2026-02-21",
+        "code": "70450",
+        "billed": 1664,
+        "allowed": 808,
+        "insurer_paid": 646,
+        "patient_resp": 162,
+        "description": "CT scan of head, no contrast",
+        "units": 1
+      },
+      {
+        "date": "2026-02-21",
+        "code": "96374",
+        "billed": 255,
+        "allowed": 113,
+        "insurer_paid": 90,
+        "patient_resp": 23,
+        "description": "IV push medication",
+        "units": 1
+      }
+    ],
+    "totals": {
+      "allowed": 1597,
+      "billed": 3116,
+      "insurer_paid": 1262,
+      "patient_resp": 335
+    },
+    "network": "out-of-network",
+    "service_type": "emergency",
+    "claim_number": "CLM-593835368",
+    "insurer": "Bluefinch Health Plan",
+    "member": {
+      "id": "BFH482914",
+      "name": "Daniel Torres"
+    },
+    "provider_name": "Stonebridge Emergency Center"
+  }
+}
