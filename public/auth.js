@@ -14,18 +14,20 @@
   const read = (store, k) => { try { return JSON.parse(store.getItem(k)); } catch (e) { return null; } };
   const write = (store, k, v) => { try { if (v === null) store.removeItem(k); else store.setItem(k, JSON.stringify(v)); } catch (e) { /* storage blocked */ } };
 
+  // Only a working answer is remembered, so a failed load is tried again on the next sign-in.
   async function config() {
     if (cfg) return cfg;
     try {
       const res = await fetch('/api/config');
-      cfg = res.ok ? await res.json() : { accounts: false };
-    } catch (e) { cfg = { accounts: false }; }
-    return cfg;
+      const c = res.ok ? await res.json() : null;
+      if (c && c.accounts) cfg = c;
+      return c || { accounts: false };
+    } catch (e) { return { accounts: false }; }
   }
 
   async function authCall(path, body, token) {
     const c = await config();
-    if (!c.accounts) throw new Error('Saving is not set up on this server. You can still try an example.');
+    if (!c.accounts) throw new Error("We couldn't start your account just now. Please try again in a moment, or try an example below.");
     const ctrl = new AbortController();
     const timer = setTimeout(() => ctrl.abort(), 12000);
     try {

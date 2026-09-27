@@ -28,13 +28,7 @@
     $('#name').focus();
   });
 
-  // Tell people early if this server can't save accounts; the examples still work.
-  A.config().then((c) => {
-    if (c.accounts) return;
-    $('#btn-start').disabled = true;
-    $('#name').disabled = true;
-    say("Saving isn't set up on this server yet. You can still try an example below.", 'err');
-  });
+  A.config(); // load the sign-in settings early; problems are only reported if someone presses Get started
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
