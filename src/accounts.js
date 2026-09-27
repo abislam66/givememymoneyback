@@ -6,7 +6,8 @@
 // - No header (the /classic/ page): the shared in-memory store, as before.
 // Uploaded files never come here; only the numbers the person confirmed and the rules' results.
 
-const URL_ = () => (process.env.SUPABASE_URL || '').replace(/\/+$/, '');
+// Accept the project URL as Supabase shows it in different places: with or without /rest/v1 or /auth/v1.
+const URL_ = () => (process.env.SUPABASE_URL || '').trim().replace(/\/+$/, '').replace(/\/(rest|auth)\/v1$/, '');
 const KEY = () => process.env.SUPABASE_ANON_KEY || '';
 const hasAccounts = () => Boolean(URL_() && KEY());
 const TIMEOUT = 10000;
