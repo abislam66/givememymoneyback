@@ -39,8 +39,12 @@
     files[doc] = file;
     box.classList.add('has-file');
     $(`#name-${doc}`).textContent = `${file.name} (${Math.max(1, Math.round(file.size / 1024))} KB)`;
-    setMsg(msg, '');
+    setMsg(msg, sameFile() ? sameFileText() : '', sameFile() ? 'err' : undefined);
   }
+
+  // The same file picked for both boxes is almost always a mistake (the EOB is a separate letter from the insurer).
+  const sameFile = () => Boolean(files.bill && files.eob && files.bill.name === files.eob.name && files.bill.size === files.eob.size);
+  const sameFileText = () => `Heads up: you chose the same file (${files.bill.name}) for both the bill and the EOB. Please choose the other document in one of the boxes.`;
 
   function bindDrop(doc) {
     const box = $(`#drop-${doc}`);
@@ -91,6 +95,7 @@
     e.preventDefault();
     const msg = $('#upload-msg');
     if (!files.bill || !files.eob) { setMsg(msg, 'Please choose both files: your bill and your EOB.', 'err'); return; }
+    if (sameFile()) { setMsg(msg, sameFileText(), 'err'); return; }
     if (state.demo) { setMsg(msg, "We can't reach the server right now, so we can't read documents. Try again soon, or type the numbers in yourself.", 'err'); return; }
     $('#btn-read').disabled = true;
     setMsg(msg, 'Reading your documents with Gemini. This can take up to 20 seconds…');
