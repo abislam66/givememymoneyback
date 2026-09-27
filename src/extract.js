@@ -4,12 +4,15 @@
 // (scripts/score-extraction.js). Live uploads are cached in memory only, by file hash, and never saved.
 
 const crypto = require('crypto');
+const { docxText } = require('./docx');
 const { generateDetailed, hasGemini } = require('./gemini');
 const V = require('./validate');
 
 const cache = new Map(); // sha256 -> result (in memory only)
 const MAX_CACHE = 50;
-const MIME_OK = /^(image\/(png|jpeg|jpg|webp|heic|heif)|application\/pdf)$/;
+const DOCX = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+const MIME_OK = /^(image\/(png|jpeg|jpg|webp|heic|heif)|application\/pdf|text\/plain|application\/vnd\.openxmlformats-officedocument\.wordprocessingml\.document)$/;
+const MAX_TEXT_CHARS = 60000;
 
 class ExtractError extends Error {
   constructor(message, status = 422) { super(message); this.status = status; }
@@ -228,7 +231,12 @@ function geminiFailure(err) {
 
 // Read raw Gemini JSON for one document. Exported for the scoreboard script, which keeps its own disk cache.
 async function readDocument({ data, mime, docType }) {
-  const parts = [{ inline_data: { mime_type: mime, data } }, { text: prompt(docType) }];
+  // Word files arrive here already turned into plain text (see extract()); send that as text, not as a file.
+  const parts = mime === 'text/plain'
+    ? [{ text: `The document's text (from a Word or text file; table cells are separated by tabs):
+
+${Buffer.from(data, 'base64').toString('utf8')}` }, { text: prompt(docType) }]
+    : [{ inline_data: { mime_type: mime, data } }, { text: prompt(docType) }];
   const schema = docType === 'bill' ? BILL_SCHEMA : EOB_SCHEMA;
   let r = await generateDetailed({ parts, json: true, schema, temperature: 0, maxOutputTokens: 8192 });
   if (r.error && r.error.kind === 'bad_request' && /schema/i.test(`${r.error.detail} ${r.error.message}`)) {
@@ -258,12 +266,23 @@ function finish(docType, raw) {
 async function extract({ image_base64, mime_type, doc_type }) {
   if (!['bill', 'eob'].includes(doc_type)) throw new ExtractError('doc_type must be "bill" or "eob".', 400);
   if (!image_base64 || typeof image_base64 !== 'string') throw new ExtractError('No file was sent.', 400);
-  const mime = str(mime_type).toLowerCase() || 'image/jpeg';
-  if (!MIME_OK.test(mime)) throw new ExtractError('Please upload a PDF, PNG or JPG file.', 400);
+  let mime = str(mime_type).toLowerCase() || 'image/jpeg';
+  if (!MIME_OK.test(mime)) throw new ExtractError('Please upload a PDF, Word (.docx), PNG or JPG file.', 400);
   if (!hasGemini()) {
     throw new ExtractError('Reading documents needs a Gemini API key, and none is set up. You can type the numbers in yourself, or try an example.', 501);
   }
-  const data = image_base64.replace(/^data:[^;]+;base64,/, '');
+  let data = image_base64.replace(/^data:[^;]+;base64,/, '');
+  if (mime === DOCX) {
+    let text;
+    try { text = docxText(data); } catch (e) {
+      throw new ExtractError("We couldn't open that Word file. Please save it as a PDF (File > Save As > PDF) and upload that instead.", 400);
+    }
+    if (text.replace(/s/g, '').length < 20) {
+      throw new ExtractError('That Word file has no text we can read (it may only hold a picture). Please upload it as a PDF or a photo instead.', 400);
+    }
+    data = Buffer.from(text.slice(0, MAX_TEXT_CHARS), 'utf8').toString('base64');
+    mime = 'text/plain';
+  }
   const hash = crypto.createHash('sha256').update(doc_type).update(data).digest('hex');
   if (cache.has(hash)) return { ...cache.get(hash), cached: true };
 

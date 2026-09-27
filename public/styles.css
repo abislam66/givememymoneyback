@@ -636,3 +636,8 @@ a.chip { text-decoration: none; }
 body.no-result .empty-state { display: block; color: var(--muted); }
 body.no-result #result, body.no-result .problems, body.no-result #ask-section, body.no-result #math-details,
 body.no-result #recon-section, body.no-result #step-dispute .actions, body.no-result #letter-panel, body.no-result #dispute-section { display: none; }
+
+/* What you can upload */
+.allowed { background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: .75rem 1rem; margin-block: .75rem; max-width: 70ch; }
+.allowed-h { font-weight: 700; margin: 0 0 .35rem; }
+.allowed ul { margin: 0; padding-left: 1.2rem; display: grid; gap: .25rem; font-size: var(--fs-0); }

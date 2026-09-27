@@ -24,3 +24,5 @@ Several services, a deductible and cents; the bill matches the EOB exactly.
 Bill: charges $641.00 - insurance $230.42 - adjustments $310.88 = amount due $99.70
 Expected finding: none (the bill matches your insurer's statement)
 Expected "you likely owe": $99.70
+
+Word versions: Test_1_Bill.docx and Test_1_EOB.docx hold the same Test 1 numbers as the PDFs (same answer: likely owe $155.55, one duplicate charge of $342).

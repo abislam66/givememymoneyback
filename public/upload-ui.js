@@ -1,4 +1,4 @@
-// Live document upload: choose or drop a bill and an EOB (PDF, PNG, JPG) -> Gemini reads them
+// Live document upload: choose or drop a bill and an EOB (PDF, Word .docx, PNG, JPG) -> Gemini reads them
 // (same /api/extract pipeline the extraction scoreboard uses) -> the person reviews and corrects every
 // number -> "Confirm & Analyze" hands the documents to the deterministic rules engine.
 // Without a Gemini key, the same review screen opens blank so the numbers can be typed in.
@@ -15,10 +15,12 @@
 
   const MAX_BYTES = 12e6;
   // Hosting limits a request to about 4.5 MB, and a file grows by a third when sent as text (base64).
-  // So big photos are resized in the browser first, and PDFs (which we can't shrink here) must be 3 MB or less.
+  // So big photos are resized in the browser first, and PDFs and Word files (which we can't shrink here) must be 3 MB or less.
   const MAX_PDF_BYTES = 3e6;
   const MAX_SEND_BYTES = 3e6;
-  const TYPES = { pdf: 'application/pdf', png: 'image/png', jpg: 'image/jpeg', jpeg: 'image/jpeg' };
+  const DOCX = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+  const TYPES = { pdf: 'application/pdf', docx: DOCX, png: 'image/png', jpg: 'image/jpeg', jpeg: 'image/jpeg' };
+  const ALLOWED = 'PDF, Word (.docx), PNG or JPG';
   const files = { bill: null, eob: null };
   let draft = null; // { bill, eob } being reviewed
 
@@ -33,9 +35,10 @@
     const msg = $('#upload-msg');
     const box = $(`#drop-${doc}`);
     if (!file) return;
-    if (!mimeOf(file)) { setMsg(msg, `${file.name} isn't a PDF, PNG or JPG. Please choose one of those.`, 'err'); return; }
+    if (/.doc$/i.test(file.name)) { setMsg(msg, `${file.name} is an older Word file (.doc). Please open it in Word and save it as .docx or PDF, then upload that.`, 'err'); return; }
+    if (!mimeOf(file)) { setMsg(msg, `${file.name} can't be read here. Please choose a ${ALLOWED} file.`, 'err'); return; }
     if (file.size > MAX_BYTES) { setMsg(msg, `${file.name} is larger than 12 MB. Please use a smaller file.`, 'err'); return; }
-    if (mimeOf(file) === 'application/pdf' && file.size > MAX_PDF_BYTES) { setMsg(msg, `${file.name} is larger than 3 MB. Please use a smaller PDF, or a photo or screenshot of each page.`, 'err'); return; }
+    if ([TYPES.pdf, DOCX].includes(mimeOf(file)) && file.size > MAX_PDF_BYTES) { setMsg(msg, `${file.name} is larger than 3 MB. Please use a smaller file, or a photo or screenshot of each page.`, 'err'); return; }
     files[doc] = file;
     box.classList.add('has-file');
     $(`#name-${doc}`).textContent = `${file.name} (${Math.max(1, Math.round(file.size / 1024))} KB)`;
@@ -75,7 +78,7 @@
   // Photos over the limit are redrawn smaller as a JPEG (in the browser; nothing is saved).
   async function prepare(file) {
     const mime = mimeOf(file);
-    if (mime === 'application/pdf' || file.size <= MAX_SEND_BYTES) return { b64: await readAsBase64(file), mime };
+    if (mime === 'application/pdf' || mime === DOCX || file.size <= MAX_SEND_BYTES) return { b64: await readAsBase64(file), mime };
     let img;
     try { img = await createImageBitmap(file); } catch (e) { throw new Error(`We couldn't open ${file.name}. Try a different photo.`); }
     for (const side of [2400, 1800, 1400]) {

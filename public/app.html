@@ -105,22 +105,31 @@
               <span class="drop-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M6 2h9l5 5v15H6zM14 2v6h6M9 13h8M9 17h6"/></svg></span>
               <div class="drop-text">
                 <p class="drop-title">Medical Bill</p>
-                <p class="drop-sub">PDF, PNG or JPG · drag a file here</p>
+                <p class="drop-sub">PDF, Word, PNG or JPG · drag a file here</p>
               </div>
-              <input id="file-bill" class="file-in" type="file" accept=".pdf,.png,.jpg,.jpeg,application/pdf,image/png,image/jpeg">
-              <label for="file-bill" class="btn ghost file-btn">Upload bill<span class="sr-only">: your hospital or doctor bill (PDF, PNG or JPG)</span></label>
+              <input id="file-bill" class="file-in" type="file" accept=".pdf,.docx,.png,.jpg,.jpeg,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/png,image/jpeg">
+              <label for="file-bill" class="btn ghost file-btn">Upload bill<span class="sr-only">: your hospital or doctor bill (PDF, Word, PNG or JPG)</span></label>
               <p class="drop-name" id="name-bill">No file chosen</p>
             </div>
             <div class="drop" id="drop-eob" data-doc="eob">
               <span class="drop-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 2 4 5v6c0 5 3.4 9.3 8 11 4.6-1.7 8-6 8-11V5zM8.5 12l2.5 2.5 4.5-5"/></svg></span>
               <div class="drop-text">
                 <p class="drop-title">Insurance EOB</p>
-                <p class="drop-sub">PDF, PNG or JPG · drag a file here</p>
+                <p class="drop-sub">PDF, Word, PNG or JPG · drag a file here</p>
               </div>
-              <input id="file-eob" class="file-in" type="file" accept=".pdf,.png,.jpg,.jpeg,application/pdf,image/png,image/jpeg">
-              <label for="file-eob" class="btn ghost file-btn">Upload EOB<span class="sr-only">: your insurer's explanation of benefits (PDF, PNG or JPG)</span></label>
+              <input id="file-eob" class="file-in" type="file" accept=".pdf,.docx,.png,.jpg,.jpeg,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/png,image/jpeg">
+              <label for="file-eob" class="btn ghost file-btn">Upload EOB<span class="sr-only">: your insurer's explanation of benefits (PDF, Word, PNG or JPG)</span></label>
               <p class="drop-name" id="name-eob">No file chosen</p>
             </div>
+          </div>
+          <div class="allowed" id="upload-allowed">
+            <p class="allowed-h">What you can upload</p>
+            <ul>
+              <li><b>File types:</b> PDF, Word (.docx), PNG, JPG or JPEG. Older Word files (.doc): save them as .docx or PDF first.</li>
+              <li><b>Size:</b> PDF and Word files up to 3 MB. Photos up to 12 MB (we shrink big photos for you).</li>
+              <li><b>One file in each box:</b> your bill in one, your insurer's EOB in the other. Not the same file twice.</li>
+              <li><b>Many pages?</b> Use a PDF or Word file. A photo only shows one page.</li>
+            </ul>
           </div>
           <div class="cta-row">
             <button type="submit" id="btn-read" class="btn btn-lg">Read my documents</button>

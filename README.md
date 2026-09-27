@@ -38,7 +38,7 @@ Copy `.env.example` to `.env` and fill in what you have:
 
 | Variable | What it turns on | Without it |
 |---|---|---|
-| `GEMINI_API_KEY` | Reading your own bill and EOB (PDF, PNG, JPG), friendlier wording, an AI billing rep for call practice | Test bills, typing numbers in by hand, glossary wording, scripted rep |
+| `GEMINI_API_KEY` | Reading your own bill and EOB (PDF, Word .docx, PNG, JPG), friendlier wording, an AI billing rep for call practice | Test bills, typing numbers in by hand, glossary wording, scripted rep |
 | `GEMINI_MODEL` | The model used for document extraction, rewording and the AI rep. Must be a currently available **multimodal** Gemini model (reads images and PDFs) that your key can use. Default `gemini-2.5-flash` | |
 | `ELEVENLABS_API_KEY` | Natural voice for "Read results aloud", the call script and the practice rep | The browser's built-in voice |
 | `ELEVENLABS_VOICE_ID` | Which ElevenLabs voice (default: a premade voice) | |
@@ -70,7 +70,7 @@ If the server can't be reached, the page falls back to a saved copy of Maya's ex
 
 ### Checking a new document live
 
-1. Choose or drag in the bill and the EOB. Supported formats: **PDF, PNG, JPG and JPEG**. Photos up to 12 MB (big photos are resized in the browser before sending); PDFs up to 3 MB (hosting caps a request at 4.5 MB).
+1. Choose or drag in the bill and the EOB. Supported formats: **PDF, Word (.docx), PNG, JPG and JPEG** (older .doc files: save as .docx or PDF first). Photos up to 12 MB (big photos are resized in the browser before sending); PDFs and Word files up to 3 MB (hosting caps a request at 4.5 MB). Word files are turned into plain text in memory and sent to Gemini as text.
 2. Press **Read my documents**. Gemini reads each file into the same JSON the rules use. The file itself is not stored.
 3. The **Check what we read** screen shows every field and line, all editable. If the numbers don't add up the way a real bill should (line charges vs. the printed total, charges − adjustments − payments vs. amount due, EOB lines vs. EOB totals, paid + your share vs. allowed), it says **Please review these numbers** and highlights the fields to check. You can fix anything, add or remove lines, and see the checks update as you type.
 4. Press **Confirm & Analyze**. Only now do the rules run, the same way they do on the test bills. If you're signed in, the confirmed numbers and results are saved to **My analyses**.

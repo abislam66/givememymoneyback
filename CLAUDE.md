@@ -40,7 +40,7 @@ Built solo for **OwlHacks 2026** (Temple University). Submission deadline: about
 - `src/gemini.js`, `src/tts.js`: external API layers with fallbacks; `GEMINI_MODEL` picks the model, never switched silently
 - `data/handwritten/`: hand-written edge cases + answer key (not generated)
 - `scripts/render.js`, `scripts/score-extraction.js`: sample documents and the extraction scoreboard
-- `public/upload-ui.js`: upload (PDF/PNG/JPG/JPEG, drag-and-drop) and the editable review screen
+- `public/upload-ui.js`: upload (PDF, Word .docx, PNG, JPG/JPEG, drag-and-drop) and the editable review screen. Word files are turned into plain text in memory by `src/docx.js` (no packages) and sent to Gemini as text through the same `src/extract.js` pipeline
 - `data/generate.js`, `scripts/score.js`: test data and scoreboard
 - `public/`: the single-page app
 
