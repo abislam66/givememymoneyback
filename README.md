@@ -1,8 +1,8 @@
-# SecondLook
+# GiveMeMyMoneyBack
 
 **Check your medical bill against your insurance.**
 
-SecondLook compares a hospital bill with the insurer's explanation of benefits (EOB). It lines up every charge and finds errors: duplicate charges, insurance payments that were never applied, missing in-network discounts, and more. It shows the evidence and the math side by side, explains confusing terms, writes the dispute letter, tracks the dispute, and lets you practice the billing phone call.
+GiveMeMyMoneyBack compares a hospital bill with the insurer's explanation of benefits (EOB). It lines up every charge and finds errors: duplicate charges, insurance payments that were never applied, missing in-network discounts, and more. It shows the evidence and the math side by side, explains confusing terms, writes the dispute letter, tracks the dispute, and lets you practice the billing phone call.
 
 Built solo for **OwlHacks 2026** at Temple University. Tracks: Health & Wellness, AI & Agents, HCI.
 
@@ -44,24 +44,24 @@ Copy `.env.example` to `.env` and fill in what you have:
 | `ELEVENLABS_VOICE_ID` | Which ElevenLabs voice (default: a premade voice) | |
 | `SUPABASE_URL`, `SUPABASE_ANON_KEY` | Name-only sign-in and **My analyses**: each person's checked bills and disputes are saved to their own account | Only the examples work; nothing is saved |
 
-**Setting up Supabase (free):** create a project, turn on Authentication → Sign In / Providers → **Allow anonymous sign-ins**, run [db/schema.sql](db/schema.sql) in the SQL Editor, and copy the Project URL and anon key into `.env.local`. Row-level security keeps every user's rows private. SecondLook never uses the service role key.
+**Setting up Supabase (free):** create a project, turn on Authentication → Sign In / Providers → **Allow anonymous sign-ins**, run [db/schema.sql](db/schema.sql) in the SQL Editor, and copy the Project URL and anon key into `.env.local`. Row-level security keeps every user's rows private. GiveMeMyMoneyBack never uses the service role key.
 
 Gemini calls time out after 20 seconds and ElevenLabs after 15. If either fails, the app uses its fallback and keeps going.
 
-**About `GEMINI_MODEL`:** model availability differs between API keys and changes over time, so SecondLook doesn't assume any model exists and never switches models silently. If the configured model is not found, not allowed for your key, or unavailable, uploads show a message that names the model and tells you to check `GEMINI_MODEL`. The server log at startup also prints the model in use. The API key is sent in a request header, never in a URL, and is scrubbed from logs.
+**About `GEMINI_MODEL`:** model availability differs between API keys and changes over time, so GiveMeMyMoneyBack doesn't assume any model exists and never switches models silently. If the configured model is not found, not allowed for your key, or unavailable, uploads show a message that names the model and tells you to check `GEMINI_MODEL`. The server log at startup also prints the model in use. The API key is sent in a request header, never in a URL, and is scrubbed from logs.
 
 ## Using it
 
-**With your own bill:** start page → type your name → **Get started** → the dashboard opens at **Check my bill** → upload your bill and your EOB → **Read my documents** (Gemini) → check the numbers → **Confirm & Analyze** → results (saved to **My analyses**) → **Ask SecondLook** (answers can be read aloud) → **Create dispute letter** and **Track this dispute** → **Resolve** when the provider fixes the bill. Your checked bills and disputes stay in **My analyses** on this browser.
+**With your own bill:** start page → type your name → **Get started** → the dashboard opens at **Check my bill** → upload your bill and your EOB → **Read my documents** (Gemini) → check the numbers → **Confirm & Analyze** → results (saved to **My analyses**) → **Ask GiveMeMyMoneyBack** (answers can be read aloud) → **Create dispute letter** and **Track this dispute** → **Resolve** when the provider fixes the bill. Your checked bills and disputes stay in **My analyses** on this browser.
 
 **With an example (no account):** press **Try an example**. Three fictional bills are offered; nothing is saved. The walkthrough below uses the first one.
 
-1. **Maya, ER visit for a sprained ankle** (fictional). The bill says **$1,240**. SecondLook says she likely owes **$250**.
+1. **Maya, ER visit for a sprained ankle** (fictional). The bill says **$1,240**. GiveMeMyMoneyBack says she likely owes **$250**.
 2. **The math:** $1,240 − $380 (ankle X-ray billed twice) − $610 (insurance payment never applied) = $250, which matches her insurer's statement.
 3. Press **Show evidence** on a problem to open the full bill & EOB comparison with the exact lines highlighted (**View the math** shows the arithmetic). Press **Why?** for an explanation that quotes those lines. Underlined words like *Contractual adjustment* open plain-English explanations.
 4. Press **Edit and re-check**. Duplicate a line, delete one, or change a charge. The rules run again and the findings update.
-5. **Track this dispute** → **Mark as sent** → **Simulate 30 days passing**. SecondLook drafts the follow-up letter and shows the escalation path.
-6. **Ask SecondLook** on the Results screen: tap a suggested question ("Why was this charge flagged?") or type one. Answers come only from the bill, the EOB and the rules' results, and each one can be read aloud (ElevenLabs or the browser voice, 0.75×–1.25×). **Alt + R** reads a short summary.
+5. **Track this dispute** → **Mark as sent** → **Simulate 30 days passing**. GiveMeMyMoneyBack drafts the follow-up letter and shows the escalation path.
+6. **Ask GiveMeMyMoneyBack** on the Results screen: tap a suggested question ("Why was this charge flagged?") or type one. Answers come only from the bill, the EOB and the rules' results, and each one can be read aloud (ElevenLabs or the browser voice, 0.75×–1.25×). **Alt + R** reads a short summary.
 7. **Resolve dispute** at $250. The card shows **Saved $990**. Potential savings stay in their own box and never count as saved.
 
 The other two examples: **Leo, out-of-network ER visit** (a surprise bill protected by the No Surprises Act) and **Daniel, yearly checkup** (a bill that matches). The 18 test cases and 8 hand-written edge cases stay in the test sets and scoreboards.
@@ -171,14 +171,14 @@ Defaults: 8 cases (the hero, 4 generated, 3 hand-written), PNG, one request ever
 
 ## Deploy to Vercel
 
-The repo is ready for Vercel: static pages are served from `public/`, and the Express app runs as one function (`api/index.js` → `server.js`), as set in [vercel.json](vercel.json). Import the repo, keep the settings from `vercel.json`, and add the environment variables `GEMINI_API_KEY`, `GEMINI_MODEL`, `ELEVENLABS_API_KEY`, `ELEVENLABS_VOICE_ID`, `SUPABASE_URL` and `SUPABASE_ANON_KEY`. Never add the Supabase service role key. Signed-in users' disputes are re-read from Supabase on every request, so multiple function instances stay in sync; disputes made without an account are in memory and can be lost when Vercel starts a new instance.
+The repo is ready for Vercel: static pages are served from `public/`, and the Express app runs as one function (`api/index.js` → `server.js`), as set in [vercel.json](vercel.json). Import the repo, keep the settings from `vercel.json`, and add the environment variables `GEMINI_API_KEY`, `GEMINI_MODEL`, `ELEVENLABS_API_KEY`, `ELEVENLABS_VOICE_ID`, `SUPABASE_URL` and `SUPABASE_ANON_KEY`. Never add the Supabase service role key. Custom domain: **givememymoneyback.ink** (Vercel → Settings → Domains). Signed-in users' disputes are re-read from Supabase on every request, so multiple function instances stay in sync; disputes made without an account are in memory and can be lost when Vercel starts a new instance.
 
 ## Limits
 
-- SecondLook checks the bill **against the insurer's statement**. It does not judge whether the medical care or the coding was correct, and it isn't legal or medical advice.
+- GiveMeMyMoneyBack checks the bill **against the insurer's statement**. It does not judge whether the medical care or the coding was correct, and it isn't legal or medical advice.
 - Lines are matched by date and CPT code. Bills that use different codes than the EOB will show as "not on insurer statement."
 - Uploaded files are never saved. Signed-in users' confirmed numbers, results and disputes are saved in Supabase; disputes made without an account live in server memory only and vanish on restart.
 - Sign-in is name-only (a Supabase anonymous account in this browser). Clearing the browser, switching devices or signing out means the saved analyses can't be opened again. A later version could add email sign-in.
 - Extraction accuracy depends on the Gemini model and the document. The review step is there because reading can go wrong. Accuracy numbers appear only after `npm run score:extraction` has been run with a real key.
-- Call practice is practice only. SecondLook never places real phone calls.
+- Call practice is practice only. GiveMeMyMoneyBack never places real phone calls.
 - Reading documents needs a Gemini key. Clear, flat photos or PDFs work best.

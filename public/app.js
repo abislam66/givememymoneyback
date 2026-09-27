@@ -1,4 +1,4 @@
-// SecondLook front end. Plain JS, no framework.
+// GiveMeMyMoneyBack front end. Plain JS, no framework.
 // The server's rules engine decides every finding; this file only shows them.
 
 (() => {
@@ -83,7 +83,7 @@
       return data;
     } catch (e) {
       if (e.name === 'AbortError') throw new Error('That took too long. Please check your connection and try again.');
-      if (e instanceof TypeError) throw new Error("We couldn't reach the SecondLook server. Is it running?");
+      if (e instanceof TypeError) throw new Error("We couldn't reach the GiveMeMyMoneyBack server. Is it running?");
       throw e;
     } finally {
       clearTimeout(timer);
@@ -585,7 +585,7 @@
       $('#explain-body').textContent = out.text;
       $('#explain-source').textContent = out.source === 'gemini'
         ? 'Reworded by Gemini. Every number was checked against the rules.'
-        : "From SecondLook's built-in glossary and rules.";
+        : "From GiveMeMyMoneyBack's built-in glossary and rules.";
     } catch (e) {
       if (seq !== explainSeq) return;
       $('#explain-body').textContent = e.message;

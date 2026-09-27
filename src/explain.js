@@ -48,7 +48,7 @@ const GLOSSARY = {
   },
   'cpt code': {
     title: 'CPT code',
-    text: 'A five-digit code that names each medical service, like 73610 for an ankle X-ray. The bill and your EOB use the same codes, which is how SecondLook lines them up.',
+    text: 'A five-digit code that names each medical service, like 73610 for an ankle X-ray. The bill and your EOB use the same codes, which is how GiveMeMyMoneyBack lines them up.',
   },
   'no surprises act': {
     title: 'No Surprises Act',

@@ -1,4 +1,4 @@
-/* SecondLook start page. Same tokens, fonts and blue → cyan gradient as the dashboard (styles.css),
+/* GiveMeMyMoneyBack start page. Same tokens, fonts and blue → cyan gradient as the dashboard (styles.css),
    so the landing and the app read as one product. Light by default; dark follows the dashboard toggle. */
 
 :root {
@@ -79,9 +79,9 @@ a { color: var(--primary); }
 
 /* ---------- top ---------- */
 .lp-top {
-  max-width: 1180px; margin: 0 auto; padding: 18px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  max-width: 1180px; margin: 0 auto; padding: 18px 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 16px;
 }
-.lp-brand { display: inline-flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; font-family: var(--display); font-weight: 800; font-size: 1.35rem; }
+.lp-brand { min-width: 0; display: inline-flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; font-family: var(--display); font-weight: 800; font-size: 1.35rem; }
 .lp-mark { width: 38px; height: 38px; padding: 5px; border-radius: 11px; background: var(--grad); color: #fff; }
 .lp-nav { display: flex; align-items: center; gap: 18px; }
 .lp-nav > a:not(.lp-btn) { color: var(--ink); font-weight: 700; text-decoration: none; }
@@ -191,6 +191,8 @@ h1 { font-size: clamp(2.1rem, 4.6vw, 3.4rem); font-weight: 800; }
 @media (max-width: 560px) {
   .lp-top, main, .lp-foot { padding-inline: 16px; }
   .lp-nav > a:not(.lp-btn) { display: none; }
+  .lp-brand { font-size: 1.15rem; }
+  .lp-mark { width: 34px; height: 34px; }
   .docs { grid-template-columns: minmax(0, 1fr); }
   .start, .preview { padding: 18px; }
   .start-row .lp-btn { flex: 1 1 100%; }

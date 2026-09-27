@@ -1,4 +1,4 @@
-/* SecondLook styles: sidebar dashboard. Blue → cyan sidebar, soft gray page, white rounded cards,
+/* GiveMeMyMoneyBack styles: sidebar dashboard. Blue → cyan sidebar, soft gray page, white rounded cards,
    near-black type, blue primary actions, green savings, yellow review, coral problems.
    Tokens first; components only use tokens. The original look is kept in public/classic/. */
 
@@ -121,7 +121,8 @@ b, strong { font-weight: 700; }
 }
 .brand { display: flex; gap: 12px; align-items: center; padding-inline: 8px; }
 .brand-mark { width: 38px; height: 38px; flex: none; color: #ffffff; }
-.brand-name { font-size: 1.35rem; font-weight: 800; color: #ffffff; letter-spacing: -.02em; line-height: 1; }
+.brand > div { min-width: 0; }
+.brand-name { font-size: 1.1rem; font-weight: 800; color: #ffffff; letter-spacing: -.02em; line-height: 1.1; }
 .brand-tag { color: rgba(255, 255, 255, .85); font-size: .8rem; margin-top: 3px; }
 .side-nav { display: grid; gap: 6px; }
 .side-group { font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255, 255, 255, .78); padding: 12px 12px 4px; }
@@ -537,7 +538,7 @@ details summary { cursor: pointer; font-weight: 700; color: var(--accent); paddi
   }
   .brand { padding-inline: 4px; }
   .brand-mark { width: 28px; height: 28px; }
-  .brand-name { font-size: 1.1rem; }
+  .brand-name { font-size: 1.05rem; }
   .brand-tag, .side-group, .sn-badge { display: none; }
   .side-nav { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; }
   .side-nav ol { display: flex; gap: 4px; }
@@ -565,7 +566,7 @@ details summary { cursor: pointer; font-weight: 700; color: var(--accent); paddi
   tr.hl td { transition: background-color .3s; }
 }
 
-/* ================= Ask SecondLook ================= */
+/* ================= Ask GiveMeMyMoneyBack ================= */
 .ask-card { gap: 16px; }
 .ask-head { display: flex; gap: 14px; align-items: flex-start; }
 .ask-head > div { display: grid; gap: 4px; min-width: 0; }

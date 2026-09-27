@@ -1,4 +1,4 @@
-// SecondLook rules engine. Pure functions, no I/O.
+// GiveMeMyMoneyBack rules engine. Pure functions, no I/O.
 // Code decides what is an error. Every flag carries evidence (bill lines, EOB lines) and arithmetic.
 
 const { CPT } = require('./cpt');

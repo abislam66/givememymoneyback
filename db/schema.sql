@@ -1,4 +1,4 @@
--- SecondLook tables. Run once in Supabase: SQL Editor -> New query -> paste -> Run.
+-- GiveMeMyMoneyBack tables. Run once in Supabase: SQL Editor -> New query -> paste -> Run.
 -- Uploaded files are never stored; only the user-confirmed numbers and rules results.
 
 create table if not exists public.analyses (

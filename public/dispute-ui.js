@@ -102,7 +102,7 @@
     }
     if (d.status === 'sent') {
       parts.push(`<div class="sub-panel"><h4>Waiting for an answer</h4>
-        <p>Most billing offices answer within 30 days. If you don't hear back by ${esc(shortDate(d.follow_up_date))}, SecondLook drafts a follow-up.</p>
+        <p>Most billing offices answer within 30 days. If you don't hear back by ${esc(shortDate(d.follow_up_date))}, GiveMeMyMoneyBack drafts a follow-up.</p>
         <div class="row"><button type="button" id="btn-advance" class="btn ghost">Simulate 30 days passing</button></div></div>`);
     }
     if (d.status === 'follow_up_due' || (saved && d.follow_up_letter)) {
@@ -171,7 +171,7 @@
   }
 
   // ---------- call practice ----------
-  // The main page replaced this with Ask SecondLook; /classic/ still has it. Everything below is a no-op without it.
+  // The main page replaced this with Ask GiveMeMyMoneyBack; /classic/ still has it. Everything below is a no-op without it.
   const hasPractice = Boolean(document.getElementById('btn-practice-start'));
   let session = null;
 

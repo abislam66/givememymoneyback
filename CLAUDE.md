@@ -1,9 +1,9 @@
-# CLAUDE.md: SecondLook
+# CLAUDE.md: GiveMeMyMoneyBack
 
 This file gives Claude Code the standing context for this project. Read it at the start of every session. The full build spec lives in `BUILD_PROMPT.md`; progress lives in `PROGRESS.md`.
 
 ## Project
-SecondLook checks a patient's hospital bill against their insurer's explanation of benefits (EOB), finds errors with deterministic rules, shows the evidence and math side by side, explains confusing terms, writes the dispute letter, tracks the dispute, and lets the patient practice the billing phone call.
+GiveMeMyMoneyBack checks a patient's hospital bill against their insurer's explanation of benefits (EOB), finds errors with deterministic rules, shows the evidence and math side by side, explains confusing terms, writes the dispute letter, tracks the dispute, and lets the patient practice the billing phone call.
 
 Built solo for **OwlHacks 2026** (Temple University). Submission deadline: about **9am Sunday, Sept 27, 2026**. Everything must run for free.
 

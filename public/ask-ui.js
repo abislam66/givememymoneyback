@@ -1,4 +1,4 @@
-// Ask SecondLook (browser side): suggested questions, a small chat, a speaker for each answer, and Alt+R.
+// Ask GiveMeMyMoneyBack (browser side): suggested questions, a small chat, a speaker for each answer, and Alt+R.
 // Answers come from /api/ask (grounded in the current bill, EOB and rules result). If the server can't be
 // reached, suggested questions still get the same deterministic answers from /askfacts.js.
 // Voice: ElevenLabs through the server (/api/tts, key stays server-side); the browser voice is the fallback.
@@ -131,7 +131,7 @@
   function addBubble(role, html, extraClass = '') {
     const li = document.createElement('li');
     li.className = `ask-msg ${role}${extraClass ? ` ${extraClass}` : ''}`;
-    li.innerHTML = `<span class="who">${role === 'user' ? 'You' : 'SecondLook'}</span>${html}`;
+    li.innerHTML = `<span class="who">${role === 'user' ? 'You' : 'GiveMeMyMoneyBack'}</span>${html}`;
     $('#ask-log').appendChild(li);
     return li;
   }
@@ -158,11 +158,11 @@
     const owner = `answer-${++answerNo}`;
     const note = out.source === 'gemini' ? 'Worded by Gemini from your documents; every number was checked against your results.' : 'From your documents and the rules. No AI used.';
     pending.classList.remove('pending');
-    pending.innerHTML = `<span class="who">SecondLook</span>${bodyHtml(out.text)}<p class="ask-src">${note}</p>${speakerHtml(owner)}`;
+    pending.innerHTML = `<span class="who">GiveMeMyMoneyBack</span>${bodyHtml(out.text)}<p class="ask-src">${note}</p>${speakerHtml(owner)}`;
     pending.querySelector('.speaker').dataset.text = out.text;
     history.push({ role: 'user', text: q }, { role: 'model', text: out.text });
     history = history.slice(-8);
-    announce(`SecondLook answered: ${out.text}`);
+    announce(`GiveMeMyMoneyBack answered: ${out.text}`);
     busy = false;
   }
 

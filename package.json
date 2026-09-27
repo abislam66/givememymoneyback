@@ -1,5 +1,5 @@
 {
-  "name": "secondlook",
+  "name": "givememymoneyback",
   "version": "1.0.0",
   "description": "Check a hospital bill against the insurer's explanation of benefits, find errors with deterministic rules, and help the patient dispute them.",
   "main": "server.js",

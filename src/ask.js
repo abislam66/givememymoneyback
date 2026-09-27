@@ -1,4 +1,4 @@
-// Ask SecondLook (server side). Explains the current result; never creates findings or changes amounts.
+// Ask GiveMeMyMoneyBack (server side). Explains the current result; never creates findings or changes amounts.
 // Suggested questions get the deterministic answers from src/askfacts.js (Gemini may reword them, and the
 // rewrite is kept only if every number and month still matches). Free-form questions go to Gemini with the
 // fact sheet; a reply that adds any number or month not in the fact sheet is dropped.
@@ -30,8 +30,8 @@ async function answer({ question, intent, history = [], bill, eob, noAI = false 
   if (noAI || !hasGemini()) return { text: A.NOT_SUPPORTED, source: 'template' };
   const sheet = A.factSheet(result, b, e);
   const recent = (Array.isArray(history) ? history : []).slice(-6)
-    .map((h) => `${h.role === 'user' ? 'Patient' : 'SecondLook'}: ${String(h.text || '').slice(0, 600)}`).join('\n');
-  const system = 'You are SecondLook, helping a patient understand one medical bill and their insurer\'s explanation of benefits (EOB). '
+    .map((h) => `${h.role === 'user' ? 'Patient' : 'GiveMeMyMoneyBack'}: ${String(h.text || '').slice(0, 600)}`).join('\n');
+  const system = 'You are GiveMeMyMoneyBack, helping a patient understand one medical bill and their insurer\'s explanation of benefits (EOB). '
     + 'Answer ONLY from the FACTS below. Never create new billing problems, never change or compute new amounts, and never overrule the findings. '
     + 'If the FACTS do not answer the question, reply exactly: NOT_IN_DOCUMENTS. '
     + 'Plain English, about a 6th-grade reading level, at most 5 short sentences. No medical or legal advice.';

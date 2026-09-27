@@ -1,4 +1,4 @@
-// Gemini extraction: a photo or PDF of a bill or EOB -> JSON in SecondLook's data model.
+// Gemini extraction: a photo or PDF of a bill or EOB -> JSON in GiveMeMyMoneyBack's data model.
 // Gemini only READS the document. It never decides what is an error; src/rules.js does that.
 // This one pipeline serves both live uploads (server.js) and the extraction scoreboard
 // (scripts/score-extraction.js). Live uploads are cached in memory only, by file hash, and never saved.

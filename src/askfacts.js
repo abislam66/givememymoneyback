@@ -1,4 +1,4 @@
-// Ask SecondLook: deterministic answers built only from the current bill, EOB and rules result.
+// Ask GiveMeMyMoneyBack: deterministic answers built only from the current bill, EOB and rules result.
 // Runs on the server (src/ask.js) and in the browser (served as /askfacts.js), so the suggested
 // questions and the Alt+R summary work offline and in demo mode. It never creates findings or amounts.
 

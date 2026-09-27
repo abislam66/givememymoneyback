@@ -1,0 +1,21 @@
+SECONDLOOK TEST 1 / TEST 2 / TEST 3 - ANSWER KEY
+
+All documents are fictional. Do not use them for payment or insurance claims.
+
+TEST 1 - DUPLICATE CHARGE
+Files: Test_1_Medical_Bill.pdf + Test_1_EOB.pdf
+Expected issue: CPT 71046 appears twice on the provider bill but once on the EOB.
+Extra charge to identify: $342.00.
+
+TEST 2 - MISSING INSURANCE PAYMENT
+Files: Test_2_Medical_Bill.pdf + Test_2_EOB.pdf
+EOB plan-paid total: $1,272.47.
+Provider bill credits only $588.20.
+Expected missing insurance payment/credit: $684.27.
+
+TEST 3 - COMPLEX BUT CORRECT
+Files: Test_3_Medical_Bill.pdf + Test_3_EOB.pdf
+Expected: no discrepancy. It contains multiple services and cents, but the provider bill correctly reflects the EOB.
+Expected patient responsibility: $99.70.
+
+The dollar amounts are fictional but chosen to be plausible-looking for software testing.

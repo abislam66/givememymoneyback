@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>SecondLook</title>
+  <title>GiveMeMyMoneyBack</title>
   <meta name="description" content="Check your medical bill against your insurer's explanation of benefits. Find errors, see the math, and dispute them.">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='3' y='4' width='17' height='22' rx='2' fill='white' stroke='%231440d0' stroke-width='2'/%3E%3Ccircle cx='21' cy='19' r='6' fill='%2322c3e6' stroke='%231440d0' stroke-width='2'/%3E%3Cpath d='M25.5 23.5 29 27' stroke='%231440d0' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -35,7 +35,7 @@
         <path d="M25.5 23.5 29 27" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
       </svg>
       <div>
-        <h1 class="brand-name">SecondLook<span class="sr-only">: check your medical bill against your insurance.</span></h1>
+        <h1 class="brand-name">GiveMe<wbr>MyMoney<wbr>Back<span class="sr-only">: check your medical bill against your insurance.</span></h1>
         <p class="brand-tag" aria-hidden="true">Medical bill checker</p>
       </div>
     </div>
@@ -84,7 +84,7 @@
     </header>
 
     <div class="notice">
-      <p><strong>Uploaded files are not permanently stored.</strong> The numbers you confirm and your results may be saved to your account. Example bills are fictional. SecondLook checks your bill against your insurer's statement. It does not judge whether the medical care or coding was right.</p>
+      <p><strong>Uploaded files are not permanently stored.</strong> The numbers you confirm and your results may be saved to your account. Example bills are fictional. GiveMeMyMoneyBack checks your bill against your insurer's statement. It does not judge whether the medical care or coding was right.</p>
       <p id="demo-note" class="demo-note" hidden><b>We can't reach the server right now.</b> You're seeing a saved example (Maya's fictional bill). Reading documents, AI answers and voice come back when the connection does.</p>
     </div>
 
@@ -127,7 +127,7 @@
             <button type="button" id="btn-manual" class="btn ghost">Type the numbers in myself</button>
             <p id="upload-msg" class="msg" role="status"></p>
           </div>
-          <p class="hint small">Gemini reads your files, <b>you check the numbers</b>, and then SecondLook's rules look for errors. Uploaded files are not permanently stored.</p>
+          <p class="hint small">Gemini reads your files, <b>you check the numbers</b>, and then GiveMeMyMoneyBack's rules look for errors. Uploaded files are not permanently stored.</p>
         </form>
         <button type="button" id="btn-upload-toggle" hidden aria-expanded="true" aria-controls="upload-box">Upload your own</button>
 
@@ -159,7 +159,7 @@
         <section id="review" class="review" hidden aria-labelledby="review-h">
           <div class="card review-top">
             <h3 id="review-h" tabindex="-1" class="card-title">Check what we read</h3>
-            <p class="hint">Compare these numbers with your papers and fix anything that's wrong. Fields that need a look are marked in yellow. SecondLook only looks for errors after you press <b>Confirm &amp; Analyze</b>.</p>
+            <p class="hint">Compare these numbers with your papers and fix anything that's wrong. Fields that need a look are marked in yellow. GiveMeMyMoneyBack only looks for errors after you press <b>Confirm &amp; Analyze</b>.</p>
             <div id="review-issues" class="review-issues" aria-live="polite"></div>
           </div>
           <form id="review-form" class="review-form" novalidate></form>
@@ -209,7 +209,7 @@
           <div class="ask-head">
             <span class="action-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4 5h16v11H9l-5 4zM8 9h8M8 12h5"/></svg></span>
             <div>
-              <h3 id="ask-h" class="card-title">Ask SecondLook</h3>
+              <h3 id="ask-h" class="card-title">Ask GiveMeMyMoneyBack</h3>
               <p class="hint">Answers come only from your bill, your insurance statement and the results above. It can't find new problems or change any amount. If the answer isn't in your papers, it will say so.</p>
             </div>
           </div>
@@ -297,8 +297,8 @@
           <div class="card action-card" aria-labelledby="askcta-h" role="group">
             <span class="action-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4 5h16v11H9l-5 4zM8 9h8M8 12h5"/></svg></span>
             <h3 id="askcta-h" class="card-title">Questions before you call?</h3>
-            <p class="hint">Ask SecondLook what to say to the billing department, or how we got the amount. Every answer can be read aloud.</p>
-            <div><a class="btn ghost" href="#ask-section">Ask SecondLook</a></div>
+            <p class="hint">Ask GiveMeMyMoneyBack what to say to the billing department, or how we got the amount. Every answer can be read aloud.</p>
+            <div><a class="btn ghost" href="#ask-section">Ask GiveMeMyMoneyBack</a></div>
           </div>
         </div>
 
@@ -328,7 +328,7 @@
 
         <section class="card" id="dispute-section" aria-labelledby="dispute-h">
           <h3 id="dispute-h" class="card-title">Dispute status</h3>
-          <p class="hint">SecondLook keeps track of your dispute, tells you when to follow up, and drafts the next letter. Only a resolved dispute counts as money saved.</p>
+          <p class="hint">GiveMeMyMoneyBack keeps track of your dispute, tells you when to follow up, and drafts the next letter. Only a resolved dispute counts as money saved.</p>
           <div id="dispute-box" class="dispute-box"></div>
           <p id="dispute-msg" class="msg" role="status"></p>
         </section>
@@ -362,7 +362,7 @@
     </main>
 
     <footer class="foot">
-      <p>SecondLook compares a bill with the insurer's statement. The rules in code decide what is an error. AI only reads documents and rewords explanations, and its numbers are checked against the rules. This is not legal or medical advice. Built for OwlHacks 2026.</p>
+      <p>GiveMeMyMoneyBack compares a bill with the insurer's statement. The rules in code decide what is an error. AI only reads documents and rewords explanations, and its numbers are checked against the rules. This is not legal or medical advice. Built for OwlHacks 2026.</p>
     </footer>
   </div>
 

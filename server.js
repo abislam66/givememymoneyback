@@ -1,4 +1,4 @@
-// SecondLook server. Express. Works with no API keys. Signed-in users' analyses and disputes are saved
+// GiveMeMyMoneyBack server. Express. Works with no API keys. Signed-in users' analyses and disputes are saved
 // in Supabase (src/accounts.js); people without an account and /classic/ stay in memory only.
 
 const fs = require('fs');
@@ -42,7 +42,7 @@ const caseById = (id) => CASES.find((c) => c.id === id);
 function badDocs(bill, eob) {
   if (!bill || typeof bill !== 'object' || !Array.isArray(bill.lines)) return 'The bill is missing or has no lines.';
   if (!eob || typeof eob !== 'object' || !Array.isArray(eob.lines)) return "The insurer's statement (EOB) is missing or has no lines.";
-  if (bill.lines.length > 500 || eob.lines.length > 500) return 'That bill has too many lines. SecondLook handles up to 500.';
+  if (bill.lines.length > 500 || eob.lines.length > 500) return 'That bill has too many lines. GiveMeMyMoneyBack handles up to 500.';
   return null;
 }
 
@@ -298,7 +298,7 @@ app.get('/api/family', safe(async (req) => {
   return { people, family, uploads: { disputes: uploads.length, confirmed_savings: uploadSaved }, total_saved: family.confirmed_savings };
 }));
 
-// ---------- Ask SecondLook: explains the current result; never creates findings ----------
+// ---------- Ask GiveMeMyMoneyBack: explains the current result; never creates findings ----------
 app.post('/api/ask', safe((req) => {
   const { question, intent, history, bill, eob } = req.body || {};
   const bad = badDocs(bill, eob);
@@ -335,7 +335,7 @@ process.on('unhandledRejection', (e) => console.error('[unhandled]', e));
 
 if (require.main === module) {
   app.listen(PORT, () => {
-    console.log(`SecondLook running at http://localhost:${PORT}`);
+    console.log(`GiveMeMyMoneyBack running at http://localhost:${PORT}`);
     console.log(`Gemini: ${hasGemini() ? `on, model "${geminiConfig().model}" (set GEMINI_MODEL to change)` : 'off (using templates)'} | ElevenLabs: ${hasTTS() ? 'on' : 'off (browser voice)'} | ${CASES.length} test cases`);
   });
 }
