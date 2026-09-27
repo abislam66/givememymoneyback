@@ -574,6 +574,8 @@
     $('#explain-title').textContent = fallbackTitle || 'Explanation';
     $('#explain-body').textContent = 'Looking that up…';
     $('#explain-source').textContent = '';
+    $('#explain-voice-row').hidden = true;
+    setMsg($('#explain-voice'), '');
     panel.hidden = false;
     $('#explain-title').focus();
     try {
@@ -586,6 +588,7 @@
       $('#explain-source').textContent = out.source === 'gemini'
         ? 'Reworded by Gemini. Every number was checked against the rules.'
         : "From GiveMeMyMoneyBack's built-in glossary and rules.";
+      $('#explain-voice-row').hidden = false;
     } catch (e) {
       if (seq !== explainSeq) return;
       $('#explain-body').textContent = e.message;
@@ -593,6 +596,7 @@
   }
 
   function closeExplain() {
+    stopSpeaking();
     $('#explain').hidden = true;
     explainSeq += 1;
     if (explainInvoker && document.body.contains(explainInvoker)) explainInvoker.focus();
@@ -640,6 +644,7 @@
   }
 
   // Speak with ElevenLabs when the server has it; otherwise (501 or any error) use the browser voice.
+  const voiceCache = new Map(); // text -> audio URL: hearing the same text again doesn't use more ElevenLabs credits
   async function speak(text, msgEl) {
     stopSpeaking();
     const seq = speakSeq;
@@ -647,11 +652,14 @@
     const done = () => { if (seq === speakSeq) $('#btn-stop').hidden = true; };
     if (!state.demo && state.status.elevenlabs) {
       try {
-        const res = await fetch('/api/tts', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text }) });
-        if (res.ok) {
-          const blob = await res.blob();
+        let url = voiceCache.get(text);
+        if (!url) {
+          const res = await fetch('/api/tts', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text }) });
+          if (res.ok) { url = URL.createObjectURL(await res.blob()); voiceCache.set(text, url); }
+        }
+        if (url) {
           if (seq !== speakSeq) return;
-          audio = new Audio(URL.createObjectURL(blob));
+          audio = new Audio(url);
           audio.onended = done;
           await audio.play();
           if (msgEl) setMsg(msgEl, 'Playing (ElevenLabs voice).');
@@ -873,6 +881,8 @@
     });
 
     $('#explain-close').addEventListener('click', closeExplain);
+    $('#explain-listen').addEventListener('click', () => speak(`${$('#explain-title').textContent}. ${$('#explain-body').textContent}`, $('#explain-voice')));
+    $('#explain-stop').addEventListener('click', () => { stopSpeaking(); setMsg($('#explain-voice'), 'Stopped.'); });
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !$('#explain').hidden) closeExplain(); });
 
     $('#tab-letter').addEventListener('click', () => selectTab('letter'));

@@ -112,7 +112,7 @@
   }
 
   // The letter / call-script buttons in app.js use their own voice; stop this one when they start.
-  ['#btn-read-results', '#btn-play-script'].forEach((sel) => { const b = $(sel); if (b) b.addEventListener('click', stop, true); });
+  ['#btn-read-results', '#btn-play-script', '#explain-listen'].forEach((sel) => { const b = $(sel); if (b) b.addEventListener('click', stop, true); });
 
   // ---------- chat ----------
   let history = [];
